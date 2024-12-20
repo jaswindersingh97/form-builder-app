@@ -1,7 +1,11 @@
-const login = () =>{
+const asyncHandler = require('./../utils/asyncHandler');
+
+const login = async() =>{
 
 }
-const register = () =>{ 
+const register = async() =>{ 
 }
 
-module.exports = {login,register}
+module.exports = {
+    login: asyncHandler(login),
+    register: asyncHandler(register)}

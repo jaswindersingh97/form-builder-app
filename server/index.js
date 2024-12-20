@@ -11,7 +11,10 @@ const cors = require("cors");
 app.use(cors());
 
 const connectDB = require("./config/db");
+const errorHandlerMiddleware = require("./middleware/errorHandlerMiddleware");
 connectDB();
+
+app.use(errorHandlerMiddleware());
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the server" });
