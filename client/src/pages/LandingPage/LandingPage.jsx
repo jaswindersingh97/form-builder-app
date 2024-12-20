@@ -31,6 +31,7 @@ function LandingPage() {
                 </div>
             </div>
             <div className={styles.lower}>
+                
                 <img src={Figure} alt="landingPageImage" />
             </div>
         </div>
