@@ -11,10 +11,12 @@ const cors = require("cors");
 app.use(cors());
 
 const connectDB = require("./config/db");
-const errorHandlerMiddleware = require("./middleware/errorHandlerMiddleware");
 connectDB();
 
-app.use(errorHandlerMiddleware());
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.status || 500).json({ message: err.message || 'Internal Server Error' });
+});
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the server" });
