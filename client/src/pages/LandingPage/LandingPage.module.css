@@ -1,0 +1,76 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+}
+.navbar{
+    width: 100%;
+    padding-block: 20px;
+    padding-inline: 30px;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    align-items: center;
+}
+.navbar>div{
+    display: flex;
+    gap: 10px;
+}
+.body{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    align-items: center;
+}
+.upper{
+    display: flex;
+}
+.upperLeft img{
+    transform: rotate(20deg);
+}
+.upperMiddle{
+    text-align: center;
+
+}
+.upperMiddle h1{
+    font-size: 60px;
+    background: -webkit-linear-gradient(90deg, #4B83FF 0%, #B794F4 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.Button2{
+    background-color: #1A5FFF;
+    color: white;
+    border: none;
+}
+button{
+    padding: 10px;
+    border-radius: 5px;
+}
+.Button1{
+    border: 1px, solid,#1A5FFF;
+    color: #1A5FFF;
+}
+.footer{
+    display: flex;
+    gap: 80px;
+}
+
+.column span::after {
+    content: url('./../../assets/LandingPage/link.svg');
+    display: inline-block;
+    margin-left: 10px;
+}
+.column p{
+    text-decoration: underline;
+}
+.Logo{
+    display: flex;
+    gap: 10px;
+}
