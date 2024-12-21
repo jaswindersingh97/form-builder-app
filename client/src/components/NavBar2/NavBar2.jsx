@@ -1,5 +1,5 @@
 import styles from './style.module.css';
-import React from 'react'
+import React, {useState} from 'react'
 import ToggleButton from '../ToggleButton/ToggleButton';
 function NavBar2() {
     const [formName, setFormName] = useState('');

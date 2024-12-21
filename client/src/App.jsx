@@ -8,6 +8,7 @@ import SignInPage from './pages/SignIn/SignIn'
 import RegisterPage from './pages/Register/Register'
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import WorkSpace from './pages/WorkSpace/WorkSpace';
+import FormPage from './pages/FormPage/FormPage';
 function App() {
   const theme = "dark";
   return (

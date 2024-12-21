@@ -1,0 +1,25 @@
+.container{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    height: 100vh;
+}
+.body{
+    padding: 10px;
+    flex: 1;
+    display: flex;
+    box-sizing: border-box;
+    gap: 10px;
+}
+.left{
+    width: 20%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    border: 1px,white,solid;
+    background-color: rgb(79, 25, 25);
+}
+.right{
+    flex: 1;
+}
