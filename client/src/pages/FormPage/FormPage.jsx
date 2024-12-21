@@ -4,10 +4,16 @@ import styles from './style.module.css';
 
 import React from 'react'
 
-function FormPage() {
+function FormPage({mode}) {
   return (
-    <div>
-    <NavBar2/>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <NavBar2/>
+      </div>
+      <div className={styles.body}>
+        <
+      </div>  
+
     </div>
   )
 }
