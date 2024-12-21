@@ -1,6 +1,9 @@
 // pages/SignUp.js
 import React from "react";
 import Form from "./../../components/Form/Form";
+import AuthLayout from "../../components/AuthLayout/AuthLayout";
+import buttonIcon from './../../assets/AuthPage/Google Icon.svg'
+import withTheme from "../../components/ThemeComponent/ThemeComponent";
 
 const SignUp = () => {
   const formFields = [
@@ -43,10 +46,24 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <Form fields={formFields} onSubmit={handleSubmit} />
-    </div>
+    <>
+      <Form fields={formFields} onSubmit={handleSubmit} buttonLabel={"Sign Up"}/>
+      <p>or</p>
+      <button>
+        <img src={buttonIcon} alt="Google Icon" />
+        Sign In with Google
+       </button>
+       <p>Don’t have an account? <span>Register now</span></p>
+          
+    </>
   );
 };
 
-export default SignUp;
+const RegisterPage = () => (
+    <AuthLayout>
+      <SignUp />
+    </AuthLayout>
+  );
+  
+  
+  export default withTheme(RegisterPage); 

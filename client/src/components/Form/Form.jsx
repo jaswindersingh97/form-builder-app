@@ -1,7 +1,7 @@
 // components/Form.js
 import React, { useState } from "react";
 import './style.css'
-const Form = ({ fields, onSubmit }) => {
+const Form = ({ fields, onSubmit ,buttonLabel}) => {
   const [formValues, setFormValues] = useState(() =>
     fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
   );
@@ -50,7 +50,7 @@ const Form = ({ fields, onSubmit }) => {
           )}
         </div>
       ))}
-      <button type="submit">Submit</button>
+      <button type="submit">{buttonLabel}</button>
     </form>
   );
 };

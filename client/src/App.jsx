@@ -4,7 +4,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Routes,Route } from 'react-router-dom'
 import { ThemedLandingPage } from './pages/LandingPage/LandingPage'
-import AuthLayout from './components/AuthLayout/AuthLayout'
+import SignInPage from './pages/SignIn/SignIn'
+import RegisterPage from './pages/Register/Register'
 function App() {
   const theme = "dark";
   return (
@@ -13,7 +14,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ThemedLandingPage  />} />
-          <Route path='/test' element={<AuthLayout/>} />
+          <Route path='/SignIn' element={<SignInPage/>}/>
+          <Route path='/Register' element={<RegisterPage theme={theme}/>}/>
+
         </Routes>
       </BrowserRouter>
     </>
