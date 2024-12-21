@@ -18,7 +18,6 @@ function NavBar2() {
             <button>Save</button>
             <button>X</button>
         </div>
-      
     </div>
   )
 }

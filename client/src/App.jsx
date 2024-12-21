@@ -20,6 +20,8 @@ function App() {
           <Route path='/Register' element={<RegisterPage theme={theme}/>}/>
           <Route path='/settings' element={<SettingsPage theme={theme}/>}/>
           <Route path='/WorkSpace' element={<WorkSpace theme={theme}/>} />
+          <Route path='/WorkSpace/create' element={<FormPage theme={theme}/>} />
+          <Route path='/WorkSpace/:id' element={<FormPage id= theme={theme}/>} />
           <Route path='*' element={<h1>Not Found</h1>} />
         </Routes>
       </BrowserRouter>
