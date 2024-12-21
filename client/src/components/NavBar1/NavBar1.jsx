@@ -13,8 +13,6 @@ function NavBar1() {
         <ToggleButton/>
         <button>Share</button>
       </div>
-
-    <hr/>
     </div>
   )
 }

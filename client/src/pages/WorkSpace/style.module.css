@@ -1,7 +1,12 @@
 .container{
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+}
+hr{
+    margin: 0;
+    border: 0;
+    height: 1px;
 }

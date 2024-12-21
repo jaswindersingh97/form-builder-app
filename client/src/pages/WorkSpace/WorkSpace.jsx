@@ -6,6 +6,8 @@ function WorkSpace() {
   return (
     <div className={style.container}>
       <NavBar1/>
+      <hr/>
+
     </div>
   )
 }
