@@ -4,3 +4,5 @@ body{
     display: flex;
     box-sizing: border-box;
 }
+button
+{cursor: pointer;}

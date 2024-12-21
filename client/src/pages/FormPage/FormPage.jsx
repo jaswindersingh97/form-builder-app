@@ -1,5 +1,6 @@
 import NavBar2 from '../../components/NavBar2/NavBar2';
 import withTheme from '../../components/ThemeComponent/ThemeComponent';
+import WorkFlow from '../../components/WorkFlow/WorkFlow';
 import styles from './style.module.css';
 
 import React from 'react'
@@ -43,7 +44,7 @@ function FormPage({mode}) {
           </div>
         </div>
         <div className={styles.right}>
-            
+            <WorkFlow/>
           </div>
         </div>
       </div>  
