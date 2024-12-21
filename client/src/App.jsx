@@ -7,6 +7,7 @@ import { ThemedLandingPage } from './pages/LandingPage/LandingPage'
 import SignInPage from './pages/SignIn/SignIn'
 import RegisterPage from './pages/Register/Register'
 import SettingsPage from './pages/SettingsPage/SettingsPage';
+import WorkSpace from './pages/WorkSpace/WorkSpace';
 function App() {
   const theme = "dark";
   return (
@@ -14,10 +15,12 @@ function App() {
       <ToastContainer />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ThemedLandingPage  />} />
-          <Route path='/SignIn' element={<SignInPage/>}/>
+          <Route path="/" element={<ThemedLandingPage theme={theme} />} />
+          <Route path='/SignIn' element={<SignInPage theme={theme}/>}/>
           <Route path='/Register' element={<RegisterPage theme={theme}/>}/>
           <Route path='/settings' element={<SettingsPage theme={theme}/>}/>
+          <Route path='/WorkSpace' element={<WorkSpace theme={theme}/>} />
+          <Route path='*' element={<h1>Not Found</h1>} />
         </Routes>
       </BrowserRouter>
     </>

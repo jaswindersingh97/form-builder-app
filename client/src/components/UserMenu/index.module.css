@@ -1,0 +1,40 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+  border-radius: 10px;
+  background-color: black;
+}
+
+.userName {
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: black;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  border: 1px solid #ccc;
+  background-color: black;
+  box-shadow: 0px 8px 16px rgb(14, 0, 0);
+  min-width: 160px;
+  z-index: 1;
+  border-radius: 10px;
+
+}
+
+.menuItem {
+  padding: 10px 20px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  background-color: black;
+  border: none;
+}
+
+.menuItem:hover {
+  background-color: blue;
+}
