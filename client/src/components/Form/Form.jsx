@@ -50,7 +50,7 @@ const Form = ({ fields, onSubmit ,buttonLabel}) => {
           )}
         </div>
       ))}
-      <button type="submit">{buttonLabel}</button>
+      <button className="AuthButton" type="submit">{buttonLabel}</button>
     </form>
   );
 };

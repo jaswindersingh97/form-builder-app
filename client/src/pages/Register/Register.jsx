@@ -4,7 +4,8 @@ import Form from "./../../components/Form/Form";
 import AuthLayout from "../../components/AuthLayout/AuthLayout";
 import buttonIcon from './../../assets/AuthPage/Google Icon.svg'
 import withTheme from "../../components/ThemeComponent/ThemeComponent";
-
+import { Link } from "react-router-dom";
+import {toast} from 'react-toastify';
 const SignUp = () => {
   const formFields = [
     {
@@ -49,11 +50,11 @@ const SignUp = () => {
     <>
       <Form fields={formFields} onSubmit={handleSubmit} buttonLabel={"Sign Up"}/>
       <p>or</p>
-      <button>
+      <button onClick={()=>toast.error("This functionality is not yet available")} className="AuthButton">
         <img src={buttonIcon} alt="Google Icon" />
         Sign In with Google
        </button>
-       <p>Don’t have an account? <span>Register now</span></p>
+       <p>Already have an accout <mark><Link to={"/Signin"}>Login</Link></mark></p>
           
     </>
   );
