@@ -15,6 +15,7 @@ function EmailInvites() {
         <input type="email" placeholder="Email id" />
         <button>Send Invite</button>
         <h3>Invite by link</h3>
+        <button>Copy link</button>
       </div>
       </form>
     </div>
