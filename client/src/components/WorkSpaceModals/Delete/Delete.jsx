@@ -14,4 +14,4 @@ function Delete() {
   )
 }
 
-export default DeleteFolder
+export default Delete
