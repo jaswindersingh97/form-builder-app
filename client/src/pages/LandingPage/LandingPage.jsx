@@ -3,18 +3,19 @@ import styles from './LandingPage.module.css';
 import {LeftImage, RightImage, Figure} from './../../assets/LandingPage/';
 import { Logo } from '../../assets';
 import ThemeComponent from '../../components/ThemeComponent/ThemeComponent';
+import {useNavigate} from 'react-router-dom';
 function LandingPage() {
-    // const data = [{"Product":["Status", "Documentation","Roadmap","Pricing"]},{"Community":["Discord","Github repository","Twitter","Linkedin"]},{"Company":["About","Careers","Contact","Press"]}]
+    const navigate = useNavigate();
   return (
     <div className={styles.container}>
         <div className={styles.navbar}>
-            <div className={styles.logo}>
+            <div onClick={()=>navigate("/")} className={styles.logo}>
                 <img src={Logo} alt="logo" />
                 <h6>FormBot</h6>
             </div>
             <div className={styles.navlinks}>
-                <button className={styles.Button1}>Sign in</button>
-                <button className={styles.Button2}>Create a FormBot</button>
+                <button onClick={()=>navigate("/signin")} className={styles.Button1}>Sign in</button>
+                <button onClick={()=>navigate("/signin")} className={styles.Button2}>Create a FormBot</button>
             </div>
         </div>
         <div className={styles.body}>
@@ -25,7 +26,7 @@ function LandingPage() {
                 <div className={styles.upperMiddle}>
                     <h1>Build advanced chatbots visually</h1>
                     <p>Typebot gives you powerful blocks to create unique chat experiences. Embed them anywhere on your web/mobile apps and start collecting results like magic.</p>
-                    <button className={styles.Button2}>Create a FormBot  for free</button>
+                    <button onClick={()=>navigate("/signin")} className={styles.Button2}>Create a FormBot  for free</button>
                 </div>
                 <div className={styles.upperRight}>
                 <img src={RightImage} alt="landingPageImage" />
@@ -38,7 +39,7 @@ function LandingPage() {
         </div>
         <div className={styles.footer}>
             <div className={styles.column}>
-                <div className={styles.Logo}>
+                <div onClick={()=>navigate("/")} className={styles.Logo}>
                 <img src={Logo} alt='logo'/> 
                 <h6>FormBot</h6>
                 </div>
