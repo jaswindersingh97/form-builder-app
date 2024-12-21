@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<ThemedLandingPage  />} />
           <Route path='/SignIn' element={<SignInPage/>}/>
           <Route path='/Register' element={<RegisterPage theme={theme}/>}/>
-          <Route path='/settings' element={<SettingsPage/>}/>
+          <Route path='/settings' element={<SettingsPage theme={theme}/>}/>
         </Routes>
       </BrowserRouter>
     </>

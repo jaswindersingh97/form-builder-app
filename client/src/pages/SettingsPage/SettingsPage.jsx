@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from '../../components/Form/Form';
+import withTheme from '../../components/ThemeComponent/ThemeComponent';
 function SettingsPage() {
     const formFields = [
         {
@@ -54,4 +55,4 @@ function SettingsPage() {
     );
 }
 
-export default SettingsPage;
+export default withTheme(SettingsPage);
