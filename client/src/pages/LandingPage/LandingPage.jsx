@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import styles from './LandingPage.module.css';
 import {LeftImage, RightImage, Figure} from './../../assets/LandingPage/';
 import { Logo } from '../../assets';
+import ThemeComponent from '../../components/ThemeComponent/ThemeComponent';
 function LandingPage() {
     // const data = [{"Product":["Status", "Documentation","Roadmap","Pricing"]},{"Community":["Discord","Github repository","Twitter","Linkedin"]},{"Company":["About","Careers","Contact","Press"]}]
   return (
@@ -72,3 +73,5 @@ function LandingPage() {
 }
 
 export default LandingPage
+
+export const ThemedLandingPage = ThemeComponent(LandingPage);
