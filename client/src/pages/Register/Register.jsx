@@ -6,10 +6,11 @@ import buttonIcon from './../../assets/AuthPage/Google Icon.svg'
 import withTheme from "../../components/ThemeComponent/ThemeComponent";
 import { Link } from "react-router-dom";
 import {toast} from 'react-toastify';
+import Api from "../../Api/Api";
 const SignUp = () => {
   const formFields = [
     {
-        name: "username",
+        name: "name",
         label: "Username",
         type: "text",
         required: true,
@@ -37,13 +38,21 @@ const SignUp = () => {
       label: "Confirm Password",
       type: "password",
       required: true,
-      validate: (value) => value === formFields[1].value,
+      validate: (value, formValues) => value === formValues.password,
       errorMessage: "Passwords do not match",
     },
   ];
 
-  const handleSubmit = (data) => {
-    console.log("Form Submitted:", data);
+  const handleSubmit = async(data) => {
+    const {confirmPassword,...finalData}=data; 
+    const response =await Api({
+      endpoint: "/register",
+      method: "POST",
+      data:finalData,
+    });
+    if(response.status === 201){
+      toast.success("Account created successfully");}
+      
   };
 
   return (

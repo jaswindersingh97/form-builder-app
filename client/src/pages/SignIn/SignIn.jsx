@@ -6,6 +6,7 @@ import buttonIcon from './../../assets/AuthPage/Google Icon.svg'
 import withTheme from "../../components/ThemeComponent/ThemeComponent";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import Api from "./../../Api/Api";
 const SignIn = () => {
   const formFields = [
     {
@@ -26,8 +27,17 @@ const SignIn = () => {
     },
   ];
 
-  const handleSubmit = (data) => {
-    console.log("Form Submitted:", data);
+  const handleSubmit = async(data) => {
+    const response =await Api({
+      endpoint: "/login",
+      method: "POST",
+      data,
+    });
+    if(response.status === 200){
+      localStorage.setItem("token",response.data.token);
+      toast.success("logged-in Succesfully");
+      window.location.href = '/workspace';
+    }
   };
 
   return (

@@ -12,13 +12,17 @@ const Form = ({ fields, onSubmit ,buttonLabel}) => {
     fields.forEach((field) => {
       if (field.required && !formValues[field.name]) {
         newErrors[field.name] = `${field.label || field.name} is required`;
-      } else if (field.validate && !field.validate(formValues[field.name])) {
+      } else if (
+        field.validate &&
+        !field.validate(formValues[field.name], formValues)
+      ) {
         newErrors[field.name] = field.errorMessage || "Invalid value";
       }
     });
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
