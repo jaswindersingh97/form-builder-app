@@ -20,11 +20,20 @@ const userSchema = new mongoose.Schema({
         required: true,
         select:false,
     },
-    theme:{
-        type: String,
-        default: 'dark',
-    },
-    
+    sharedDashboards: [
+        {
+          userId: {
+            type: mongoose.Schema.Types.ObjectId, 
+            ref: 'User',
+            required: true,
+          },
+          permission: {
+            type: String,
+            enum: ['view', 'edit'], 
+            required: true,
+          },
+        },
+      ],    
     createdAt: {
         type: Date,
         default: Date.now,
