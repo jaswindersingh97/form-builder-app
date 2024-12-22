@@ -1,4 +1,4 @@
-const schemas = require('./../ValidationSchemas/Schemas');
+const schemas = require('./../ValidationSchema/Schemas');
 const validationMiddleware = (schemaType) => (req, res, next) => {
   const { body, params, query } = schemas[schemaType]; // Destructure the body and params schemas
 
@@ -26,4 +26,4 @@ const validationMiddleware = (schemaType) => (req, res, next) => {
   next();
 };
 
-module.exports = validationMiddleware
+module.exports = validationMiddleware;

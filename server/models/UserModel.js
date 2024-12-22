@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         select:false,
     },
+    theme:{
+        type: String,
+        default: 'dark',
+    },
     createdAt: {
         type: Date,
         default: Date.now,
