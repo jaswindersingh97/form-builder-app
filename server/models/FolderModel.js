@@ -5,7 +5,7 @@ const FolderSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  owner: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
@@ -24,6 +24,8 @@ const FolderSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+},{
+  timestamps: true
 });
 const Folder = mongoose.model('Folder', FolderSchema);
 

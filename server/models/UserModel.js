@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema({
         required: true,
         select:false,
     },
+    folders: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Folder', 
+      },
+    ],
     sharedDashboards: [
         {
           userId: {
@@ -45,6 +51,24 @@ const userSchema = new mongoose.Schema({
 },{
     timestamps: true
   });
+
+  userSchema.pre('save', async function (next) {
+    if (this.isNew) {
+      try {
+        const defaultFolder = await folderModel.create({
+          name: 'Default',
+          userId: this._id,
+          isDefault: true,
+        });
+        this.folders.push(defaultFolder._id); // Add the default folder to user's folders
+      } catch (err) {
+        return next(err);
+      }
+    }
+    next();
+  });
+  
+
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
