@@ -3,6 +3,7 @@ import styles from './style.module.css';
 import flag from './../../assets/FormPage/Flag.svg'
 import {buttons,Date,Email,Gif,Image,Number,Phone,Rating,TextBubble,Textinput,Video} from './../../assets/FormPage';
 import deleteicon from './../../assets/Workspace/delete.svg';
+import BubblesInFlow from '../BubblesInFlow/BubblesInFlow';
 function WorkFlow() {
     const Bubbles = [
       {
@@ -70,8 +71,12 @@ function WorkFlow() {
         <img src={flag} alt='flag'/>
         <span>Start</span>
       </div>
+      {
+        Bubbles.map((item,index)=>(
+          <BubblesInFlow object={item} key={index}/>
+        ))
+      }
 
-      
 
     </div>
   )
