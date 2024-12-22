@@ -14,7 +14,6 @@ import { useTheme } from './context/ThemeContext';
 function App() {
   const {theme}=useTheme();
   const themeStyle = theme ? "dark" : "light"; 
-  console.log(theme,themeStyle)
   return (
     <>
       <ToastContainer />

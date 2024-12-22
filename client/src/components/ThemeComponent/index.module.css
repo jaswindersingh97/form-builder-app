@@ -1,6 +1,7 @@
 
 
 .theme-light{
+    width: 100vw;
     background-color: white;
     --text:#18181B;
     --dropdownbackground:white;
@@ -11,6 +12,7 @@
     }
 }
 .theme-dark{
+    width: 100vw;
     background-color: #18181B;
     --text:white;
     --dropdownbackground:#18181B;

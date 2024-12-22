@@ -2,12 +2,58 @@ import NavBar2 from '../../components/NavBar2/NavBar2';
 import withTheme from '../../components/ThemeComponent/ThemeComponent';
 import WorkFlow from '../../components/WorkFlow/WorkFlow';
 import styles from './style.module.css';
-
+import {buttons,Date,Email,Gif,Image,Number,Phone,Rating,TextBubble,Textinput,Video} from './../../assets/FormPage';
 import React from 'react'
 
 function FormPage({mode}) {
-  const Bubbles = ["Text","Image","Video","GIF"];
-  const inputs = ["Text","Number","Email","Phone","Date","Rating","Buttons"]
+  const Bubbles = [
+    {
+      name:"Text",
+      icon:TextBubble
+    },
+    {
+      name:"Image",
+      icon:Image
+    },
+    {
+      name:"Video",
+      icon:Video
+    },
+    {
+      name:"Gif",
+      icon:Gif
+    }
+  ];
+  const inputs = [
+    {
+      name:"Text",
+      icon:Textinput
+    },
+    {
+      name:"Number",
+      icon:Number
+    },
+    {
+      name:"Email",
+      icon:Email
+    },
+    {
+      name:"Phone",
+      icon:Phone
+    },
+    {
+      name:"Date",
+      icon:Date
+    },
+    {
+      name:"Rating",
+      icon:Rating
+    },
+    {
+      name:"Button",
+      icon:buttons
+    },
+  ]
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -23,8 +69,8 @@ function FormPage({mode}) {
             {Bubbles.map((Bubble,index)=>{
               return(
                 <div key={index} className={styles.Field}>
-                  <img alt={Bubble}/>
-                  <span>{Bubble}</span>
+                  <img src={Bubble.icon} alt={Bubble.name}/>
+                  <span>{Bubble.name}</span>
                 </div>
               )
             })}
@@ -36,8 +82,8 @@ function FormPage({mode}) {
             {inputs.map((Bubble,index)=>{
               return(
                 <div key={index} className={styles.Field}>
-                  <img alt={Bubble}/>
-                  <span>{Bubble}</span>
+                <img src={Bubble.icon} alt={Bubble.name}/>
+                  <span>{Bubble.name}</span>
                 </div>
               )
             })}

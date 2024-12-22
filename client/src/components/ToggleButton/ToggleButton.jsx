@@ -5,7 +5,6 @@ import { useTheme } from '../../context/ThemeContext';
 const ToggleButton = () => {
   const { theme, setTheme } = useTheme();
 
-  console.log(typeof(theme));
   const handleToggle = () => {
     setTheme(!theme);
   };
