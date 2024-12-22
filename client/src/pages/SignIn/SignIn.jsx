@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Api from "./../../Api/Api";
 const SignIn = () => {
+  const from = location.state?.from?.pathname || '/workspace';
   const formFields = [
     {
       name: "email",
@@ -36,7 +37,7 @@ const SignIn = () => {
     if(response.status === 200){
       localStorage.setItem("token",response.data.token);
       toast.success("logged-in Succesfully");
-      window.location.href = '/workspace';
+      window.location.href = from;
     }
   };
 

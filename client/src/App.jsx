@@ -9,6 +9,7 @@ import RegisterPage from './pages/Register/Register'
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import WorkSpace from './pages/WorkSpace/WorkSpace';
 import FormPage from './pages/FormPage/FormPage';
+import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
 function App() {
   const theme = "dark";
   return (
@@ -17,12 +18,12 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ThemedLandingPage theme={theme} />} />
-          <Route path='/SignIn' element={<SignInPage theme={theme}/>}/>
-          <Route path='/Register' element={<RegisterPage theme={theme}/>}/>
-          <Route path='/settings' element={<SettingsPage theme={theme}/>}/>
-          <Route path='/WorkSpace' element={<WorkSpace theme={theme}/>} />
-          <Route path='/WorkSpace/create' element={<FormPage mode={"create"} theme={theme}/>} />
-          <Route path='/WorkSpace/edit/:id' element={<FormPage mode={"edit"} theme={theme}/>} />
+          <Route path='/SignIn' element={<ProtectedRoutes element={<SignInPage theme={theme}/>} isPublic={true}/>}/>
+          <Route path='/Register' element={<ProtectedRoutes element={<RegisterPage theme={theme}/>} isPublic={true}/>}/>
+          <Route path='/settings' element={<ProtectedRoutes element={<SettingsPage theme={theme}/>} isPublic={false}/>}/>
+          <Route path='/WorkSpace' element={<ProtectedRoutes element={<WorkSpace theme={theme}/>} isPublic={false}/>} />
+          <Route path='/WorkSpace/create' element={<ProtectedRoutes element={<FormPage mode={"create"} theme={theme}/>} isPublic={false}/>} />
+          <Route path='/WorkSpace/edit/:id' element={<ProtectedRoutes element={<FormPage mode={"edit"} theme={theme}/>} isPublic={false}/>} />
           <Route path='*' element={<h1>Not Found</h1>} />
         </Routes>
       </BrowserRouter>
