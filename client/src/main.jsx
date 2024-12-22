@@ -2,12 +2,11 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import { ModalProvider } from './context/ModalContext.jsx'
-
+import AppProvider from './context/AppProvider.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-  <ModalProvider>
+  <AppProvider>
     <App />
-    </ModalProvider>
+    </AppProvider>
   </StrictMode>,
 )

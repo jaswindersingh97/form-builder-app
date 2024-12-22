@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import styles from './ToggleButton.module.css';
+import { useTheme } from '../../context/ThemeContext';
 
 const ToggleButton = () => {
-  const [isToggled, setIsToggled] = useState(false);
+  const { theme, setTheme } = useTheme();
 
+  console.log(typeof(theme));
   const handleToggle = () => {
-    setIsToggled(!isToggled);
+    setTheme(!theme);
   };
 
   return (
     <button
-      className={`${styles.toggleButton} ${isToggled ? styles.active : ''}`}
+      className={`${styles.toggleButton} ${theme ? styles.active : ''}`}
       onClick={handleToggle}
     >
       <span className={styles.slider}></span>

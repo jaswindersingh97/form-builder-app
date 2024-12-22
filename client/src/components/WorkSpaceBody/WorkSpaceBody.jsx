@@ -3,6 +3,8 @@ import React from 'react'
 import {useModal} from './../../context/ModalContext';
 import CreateNewFolder from './../WorkSpaceModals/CreateNewFolder/CreateNewFolder';
 import Delete from './../WorkSpaceModals/Delete/Delete';
+import FolderIcon from './../../assets/Workspace/FolderIcon.svg'
+import DeleteIcon from './../../assets/Workspace/delete.svg'
 function WorkSpaceBody() {
     const {openModal} = useModal();
     const createFolder = () => {
@@ -18,32 +20,31 @@ function WorkSpaceBody() {
     <div className={styles.container}>
       <div className={styles.header}>
         <div onClick={createFolder} className={styles.Folders}>
-            📁 Create a Folder
+            <img src={FolderIcon} alt="📁"/>
+             Create a Folder
         </div>
         {
             Folders.map((folder, index) => {
                 return (
                     <div key={index} className={styles.Folders}>
                         <span>{folder}</span>
-                        <span onClick={()=>deleteSomething("folder")}>trash</span>
-                        <i className="fas fa-trash-alt"></i>
+                        <img onClick={()=>deleteSomething("folder")} src={DeleteIcon} alt="🗑️"/>
                     </div>
                 )
             })
         }
       </div>
       <div className={styles.body}>
-        <div className={styles.Forms}>
-            <p>+</p>
-            <p>Create a typebot</p>
+        <div style={{flexDirection:"column" , background:"#1A5FFF"}} className={styles.Forms}>
+            <p style={{fontSize:"40px"}}>+</p>
+            <span>Create a typebot</span>
         </div>
         {
             Forms.map((form, index) => {
                 return (
                     <div key={index} className={styles.Forms}>
                         <span>{form}</span>
-                        <span onClick={()=>deleteSomething("file")}>trash</span>
-                        <i className="fas fa-trash-alt"></i>
+                        <img onClick={()=>deleteSomething("file")} src={DeleteIcon} alt="🗑️"/>
                     </div>
                 )
             })
