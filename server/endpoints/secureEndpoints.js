@@ -1,16 +1,18 @@
 const express = require( 'express');
 
-const validationMiddleware = require('../middleware/ValidationMiddleware');
+const validationMiddleware = require('/../middleware/ValidationMiddleware');
 
 const { 
     settings, 
     getFolders,
     createFolder,
     deleteFolder,
-    getFile,
-    updateFile,
-    createFile,
-    deleteFile
+    updateform,
+    createform,
+    deleteform,
+    shareDashboard,
+    createLink,
+    verifyLink
 } = require('../controllers/secureController');
 
 const router = express.Router();
@@ -19,16 +21,18 @@ const router = express.Router();
 router.post("/settings",validationMiddleware("settings"),settings)
 
 //folders
-router.get("/folders?folderId=:folderId",validationMiddleware("getFolders"),getFolders);
-router.post("/folders",validationMiddleware("createFolder",createFolder));
+router.get("/folders",validationMiddleware("getFolders"),getFolders);
+router.post("/folders",validationMiddleware("createFolder"),createFolder);
 router.delete("/folders/:folderId",validationMiddleware("deleteFolder"),deleteFolder);
 
-//files
-router.get("/files/:fileId",validationMiddleware("getFile"),getFile);
-router.patch("/files/:fileId",validationMiddleware("updateFile"),updateFile);
-router.post("/files",validationMiddleware("createFile",createFile));
-router.delete("/files/:fileId",validationMiddleware("deleteFile"), deleteFile);
+//forms
+router.patch("/forms/:formId",validationMiddleware("updateform"),updateform);
+router.post("/forms",validationMiddleware("createform",createform));
+router.delete("/forms/:formId",validationMiddleware("deleteform"), deleteform);
 
-//dashbo
+//dashboard
+router.post("/dashboard/share", validationMiddleware("shareDashboard"),shareDashboard);
+router.post("/dashboard/createLink",validationMiddleware("createLink"),createLink); 
+router.get("/dashboard/verifyLink", validationMiddleware("verifyLink"),verifyLink); //GET /api/dashboards/verify-sharelink?token=<encryptedToken>
 
 module.exports= router;
