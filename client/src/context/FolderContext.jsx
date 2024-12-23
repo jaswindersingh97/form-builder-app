@@ -18,11 +18,13 @@ export const FolderProvider = ({ children }) => {
         },
       });
       console.log(response);
-      setFolders(response.data.folders);
+      if(response.status == 200){
+        setFolders(response.data.folders);
+      }
   }
-  useEffect(()=>{
-    getFolders();
-  },[])
+  // useEffect(()=>{
+  //   getFolders();
+  // },[])
 
   return (
     <FolderContext.Provider

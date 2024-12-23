@@ -1,16 +1,28 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
 const domain = import.meta.env.VITE_API_URL;
 
-const Api = async ({ endpoint, method = 'GET', data = {}, headers = {} }) => {
+const Api = async ({ endpoint, method = 'GET', data = {}, headers = {},includeToken = false }) => {
     try {
-        const config = {
+        const token = localStorage.getItem("token") || ""
+        let config;
+        if(!includeToken){
+            config = {
+                url: `${domain}${endpoint}`,
+                method,
+                headers,
+                data,
+            };
+        }
+        else{config = {
             url: `${domain}${endpoint}`,
             method,
-            headers,
+            headers:{
+                Authorization:  `Bearer ${token}`,
+                ...headers
+            },
             data,
-        };
+        };}
         const response = await axios(config);
         return response; 
     } catch (error) {

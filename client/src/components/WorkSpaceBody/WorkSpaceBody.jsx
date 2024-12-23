@@ -1,19 +1,38 @@
 import styles from './WorkSpaceBody.module.css';
-import React from 'react'
+import React, { useEffect } from 'react'
 import {useModal} from './../../context/ModalContext';
 import CreateNewFolder from './../WorkSpaceModals/CreateNewFolder/CreateNewFolder';
 import Delete from './../WorkSpaceModals/Delete/Delete';
 import FolderIcon from './../../assets/Workspace/FolderIcon.svg';
 import DeleteIcon from './../../assets/Workspace/delete.svg';
-
+import Api from '../../Api/Api';
 import { useFolder } from '../../context/FolderContext';
+import { toast } from 'react-toastify';
 
 function WorkSpaceBody() {
-    const {folders, setFolders} = useFolder();  
-    const {openModal} = useModal();
+    useEffect(()=>{
+        getFolders();
+    },[])
+    const {folders,getFolders, setFolders} = useFolder();  
+    const {openModal,closeModal} = useModal();
+
+    const AddFolder = async(foldername) =>{
+      const response = await Api({
+        endpoint: "/secure/folders",
+        method: "post",
+        includeToken:true,
+        data: { name: foldername },
+      });
+      if(response.status == 201){
+          setFolders((prevState) =>([...prevState,response.data.folder]));  
+          closeModal();
+        toast.success("Folder Created successfully");
+      }
+    }
+    
 
     const createFolder = () => {
-        openModal(<CreateNewFolder />);
+        openModal(<CreateNewFolder AddFolder={AddFolder}/>);
     }
 
     const deleteSomething = (something) => {
