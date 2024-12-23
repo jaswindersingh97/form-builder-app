@@ -18,6 +18,9 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ message: err.message || 'Internal Server Error' });
 });
 
+const requestLogger = require('./middleware/requestLogger');
+app.use(requestLogger)
+
 const authEndpoints = require("./endpoints/authEnpoints");
 app.use(authEndpoints);
 

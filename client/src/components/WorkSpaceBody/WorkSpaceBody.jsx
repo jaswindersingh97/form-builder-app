@@ -30,13 +30,38 @@ function WorkSpaceBody() {
       }
     }
 
+    const DeleteFolder = async(folderId) =>{
+      const response = await Api({
+        endpoint: `/secure/folders/${folderId}`,
+        method: "delete",
+        includeToken:true,
+      });
+      if(response.status == 200){
+        setFolders((prevState) =>(prevState.filter((item,index)=>(item._id != folderId))));  
+        closeModal();
+      toast.success("Folder Created successfully");
+      }
+    };
+
+    const DeleteForm =  async(formId) =>{
+      const response = await Api({
+        endpoint: `/secure/forms/${formId}`,
+        method: "delete",
+        includeToken:true,
+      });
+      if(response.status == 200){
+        setFolders((prevState) =>(prevState.filter((item,index)=>(item._id != formId))));  
+        closeModal();
+      toast.success("Folder Created successfully");
+      }
+    };
+
     const createFolder = () => {
         openModal(<CreateNewFolder AddFolder={AddFolder}/>);
     }
 
-    const deleteSomething = (something) => {
-        alert(`Delete ${something}`);
-        openModal(<Delete name={something} />);
+    const deleteSomething = ({something,id,onDelete}) => {
+        openModal(<Delete name={something} id={id} onDelete={onDelete}/>);
     }
 
     // Ensure folders is an array, fallback to an empty array if undefined
@@ -50,13 +75,12 @@ function WorkSpaceBody() {
              Create a Folder
         </div>
         
-        {/* Map over folderList (from context) to render folders */}
         {
-            folderList.map((folder, index) => {
+            folderList.map((folder) => {
                 return (
-                    <div key={index} className={styles.Folders}>
-                        <span>{folder.name}</span> {/* Assuming folder has a 'name' property */}
-                        <img onClick={() => deleteSomething("folder")} src={DeleteIcon} alt="🗑️"/>
+                    <div key={folder._id} className={styles.Folders}>
+                        <span>{folder.name}</span> 
+                        <img onClick={() => deleteSomething({something:"folder", id:folder._id, onDelete:DeleteFolder})} src={DeleteIcon} alt="🗑️"/>
                     </div>
                 )
             })
@@ -69,13 +93,12 @@ function WorkSpaceBody() {
             <span>Create a typebot</span>
         </div>
 
-        {/* Render forms */}
         {
             Forms.map((form, index) => {
                 return (
                     <div key={index} className={styles.Forms}>
                         <span>{form}</span>
-                        <img onClick={() => deleteSomething("file")} src={DeleteIcon} alt="🗑️"/>
+                        <img onClick={() => deleteSomething({something:"form", id:form._id, onDelete:DeleteForm})} src={DeleteIcon} alt="🗑️"/>
                     </div>
                 )
             })
