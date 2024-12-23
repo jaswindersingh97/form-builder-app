@@ -13,7 +13,7 @@ function WorkSpaceBody() {
     useEffect(()=>{
         getFolders();
     },[])
-    const {folders,getFolders, setFolders} = useFolder();  
+    const {folders,getFolders, setFolders,forms,setForms} = useFolder();  
     const {openModal,closeModal} = useModal();
 
     const AddFolder = async(foldername) =>{
@@ -39,7 +39,7 @@ function WorkSpaceBody() {
       if(response.status == 200){
         setFolders((prevState) =>(prevState.filter((item,index)=>(item._id != folderId))));  
         closeModal();
-      toast.success("Folder Created successfully");
+      toast.success("Folder Deleted Successfully");
       }
     };
 
@@ -50,9 +50,9 @@ function WorkSpaceBody() {
         includeToken:true,
       });
       if(response.status == 200){
-        setFolders((prevState) =>(prevState.filter((item,index)=>(item._id != formId))));  
+        setForms((prevState) =>(prevState.filter((item,index)=>(item._id != formId))));  
         closeModal();
-      toast.success("Folder Created successfully");
+      toast.success("Form Deleted Successfully");
       }
     };
 

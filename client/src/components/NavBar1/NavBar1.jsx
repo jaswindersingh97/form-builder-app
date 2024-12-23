@@ -6,6 +6,21 @@ import React from 'react'
 import EmailInvites from './../WorkSpaceModals/EmailInvites/EmailInvites';
 function NavBar1() {
   const {openModal} = useModal();
+
+  const shareDashboard = async(email) =>{
+    const response = await Api({
+      endpoint: "/secure/dashboard/share",
+      method: "post",
+      includeToken:true,
+      data: { email: email },
+    });
+    if(response.status == 200){
+        closeModal();
+      toast.success("Dashboard Shared Successfully");
+    }
+  }
+
+
   const ShareClk = () =>{
     openModal(EmailInvites);
   }
