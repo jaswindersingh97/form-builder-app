@@ -5,7 +5,7 @@ import { useToken } from './TokenContext';
 const FolderContext = createContext();
 
 export const FolderProvider = ({ children }) => {
-  const [folders, setFolders] = useState(12);
+  const [folders, setFolders] = useState([]);
   const [forms, setForms] = useState([]);
   const { token } = useToken();
 
@@ -18,7 +18,11 @@ export const FolderProvider = ({ children }) => {
         },
       });
       console.log(response);
-    }
+      setFolders(response.data.folders);
+  }
+  useEffect(()=>{
+    getFolders();
+  },[])
 
   return (
     <FolderContext.Provider
