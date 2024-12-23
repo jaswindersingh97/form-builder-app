@@ -125,5 +125,7 @@ const deleteform = ()=>{
 module.exports = {
     settings:asyncHandler(settings),
     getFolders:asyncHandler(getFolders),
-    createFolder,deleteFolder,deleteform,getform,updateform,createform,
+    createFolder:asyncHandler(createFolder),
+    deleteFolder:asyncHandler(deleteFolder),
+    deleteform,getform,updateform,createform,
 }
