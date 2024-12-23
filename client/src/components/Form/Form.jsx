@@ -32,8 +32,12 @@ const Form = ({ fields, onSubmit ,buttonLabel}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      onSubmit(formValues);
+      const filteredValues = Object.fromEntries(
+        Object.entries(formValues).filter(([_, value]) => value !== "")
+      );
+      onSubmit(filteredValues);
     }
+
   };
 
   return (

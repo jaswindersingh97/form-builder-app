@@ -1,10 +1,14 @@
 import React from 'react';
 import Form from '../../components/Form/Form';
 import withTheme from '../../components/ThemeComponent/ThemeComponent';
+import Api from './../../Api/Api'
+import { useToken } from '../../context/TokenContext';
+import {toast} from 'react-toastify'
 function SettingsPage() {
+  const {token} = useToken();
     const formFields = [
         {
-          name: "username",
+          name: "name",
           type: "text",
           required: false,
           validate: (value) => value.length >= 3 || value === "", 
@@ -18,7 +22,7 @@ function SettingsPage() {
           errorMessage: "Please enter a valid email address",
         },
         {
-          name: "Oldpassword",
+          name: "oldPassword",
           type: "password",
           required: false, 
           validate: (value) => value.length >= 6 || value === "", 
@@ -28,18 +32,30 @@ function SettingsPage() {
           name: "newPassword",
           type: "password",
           required: false, 
-          validate: (value, formFields) => {
-            const oldPasswordField = formFields.find(field => field.name === "Oldpassword");
-            if (value && !oldPasswordField.value) {
-              return false;
+          validate: (value, formValues) => {
+            const oldPasswordField = formValues.oldPassword; // Assuming 'oldPassword' is the correct field name.
+            if (value) {
+              return oldPasswordField && value.length >= 6;
             }
-            return value.length >= 6 || value === ""; 
+            return true; // If newPassword is not filled, it's valid.
           },
-          errorMessage: "New password must be at least 6 characters long and Old password cannot be empty if New password is filled",
-        },
+          errorMessage: "New password must be at least 6 characters long and Old password cannot be empty if New password is filled.",
+        }        
       ];
-      const handleSubmit = (data) => {
-        console.log("Form Submitted:", data);
+      const handleSubmit = async(data) => {
+        const response = await Api({
+          endpoint:"/secure/settings",
+          method:"post",
+          data,
+          headers:{
+            Authorization:  `Bearer ${token}`
+          }
+          });
+
+          if(response.status === 200){
+            toast.success(response.data.message);
+            window.location.href = from;
+          }  
       };
 
     return (

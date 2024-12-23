@@ -14,8 +14,8 @@ function WorkSpaceBody() {
         alert(`Delete ${something}`)
         openModal(<Delete/>)
     }
-    const Folders = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth", "Ninth", "Tenth"];
-    const Forms = ["First", "Second", "Third", "Fourth", "Fifth",]; 
+    const Folders = [];
+    const Forms = []; 
   return (
     <div className={styles.container}>
       <div className={styles.header}>

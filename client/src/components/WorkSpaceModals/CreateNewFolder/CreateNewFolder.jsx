@@ -1,7 +1,7 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import styles from './CreateNewFolder.module.css';
 function CreateNewFolder() {
-    const [folder,setFolder] = useState("");
+    const [folder,setFolder] = useState("")
   return (
     <div className={styles.container}>
       <form onSubmit={(e)=>e.preventDefault()}>
