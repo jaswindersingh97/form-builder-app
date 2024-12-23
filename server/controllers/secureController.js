@@ -1,8 +1,9 @@
 const asyncHandler = require('./../utils/asyncHandler');
 const User = require('./../models/UserModel');
-const Folder = require('../models/Folder');
+const Folder = require('./../models/FolderModel');
 const Form = require('./../models/FormModel')
-
+const bcrypt = require('bcrypt')
+//settings Route
 const settings = async(req,res) =>{
     const { userId } = req.user;
     const { name, email, oldPassword, newPassword } = req.body;
@@ -36,6 +37,7 @@ const settings = async(req,res) =>{
     return res.status(200).json({ message: 'Settings updated successfully' });
 }
 
+//folder Routes
 const getFolders = async(req,res) =>{
     const { userId } = req.user;
 
@@ -112,6 +114,7 @@ const  deleteFolder = async(req,res) =>{
     return res.status(200).json({ message: 'Folder deleted successfully.' });
 }
 
+//form Routes
 const createform = () =>{
 
 }
@@ -123,9 +126,14 @@ const deleteform = ()=>{
 
 }
 module.exports = {
+    //settings
     settings:asyncHandler(settings),
+
+    //folder
     getFolders:asyncHandler(getFolders),
     createFolder:asyncHandler(createFolder),
     deleteFolder:asyncHandler(deleteFolder),
-    deleteform,getform,updateform,createform,
+    
+    //form
+    deleteform,updateform,createform,
 }
