@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Folder = require('./FolderModel');
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -55,10 +55,9 @@ const userSchema = new mongoose.Schema({
   userSchema.pre('save', async function (next) {
     if (this.isNew) {
       try {
-        const defaultFolder = await folderModel.create({
+        const defaultFolder = await Folder.create({
           name: 'Default',
           userId: this._id,
-          isDefault: true,
         });
         this.folders.push(defaultFolder._id); // Add the default folder to user's folders
       } catch (err) {

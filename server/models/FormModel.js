@@ -4,6 +4,7 @@ const FormSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    unique:true
   },
   folder: {
     type: mongoose.Schema.Types.ObjectId, // Reference to the Folder the form belongs to

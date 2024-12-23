@@ -14,5 +14,13 @@ const schemas ={
             password: Joi.string().min(6).required(), 
             }),
         },
+    settings:{
+        body: Joi.object({
+            name:Joi.string().min(3).optional(),
+            email: Joi.string().email().optional(),
+            oldpassword: Joi.string().min(6).optional(),
+            newpassword: Joi.string().min(6).optional()
+        }),
+    },    
 };
 module.exports = schemas;

@@ -46,4 +46,5 @@ const login = async(req,res) =>{
 
 module.exports = {
     login: asyncHandler(login),
-    register: asyncHandler(register)}
+    register: asyncHandler(register)
+}
