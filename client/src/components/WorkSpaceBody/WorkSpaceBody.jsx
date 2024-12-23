@@ -29,7 +29,6 @@ function WorkSpaceBody() {
         toast.success("Folder Created successfully");
       }
     }
-    
 
     const createFolder = () => {
         openModal(<CreateNewFolder AddFolder={AddFolder}/>);
@@ -37,7 +36,7 @@ function WorkSpaceBody() {
 
     const deleteSomething = (something) => {
         alert(`Delete ${something}`);
-        openModal(<Delete />);
+        openModal(<Delete name={something} />);
     }
 
     // Ensure folders is an array, fallback to an empty array if undefined
