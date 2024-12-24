@@ -4,6 +4,8 @@ import flag from './../../assets/FormPage/Flag.svg'
 import {buttons,Date,Email,Gif,Image,Number,Phone,Rating,TextBubble,Textinput,Video} from './../../assets/FormPage';
 import deleteicon from './../../assets/Workspace/delete.svg';
 import BubblesInFlow from '../BubblesInFlow/BubblesInFlow';
+import InputInFlow from '../InputInFlow/InputInFlow';
+import ButtonInFlow from '../ButtonInFlow/ButtonInFlow';
 function WorkFlow() {
     const Bubbles = [
       {
@@ -62,8 +64,14 @@ function WorkFlow() {
       {
         name:"Button",
         icon:buttons,
+        placeholder:"Hint : User wil select on of many buttons and select what response it wants to give, Add the choices below"
       },
     ];
+    const Buttonsone = {
+      name:"Button",
+      icon:buttons,
+      placeholder:"Hint : User wil select on of many buttons and select what response it wants to give, Add the choices below"
+    }
   
   return (
     <div className={styles.container}>
@@ -75,6 +83,14 @@ function WorkFlow() {
         Bubbles.map((item,index)=>(
           <BubblesInFlow object={item} key={index}/>
         ))
+      }
+      {
+        inputs.map((item,index)=>(
+          <InputInFlow object={item} key={index}/>
+        ))
+      }
+      {
+        <ButtonInFlow object={Buttonsone}/>
       }
 
 
