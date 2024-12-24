@@ -1,3 +1,4 @@
+const { query } = require('express');
 const Joi = require('joi');
 
 const schemas ={
@@ -33,6 +34,14 @@ const schemas ={
     deleteFolder:{
         params: Joi.object({
             folderId:Joi.string().length(24).hex().required(),
+        }),
+    },
+    getUser:{
+
+    },
+    searchUser:{
+        query:Joi.object({
+            query:Joi.string().required(),
         }),
     }        
 };

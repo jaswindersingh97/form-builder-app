@@ -125,6 +125,29 @@ const updateform = () =>{
 const deleteform = ()=>{
 
 }
+
+const getUser = async(req,res) =>{
+    const {userId} = req.user;
+    if (!userId) {
+        return res.status(400).json({ error: "User ID is required." });
+    }
+    const user = await User.findById(userId);
+    if (!user) {
+        return res.status(404).json({ error: "User not found." });
+    }
+
+    res.status(200).json(user);
+}
+const searchUser = async(req,res)=>{
+    const { query } = req.query;
+    if (!query) {
+        return res.status(400).json({ error: "Search query is required." });
+    }
+
+    const users = await User.find({ name: { $regex: query, $options: "i" } });
+    res.status(200).json(users);
+}
+
 module.exports = {
     //settings
     settings:asyncHandler(settings),
@@ -136,4 +159,9 @@ module.exports = {
     
     //form
     deleteform,updateform,createform,
+
+    //User
+    getUser: asyncHandler(getUser),
+    searchUser:asyncHandler(searchUser)
+
 }

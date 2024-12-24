@@ -12,7 +12,9 @@ const {
     deleteform,
     shareDashboard,
     createLink,
-    verifyLink
+    verifyLink,
+    getUser,
+    searchUser
 } = require('../controllers/secureController');
 
 const router = express.Router();
@@ -26,13 +28,17 @@ router.post("/folders",validationMiddleware("createFolder"),createFolder);
 router.delete("/folders/:folderId",validationMiddleware("deleteFolder"),deleteFolder);
 
 //forms
-// router.patch("/forms/:formId",validationMiddleware("updateform"),updateform);
 // router.post("/forms",validationMiddleware("createform",createform));
+// router.patch("/forms/:formId",validationMiddleware("updateform"),updateform);
 // router.delete("/forms/:formId",validationMiddleware("deleteform"), deleteform);
 
 //dashboard
 // router.post("/dashboard/share", validationMiddleware("shareDashboard"),shareDashboard);
 // router.post("/dashboard/createLink",validationMiddleware("createLink"),createLink); 
 // router.get("/dashboard/verifyLink", validationMiddleware("verifyLink"),verifyLink); //GET /api/dashboards/verify-sharelink?token=<encryptedToken>
+
+//user
+router.get("/users",validationMiddleware("getUser"), getUser);
+router.get("/users",validationMiddleware("searchUser"),searchUser);
 
 module.exports= router;

@@ -22,9 +22,6 @@ export const FolderProvider = ({ children }) => {
         setFolders(response.data.folders);
       }
   }
-  // useEffect(()=>{
-  //   getFolders();
-  // },[])
 
   return (
     <FolderContext.Provider

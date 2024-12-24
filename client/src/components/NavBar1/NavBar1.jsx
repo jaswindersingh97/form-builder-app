@@ -5,7 +5,7 @@ import styles from './index.module.css';
 import React from 'react'
 import EmailInvites from './../WorkSpaceModals/EmailInvites/EmailInvites';
 function NavBar1() {
-  const {openModal} = useModal();
+  const {openModal,closeModal} = useModal();
 
   const shareDashboard = async(email) =>{
     const response = await Api({
@@ -22,7 +22,7 @@ function NavBar1() {
 
 
   const ShareClk = () =>{
-    openModal(EmailInvites);
+    openModal(<EmailInvites/>);
   }
   return (
     <div className={styles.container}>

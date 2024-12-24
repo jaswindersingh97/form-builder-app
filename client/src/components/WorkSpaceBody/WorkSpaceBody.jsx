@@ -77,12 +77,23 @@ function WorkSpaceBody() {
         
         {
             folderList.map((folder) => {
+              if(folder.name =='Default'){
+                return (
+                    <div key={folder._id} className={styles.Folders}>
+                        <span>{folder.name}</span> 
+                    </div>
+                )
+                
+              }
+              else{
                 return (
                     <div key={folder._id} className={styles.Folders}>
                         <span>{folder.name}</span> 
                         <img onClick={() => deleteSomething({something:"folder", id:folder._id, onDelete:DeleteFolder})} src={DeleteIcon} alt="🗑️"/>
                     </div>
                 )
+              }
+                
             })
         }
       </div>
