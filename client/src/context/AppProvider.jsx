@@ -3,13 +3,16 @@ import { ModalProvider } from './ModalContext'
 import { ThemeProvider } from './ThemeContext'
 import { TokenProvider } from './TokenContext'
 import { FolderProvider } from './FolderContext'
+import { FormProvider } from './FormContext'
 function AppProvider({children}) {
   return (
       <ModalProvider>
         <ThemeProvider>
           <TokenProvider>
             <FolderProvider>
-              {children}
+              <FormProvider>
+                {children}
+              </FormProvider>
             </FolderProvider>
           </TokenProvider>
         </ThemeProvider>

@@ -15,7 +15,7 @@ const FormSchema = new mongoose.Schema({
     {
       type: {
         type: String,
-        enum: ['text', 'bubble', 'input'],
+        enum: ['bubble', 'input'],
         required: true,
       },
       content: {
