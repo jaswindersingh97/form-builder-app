@@ -3,7 +3,24 @@ import styles from './style.module.css';
 import deleteIcon from './../../assets/Workspace/delete.svg';
 import { Gif, Image, TextBubble, Video } from './../../assets/FormPage';
 
-function BubblesInFlow({ type, label , state, setState}) {
+function BubblesInFlow({ type, label, state, setState }) {
+  // Access the value of the field from the state
+  const value = state.elements.find((item) => item.label === label)?.value || '';
+
+  // Handle the input change
+  const onChange = (e) => {
+    setState((prevData) => {
+      const updatedElements = prevData.elements.map((item) => {
+        if (item.label === label) {
+          return { ...item, value: e.target.value };  // Update the value field
+        }
+        return item;
+      });
+
+      return { ...prevData, elements: updatedElements };  // Return updated state
+    });
+  };
+
   const payload = [
     {
       name: "Text",
@@ -42,7 +59,12 @@ function BubblesInFlow({ type, label , state, setState}) {
       <span>{label}</span>
       <div className={styles.input}>
         <img src={object.icon} alt={object.name} />
-        <input type="text" placeholder={object.placeholder} />
+        <input
+          type="text"
+          value={value}
+          onChange={onChange}
+          placeholder={object.placeholder}
+        />
       </div>
     </div>
   );
