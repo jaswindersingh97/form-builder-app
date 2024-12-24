@@ -43,6 +43,12 @@ const schemas ={
         query:Joi.object({
             query:Joi.string().required(),
         }),
-    }        
+    },
+    shareDashboard:{
+        body:Joi.object({
+            email: Joi.string().email().required(),
+            permission: Joi.string().valid('view', 'edit').required(),
+        }),
+    },
 };
 module.exports = schemas;

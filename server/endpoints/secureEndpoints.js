@@ -33,12 +33,12 @@ router.delete("/folders/:folderId",validationMiddleware("deleteFolder"),deleteFo
 // router.delete("/forms/:formId",validationMiddleware("deleteform"), deleteform);
 
 //dashboard
-// router.post("/dashboard/share", validationMiddleware("shareDashboard"),shareDashboard);
+router.post("/dashboard/share", validationMiddleware("shareDashboard"),shareDashboard);
 // router.post("/dashboard/createLink",validationMiddleware("createLink"),createLink); 
 // router.get("/dashboard/verifyLink", validationMiddleware("verifyLink"),verifyLink); //GET /api/dashboards/verify-sharelink?token=<encryptedToken>
 
 //user
 router.get("/users",validationMiddleware("getUser"), getUser);
-router.get("/users",validationMiddleware("searchUser"),searchUser);
+router.get("/users/search",validationMiddleware("searchUser"),searchUser);
 
 module.exports= router;

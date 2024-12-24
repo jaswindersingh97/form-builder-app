@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './style.module.css';
+import Api from './../../../Api/Api';
 
 function EmailInvites() {
   const [search, setSearch] = useState("");
@@ -7,30 +8,53 @@ function EmailInvites() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [data, setData] = useState({
     email: "",
-    access: "Edit"
+    access: "edit"
   });
   const [link, setLink] = useState("https://example.com/invite");
 
-  // Mock data for suggestions
-  const mockUsers = [
-    { name: "John Doe", email: "john.doe@example.com" },
-    { name: "Jane Smith", email: "jane.smith@example.com" },
-    { name: "Alice Johnson", email: "alice.johnson@example.com" }
-  ];
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (search) {
+        SearchApi(search); // Call API when debounced search value changes
+      } else {
+        setSuggestions([]); // Clear suggestions if input is empty
+      }
+    }, 300); // Delay of 300ms
 
-  const handleSearch = (e) => {
-    const value = e.target.value;
-    setSearch(value);
-    if (value) {
-      const filteredUsers = mockUsers.filter(
-        (user) =>
-          user.name.toLowerCase().includes(value.toLowerCase()) ||
-          user.email.toLowerCase().includes(value.toLowerCase())
-      );
-      setSuggestions(filteredUsers);
-    } else {
+    return () => {
+      clearTimeout(handler); // Clear timeout if search value changes
+    };
+  }, [search]); // Only re-run when `search` changes
+
+  const SearchApi = async (value) => {
+    try {
+      const response = await Api({
+        endpoint: `/secure/users/search?query=${value}`,
+        method: "get",
+        includeToken: true,
+      });
+      setSuggestions(response.data || []);
+    } catch (error) {
+      console.error("Error fetching suggestions: ", error);
       setSuggestions([]);
     }
+  };
+
+  const shareDashboard = async({email,access}) =>{
+    const response = await Api({
+      endpoint: "/secure/dashboard/share",
+      method: "post",
+      includeToken:true,
+      data: { email: email,permission:access },
+    });
+    if(response.status == 200){
+        // closeModal();
+      toast.success("Dashboard Shared Successfully");
+    }
+  };
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value); // Update search input
   };
 
   const handleSelectUser = (user) => {
@@ -53,11 +77,12 @@ function EmailInvites() {
     }
     console.log(`Invitation sent to ${data.email} with ${data.access} access`);
     alert(`Invitation sent to ${data.email} with ${data.access} access`);
+    shareDashboard(data);
     setSelectedUser(null);
     setData((prevData) => ({ ...prevData, email: "" }));
   };
 
-  const onLinkShare = () => {
+  const onLinkShare = () => { //pending
     navigator.clipboard.writeText(link)
       .then(() => {
         alert("Link copied to clipboard!");
@@ -78,8 +103,8 @@ function EmailInvites() {
               setData((prevData) => ({ ...prevData, access: e.target.value }))
             }
           >
-            <option value="Edit">Edit</option>
-            <option value="View">View</option>
+            <option value="edit">Edit</option>
+            <option value="view">View</option>
           </select>
         </div>
         <div className={styles.body}>

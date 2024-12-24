@@ -126,6 +126,51 @@ const deleteform = ()=>{
 
 }
 
+//dashboard routes
+const shareDashboard = async(req,res) =>{
+    const { userId } = req.user; // Authenticated user's ID
+    const { email: targetUserEmail, permission } = req.body;
+
+    // Find the target user by email
+    const targetUser = await User.findOne({ email: targetUserEmail });
+    if (!targetUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Ensure user is not sharing a dashboard with themselves
+    if (targetUser._id.toString() === userId) {
+      return res.status(400).json({ error: "You cannot share a dashboard with yourself" });
+    }
+
+    // Check if the dashboard has already been shared with this user
+    const isAlreadyShared = targetUser.sharedDashboards.some(
+      (dashboard) => dashboard.userId.toString() === userId
+    );
+
+    if (isAlreadyShared) {
+      return res.status(400).json({ error: 'Dashboard already shared with this user' });
+    }
+
+    // Add the shared dashboard to the target user's sharedDashboards
+    targetUser.sharedDashboards.push({
+      userId,
+      permission,
+    });
+
+    // Save the target user
+    await targetUser.save();
+
+    return res.status(200).json({ message: 'Dashboard shared successfully' });
+}
+const createLink = ()=>{
+
+}
+
+const verifyLink =()=>{
+
+}
+
+//User Routes
 const getUser = async(req,res) =>{
     const {userId} = req.user;
     if (!userId) {
@@ -159,6 +204,10 @@ module.exports = {
     
     //form
     deleteform,updateform,createform,
+
+    //dashboard
+    shareDashboard:asyncHandler(shareDashboard),
+    createLink,verifyLink,
 
     //User
     getUser: asyncHandler(getUser),
