@@ -1,5 +1,6 @@
 import styles from './WorkSpaceBody.module.css';
 import React, { useEffect } from 'react'
+import {useParams} from 'react-router-dom';
 import {useModal} from './../../context/ModalContext';
 import CreateNewFolder from './../WorkSpaceModals/CreateNewFolder/CreateNewFolder';
 import Delete from './../WorkSpaceModals/Delete/Delete';
@@ -10,6 +11,9 @@ import { useFolder } from '../../context/FolderContext';
 import { toast } from 'react-toastify';
 
 function WorkSpaceBody() {
+  const { WorkSpaceId } = useParams();
+
+  
     useEffect(()=>{
         getFolders();
     },[])
@@ -17,12 +21,13 @@ function WorkSpaceBody() {
     const {openModal,closeModal} = useModal();
 
     const AddFolder = async(foldername) =>{
-      const response = await Api({
-        endpoint: "/secure/folders",
+      let config ={
+        endpoint: `/secure/folders/${WorkSpaceId}`,
         method: "post",
         includeToken:true,
-        data: { name: foldername },
-      });
+        data: { name: foldername },  
+        }
+      const response = await Api(config);
       if(response.status == 201){
           setFolders((prevState) =>([...prevState,response.data.folder]));  
           closeModal();
