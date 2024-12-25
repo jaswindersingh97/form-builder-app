@@ -3,6 +3,7 @@ const User = require('./../models/UserModel');
 const Folder = require('./../models/FolderModel');
 const Form = require('./../models/FormModel')
 const bcrypt = require('bcrypt')
+
 //settings Route
 const settings = async(req,res) =>{
     const { userId } = req.user;
@@ -115,16 +116,118 @@ const  deleteFolder = async(req,res) =>{
 }
 
 //form Routes
-const createform = () =>{
+const createform = async(req,res) =>{
+    const {userId} = req.user;
+    const {name,folder,elements} = req.body;
+
+    const user = await User.findById(userId).populate('sharedDashboards.userId');
+    const folderDoc = await Folder.findById(folder);
+
+    if (!folderDoc) {
+        return res.status(404).json({ message: 'Folder not found.' });
+    }
+
+    // Check if the user is the owner or has edit permission
+    const isOwner = folderDoc.userId.equals(userId);
+    const hasEditPermission = user.sharedDashboards.some(
+        d => d.userId._id.equals(folderDoc.userId) && d.permission === 'edit'
+    );
+
+    if (!isOwner && !hasEditPermission) {
+        return res.status(403).json({ message: 'You do not have permission to create a form in this folder.' });
+    }
+
+    // Create the form
+    const newForm = await Form.create({ name, folder, elements });
+
+    // Add the form to the folder
+    folderDoc.forms.push(newForm._id);
+    await folderDoc.save();
+
+    return res.status(201).json({ message: 'Form created successfully.', form: newForm });
 
 }
-const updateform = () =>{
 
-}
+const updateForm = async (req, res) => {
+    const { userId } = req.user;
+    const {formId} = req.params;
+    const { name, folder, elements } = req.body;
 
-const deleteform = ()=>{
+    // Find the user and folder documents
+    const user = await User.findById(userId).populate('sharedDashboards.userId');
+    const folderDoc = await Folder.findById(folder);
+    const formDoc = await Form.findById(formId);
 
-}
+    if (!folderDoc) {
+        return res.status(404).json({ message: 'Folder not found.' });
+    }
+
+    if (!formDoc) {
+        return res.status(404).json({ message: 'Form not found.' });
+    }
+
+    // Check if the user is the owner of the folder or has edit permission
+    const isOwner = folderDoc.userId.equals(userId);
+    const hasEditPermission = user.sharedDashboards.some(
+        (d) => d.userId._id.equals(folderDoc.userId) && d.permission === 'edit'
+    );
+
+    if (!isOwner && !hasEditPermission) {
+        return res.status(403).json({ message: 'You do not have permission to update the form in this folder.' });
+    }
+
+    // Check if the form is in the folder
+    if (!folderDoc.forms.includes(formId)) {
+        return res.status(400).json({ message: 'Form does not belong to this folder.' });
+    }
+
+    // Update the form
+    formDoc.name = name || formDoc.name;
+    formDoc.folder = folder || formDoc.folder;
+    formDoc.elements = elements || formDoc.elements;
+    await formDoc.save();
+
+    return res.status(200).json({ message: 'Form updated successfully.', form: formDoc });
+};
+
+const deleteForm = async (req, res) => {
+    const { userId } = req.user;
+    const { formId } = req.params;
+
+    // Find the user and form documents
+    const user = await User.findById(userId).populate('sharedDashboards.userId');
+    const formDoc = await Form.findById(formId);
+
+    if (!formDoc) {
+        return res.status(404).json({ message: 'Form not found.' });
+    }
+
+    // Find the folder that contains the form
+    const folderDoc = await Folder.findById(formDoc.folder);
+
+    if (!folderDoc) {
+        return res.status(404).json({ message: 'Folder not found.' });
+    }
+
+    // Check if the user is the owner of the folder or has edit permission
+    const isOwner = folderDoc.userId.equals(userId);
+    const hasEditPermission = user.sharedDashboards.some(
+        (d) => d.userId._id.equals(folderDoc.userId) && d.permission === 'edit'
+    );
+
+    if (!isOwner && !hasEditPermission) {
+        return res.status(403).json({ message: 'You do not have permission to delete the form in this folder.' });
+    }
+
+    // Remove the form from the folder's forms array
+    folderDoc.forms = folderDoc.forms.filter(form => form.toString() !== formId);
+    await folderDoc.save();
+
+    // Delete the form
+    await formDoc.remove();
+
+    return res.status(200).json({ message: 'Form deleted successfully.' });
+};
 
 //dashboard routes
 const shareDashboard = async(req,res) =>{
@@ -203,7 +306,9 @@ module.exports = {
     deleteFolder:asyncHandler(deleteFolder),
     
     //form
-    deleteform,updateform,createform,
+    deleteForm:asyncHandler(deleteFolder),
+    updateForm:asyncHandler(updateForm),
+    createForm:asyncHandler(createform),
 
     //dashboard
     shareDashboard:asyncHandler(shareDashboard),

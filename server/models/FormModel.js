@@ -40,6 +40,11 @@ const FormSchema = new mongoose.Schema({
     type: String,
     required: true, // Name of the form
   },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   folder: {
     type: String,
     default: '', // Folder name, if applicable

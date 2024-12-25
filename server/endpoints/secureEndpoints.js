@@ -7,9 +7,9 @@ const {
     getFolders,
     createFolder,
     deleteFolder,
-    updateform,
-    createform,
-    deleteform,
+    updateForm,
+    createForm,
+    deleteForm,
     shareDashboard,
     createLink,
     verifyLink,
@@ -28,9 +28,9 @@ router.post("/folders",validationMiddleware("createFolder"),createFolder);
 router.delete("/folders/:folderId",validationMiddleware("deleteFolder"),deleteFolder);
 
 //forms
-// router.post("/forms",validationMiddleware("createform",createform));
-// router.patch("/forms/:formId",validationMiddleware("updateform"),updateform);
-// router.delete("/forms/:formId",validationMiddleware("deleteform"), deleteform);
+router.post("/forms",validationMiddleware("createform",createForm));
+router.put("/forms/:formId",validationMiddleware("updateform"),updateForm);
+router.delete("/forms/:formId",validationMiddleware("deleteform"), deleteForm);
 
 //dashboard
 router.post("/dashboard/share", validationMiddleware("shareDashboard"),shareDashboard);
