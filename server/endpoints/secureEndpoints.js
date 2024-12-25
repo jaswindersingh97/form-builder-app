@@ -23,12 +23,12 @@ const router = express.Router();
 router.post("/settings",validationMiddleware("settings"),settings)
 
 //folders
-router.get("/folders",validationMiddleware("getFolders"),getFolders);
-router.post("/folders",validationMiddleware("createFolder"),createFolder);
-router.delete("/folders/:folderId",validationMiddleware("deleteFolder"),deleteFolder);
+router.get("/folders",validationMiddleware("getFolders"),getFolders);   // Not implemented for other user access 
+router.post("/folders",validationMiddleware("createFolder"),createFolder);  // implemented for other Users access but not tested
+router.delete("/folders/:folderId",validationMiddleware("deleteFolder"),deleteFolder);  // implemented for other Users access but not tested
 
 //forms
-router.post("/forms",validationMiddleware("createform",createForm));
+router.post("/forms",validationMiddleware("createForm"),createForm);
 router.put("/forms/:formId",validationMiddleware("updateform"),updateForm);
 router.delete("/forms/:formId",validationMiddleware("deleteform"), deleteForm);
 

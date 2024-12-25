@@ -58,7 +58,7 @@ const createFolder = async (req, res) => {
     const { userId: loggedInUserId } = req.user;  // The logged-in user's ID
     const { name, userId: targetUserId } = req.body;  // Target user ID (if provided)
 
-    const targetUser = await User.findById(targetUserId || loggedInUserId).populate('sharedDashboards');
+    const targetUser = await User.findById(targetUserId || loggedInUserId).populate('sharedDashboards folders');
     if (!targetUser) return res.status(404).json({ message: 'Target user not found.' });
 
     // Check if a folder with the same name already exists for the target user

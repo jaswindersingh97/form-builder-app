@@ -50,5 +50,12 @@ const schemas ={
             permission: Joi.string().valid('view', 'edit').required(),
         }),
     },
+    createForm:{
+        body:Joi.object({
+            name:Joi.string().min(2).required(),
+            folder:Joi.string().length(24).hex().required(),
+            elements:Joi.array().required(),
+        }),
+    }
 };
 module.exports = schemas;
