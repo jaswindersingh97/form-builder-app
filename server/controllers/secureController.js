@@ -54,30 +54,44 @@ const getFolders = async(req,res) =>{
     return res.status(200).json({ folders: user.folders });
 }
 
-const createFolder = async(req,res) =>{
-    const {userId} = req.user;
-    const {name} = req.body;
+const createFolder = async (req, res) => {
+    const { userId: loggedInUserId } = req.user;  // The logged-in user's ID
+    const { name, userId: targetUserId } = req.body;  // Target user ID (if provided)
 
-    const user = await User.findById(userId).populate('folders');
-    if (!user) return res.status(404).json({ message: 'User not found.' });
+    const targetUser = await User.findById(targetUserId || loggedInUserId).populate('sharedDashboards');
+    if (!targetUser) return res.status(404).json({ message: 'Target user not found.' });
 
-    const folderExists = user.folders.some(folder => folder.name === name);
+    // Check if a folder with the same name already exists for the target user
+    const folderExists = targetUser.folders.some(folder => folder.name === name);
     if (folderExists) {
         return res.status(400).json({ message: 'A folder with this name already exists.' });
     }
 
+    // Check if the logged-in user has permission (owner or editor) for the target user
+    const isOwner = targetUser._id.equals(loggedInUserId);
+    const hasEditPermission = targetUser.sharedDashboards.some(
+        (d) => d.userId._id.equals(loggedInUserId) && d.permission === 'edit'
+    );
+
+    if (!isOwner && !hasEditPermission) {
+        return res.status(403).json({ message: 'You do not have permission to create a folder for this user.' });
+    }
+
+    // Create the new folder
     const folder = new Folder({
         name,
-        userId,
+        userId: targetUser._id,  // Assign the folder to the target user
     });
 
+    // Save the folder
     await folder.save();
 
-    user.folders.push(folder._id);
-    await user.save();
+    // Add the folder to the target user's list of folders
+    targetUser.folders.push(folder._id);
+    await targetUser.save();
 
     return res.status(201).json({ message: 'Folder created successfully.', folder });
-}
+};
 
 const  deleteFolder = async(req,res) =>{
     const {userId} = req.user;
@@ -106,11 +120,12 @@ const  deleteFolder = async(req,res) =>{
         return res.status(400).json({ message: 'The default folder cannot be deleted.' });
     }
 
+    const folderOwner = folder.userId;
     await Form.deleteMany({ folder: folder._id });
 
     await Folder.findByIdAndDelete(folderId);
 
-    await User.findByIdAndUpdate(userId, { $pull: { folders: folderId } });
+    await User.findByIdAndUpdate(folderOwner, { $pull: { folders: folderId } });
 
     return res.status(200).json({ message: 'Folder deleted successfully.' });
 }
