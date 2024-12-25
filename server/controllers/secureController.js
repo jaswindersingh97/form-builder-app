@@ -135,11 +135,22 @@ const createform = async(req,res) =>{
     const {userId} = req.user;
     const {name,folder,elements} = req.body;
 
-    const user = await User.findById(userId).populate('sharedDashboards.userId');
+    const user = await User.findById(userId).populate({
+        path: 'sharedDashboards',
+        populate: {
+            path: 'userId'
+        }
+    });
+    
     const folderDoc = await Folder.findById(folder);
 
     if (!folderDoc) {
         return res.status(404).json({ message: 'Folder not found.' });
+    }
+
+    const existingForm = await Form.findOne({ name, folder });
+    if (existingForm) {
+        return res.status(400).json({ message: 'A form with this name already exists in the folder.' });
     }
 
     // Check if the user is the owner or has edit permission
@@ -153,7 +164,7 @@ const createform = async(req,res) =>{
     }
 
     // Create the form
-    const newForm = await Form.create({ name, folder, elements });
+    const newForm = await Form.create({ name, folder, elements,userId: folderDoc.userId });
 
     // Add the form to the folder
     folderDoc.forms.push(newForm._id);
@@ -165,10 +176,10 @@ const createform = async(req,res) =>{
 
 const updateForm = async (req, res) => {
     const { userId } = req.user;
-    const {formId} = req.params;
+    const { formId } = req.params;
     const { name, folder, elements } = req.body;
 
-    // Find the user and folder documents
+    // Find the user, folder, and form documents
     const user = await User.findById(userId).populate('sharedDashboards.userId');
     const folderDoc = await Folder.findById(folder);
     const formDoc = await Form.findById(formId);
@@ -196,6 +207,14 @@ const updateForm = async (req, res) => {
         return res.status(400).json({ message: 'Form does not belong to this folder.' });
     }
 
+    // Validation: Ensure the new name does not conflict with other forms in the same folder
+    if (name) {
+        const existingForm = await Form.findOne({ name, folder });
+        if (existingForm && !existingForm._id.equals(formId)) {
+            return res.status(400).json({ message: 'A form with this name already exists in the folder.' });
+        }
+    }
+
     // Update the form
     formDoc.name = name || formDoc.name;
     formDoc.folder = folder || formDoc.folder;
@@ -204,6 +223,7 @@ const updateForm = async (req, res) => {
 
     return res.status(200).json({ message: 'Form updated successfully.', form: formDoc });
 };
+
 
 const deleteForm = async (req, res) => {
     const { userId } = req.user;

@@ -56,6 +56,16 @@ const schemas ={
             folder:Joi.string().length(24).hex().required(),
             elements:Joi.array().required(),
         }),
+    },
+    updateForm:{
+        params:Joi.object({
+            formId:Joi.string().length(24).hex().required(),
+        }),
+        body:Joi.object({
+            name:Joi.string().min(2).optional(),
+            folder:Joi.string().length(24).hex().optional(),
+            elements:Joi.array().optional(),
+        }),
     }
 };
 module.exports = schemas;

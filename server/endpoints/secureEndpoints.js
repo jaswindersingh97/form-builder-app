@@ -28,8 +28,8 @@ router.post("/folders",validationMiddleware("createFolder"),createFolder);  // i
 router.delete("/folders/:folderId",validationMiddleware("deleteFolder"),deleteFolder);  // implemented for other Users access but not tested
 
 //forms
-router.post("/forms",validationMiddleware("createForm"),createForm);
-router.put("/forms/:formId",validationMiddleware("updateform"),updateForm);
+router.post("/forms",validationMiddleware("createForm"),createForm);    //implemented for other Users access but not tested
+router.patch("/forms/:formId",validationMiddleware("updateForm"),updateForm);
 router.delete("/forms/:formId",validationMiddleware("deleteform"), deleteForm);
 
 //dashboard
