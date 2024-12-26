@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './index.module.css';
 
-const Dropdown = ({ children }) => {
+const Dropdown = ({ children ,active}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -9,7 +9,7 @@ const Dropdown = ({ children }) => {
   return (
     <div className={styles.dropdown}>
       <button onClick={toggleMenu} className={styles.userName}>
-        Username
+        {active}
       </button>
       {isOpen && <div className={styles.dropdownMenu}>{children}</div>}
     </div>

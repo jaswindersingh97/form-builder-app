@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './style.module.css';
 import Api from './../../../Api/Api';
-
+import { toast } from 'react-toastify';
 function EmailInvites() {
   const [search, setSearch] = useState("");
   const [suggestions, setSuggestions] = useState([]);

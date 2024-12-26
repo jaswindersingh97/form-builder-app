@@ -337,7 +337,14 @@ const getUser = async(req,res) =>{
     if (!userId) {
         return res.status(400).json({ error: "User ID is required." });
     }
-    const user = await User.findById(userId);
+    const user = await User.findById(userId)
+    .populate({
+        path: 'sharedDashboards', // Populate sharedDashboards
+        populate: {
+            path: 'userId', // Populate userId within sharedDashboards
+            select: 'name email', // Select specific fields from User
+        },
+    });
     if (!user) {
         return res.status(404).json({ error: "User not found." });
     }

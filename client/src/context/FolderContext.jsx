@@ -17,7 +17,7 @@ export const FolderProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
+      // console.log(response);
       if(response.status == 200){
         setFolders(response.data.folders);
       }
