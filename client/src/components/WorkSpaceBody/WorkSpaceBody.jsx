@@ -25,6 +25,17 @@ function WorkSpaceBody() {
       getForms(FolderId);
   }, [folders,FolderId]);
 
+
+  const creatForm = () =>{
+    if(!FolderId){
+      const {_id} = folders.find((item)=>(item.name =='Default'))
+      navigate(`${_id}/createForm`);
+    }
+    else{
+      navigate('createForm');
+    }
+  }
+
   const AddFolder = async (foldername) => {
     const response = await Api({
       endpoint: `/secure/folders/${dashboardId}`,
@@ -104,7 +115,7 @@ function WorkSpaceBody() {
         ))}
       </div>
       <div className={styles.body}>
-        <div style={{ flexDirection: 'column', background: '#1A5FFF' }} className={styles.Forms}>
+        <div onClick={creatForm} style={{ flexDirection: 'column', background: '#1A5FFF' }} className={styles.Forms}>
           <p style={{ fontSize: '40px' }}>+</p>
           <span>Create a typebot</span>
         </div>

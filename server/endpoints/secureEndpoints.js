@@ -26,7 +26,7 @@ router.post("/settings",validationMiddleware("settings"),settings)
 //folders
 router.get("/folders",validationMiddleware("getFolders"),getFolders);   // Not implemented for other user access 
 router.get("/folders/:targetId",validationMiddleware("getFolders"),getFoldersUserBased);   // Not implemented for other user access 
-router.post("/folders",validationMiddleware("createFolder"),createFolder);  // implemented for other Users access but not tested
+router.post("/folders/:userId",validationMiddleware("createFolder"),createFolder);  // implemented for other Users access but not tested
 router.delete("/folders/:folderId",validationMiddleware("deleteFolder"),deleteFolder);  // implemented for other Users access but not tested
 
 //forms
