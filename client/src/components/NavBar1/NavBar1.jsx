@@ -2,7 +2,7 @@ import { useModal } from '../../context/ModalContext';
 import ToggleButton from '../ToggleButton/ToggleButton';
 import UserMenu from '../UserMenu/UserMenu';
 import styles from './index.module.css';
-import React, { useEffect, useState } from 'react'
+import React, { act, useEffect, useState } from 'react'
 import EmailInvites from './../WorkSpaceModals/EmailInvites/EmailInvites';
 import Dropdown from '../Dropdown/Dropdown';
 import {Link, useNavigate, useParams} from 'react-router-dom'
@@ -35,12 +35,19 @@ function NavBar1() {
     let activeUserName = '';
   
     if (!dashboardId || dashboardId === user._id) {
-      activeUserName = user.name; // If dashboardId matches user._id or dashboardId is falsy, use user.name
+      activeUserName = user.name;
     }  
+    else{
+    const dashboard = user?.sharedDashboards?.find(dashboard => {
+      return String(dashboard.userId._id) === dashboardId; 
+    });
+    if (dashboard) {
+      activeUserName = dashboard.userId.name;
+    }
+
+    }
     return activeUserName && `${activeUserName}`;
   };
-  
-    
   
   return (
     <div className={styles.container}>
