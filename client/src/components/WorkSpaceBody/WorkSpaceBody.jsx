@@ -1,6 +1,6 @@
 import styles from './WorkSpaceBody.module.css';
 import React, { useEffect } from 'react'
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {useModal} from './../../context/ModalContext';
 import CreateNewFolder from './../WorkSpaceModals/CreateNewFolder/CreateNewFolder';
 import Delete from './../WorkSpaceModals/Delete/Delete';
@@ -11,18 +11,20 @@ import { useFolder } from '../../context/FolderContext';
 import { toast } from 'react-toastify';
 
 function WorkSpaceBody() {
-  const { WorkSpaceId } = useParams();
+  const navigate = useNavigate();
+  const { FolderId,dashboardId } = useParams();
 
   
     useEffect(()=>{
-        getFolders();
+        getFolders(dashboardId);
+        // getForms(FolderId);
     },[])
-    const {folders,getFolders, setFolders,forms,setForms} = useFolder();  
+    const {folders,getFolders, setFolders,forms,setForms,getForms} = useFolder();  
     const {openModal,closeModal} = useModal();
 
     const AddFolder = async(foldername) =>{
       let config ={
-        endpoint: `/secure/folders/${WorkSpaceId}`,
+        endpoint: `/secure/folders/${FolderId}`,
         method: "post",
         includeToken:true,
         data: { name: foldername },  
@@ -71,7 +73,7 @@ function WorkSpaceBody() {
 
     // Ensure folders is an array, fallback to an empty array if undefined
     const folderList = folders || [];
-    const Forms =[]
+    const Forms = forms || []
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -84,7 +86,7 @@ function WorkSpaceBody() {
             folderList.map((folder) => {
               if(folder.name =='Default'){
                 return (
-                    <div key={folder._id} className={styles.Folders}>
+                    <div onClick={()=>navigate(`/${dashboardId}/workspace`)} key={folder._id} className={styles.Folders}>
                         <span>{folder.name}</span> 
                     </div>
                 )
@@ -92,7 +94,7 @@ function WorkSpaceBody() {
               }
               else{
                 return (
-                    <div key={folder._id} className={styles.Folders}>
+                    <div onClick={()=>navigate(`/${dashboardId}/workspace/${folder._id}`)} key={folder._id} className={styles.Folders}>
                         <span>{folder.name}</span> 
                         <img onClick={() => deleteSomething({something:"folder", id:folder._id, onDelete:DeleteFolder})} src={DeleteIcon} alt="🗑️"/>
                     </div>
@@ -108,7 +110,6 @@ function WorkSpaceBody() {
             <p style={{fontSize:"40px"}}>+</p>
             <span>Create a typebot</span>
         </div>
-
         {
             Forms.map((form, index) => {
                 return (

@@ -9,9 +9,9 @@ export const FolderProvider = ({ children }) => {
   const [forms, setForms] = useState([]);
   const { token } = useToken();
 
-  const getFolders = async () => {
+  const getFolders = async (userId) => {
       const response = await Api({
-        endpoint: "/secure/folders",
+        endpoint: `/secure/folders/${userId}`,
         method: "get",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -23,6 +23,17 @@ export const FolderProvider = ({ children }) => {
       }
   }
 
+  const getForms = (folderId) =>{
+    if(!folderId){
+      setForms(folders.filter((item)=>(
+        item.name =='Default'
+      )))
+    }
+    setForms(folders.filter((item)=>(
+      item._id == folderId
+    )))
+    console.log(forms)
+  }
   return (
     <FolderContext.Provider
       value={{
@@ -30,7 +41,8 @@ export const FolderProvider = ({ children }) => {
         setFolders,
         forms,
         setForms,
-        getFolders
+        getFolders,
+        getForms
       }}
     >
       {children}

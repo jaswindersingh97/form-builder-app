@@ -23,8 +23,8 @@ function App() {
           <Route path='/SignIn' element={<ProtectedRoutes element={<SignInPage theme={themeStyle}/>} isPublic={true}/>}/>
           <Route path='/Register' element={<ProtectedRoutes element={<RegisterPage theme={themeStyle}/>} isPublic={true}/>}/>
           <Route path='/settings' element={<ProtectedRoutes element={<SettingsPage theme={themeStyle}/>} isPublic={false}/>}/>
-          <Route path='/WorkSpace' element={<ProtectedRoutes element={<WorkSpace theme={themeStyle}/>} isPublic={false}/>} />
-          <Route path='/Workspace/:WorkSpaceId' element={<ProtectedRoutes element={<WorkSpace theme={themeStyle}/>} isPublic={false}/>}/>
+          <Route path='/:dashboardId/WorkSpace/' element={<ProtectedRoutes element={<WorkSpace theme={themeStyle}/>} isPublic={false}/>} />
+          <Route path='/:dashboardId/Workspace/:FolderId' element={<ProtectedRoutes element={<WorkSpace theme={themeStyle}/>} isPublic={false}/>}/>
           <Route path='/WorkSpace/create' element={<ProtectedRoutes element={<FormPage mode={"create"} theme={themeStyle}/>} isPublic={false}/>} />
           <Route path='/WorkSpace/edit/:id' element={<ProtectedRoutes element={<FormPage mode={"edit"} theme={themeStyle}/>} isPublic={false}/>} />
           <Route path='*' element={<h1>Not Found</h1>} />

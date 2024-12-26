@@ -53,6 +53,30 @@ const getFolders = async(req,res) =>{
 
     return res.status(200).json({ folders: user.folders });
 }
+const getFoldersUserBased = async (req, res) => {
+    const { userId } = req.user;
+    const { targetId } = req.params;
+
+    // Fetch the current logged-in user to verify access
+    const currentUser = await User.findById(userId);
+    if (!currentUser) return res.status(404).json({ message: 'User not found.' });
+
+    // Check if the targetId is the current user or part of dashboardShared
+    if (targetId !== userId && !currentUser.sharedDashboards.includes(targetId)) {
+        return res.status(403).json({ message: 'Access denied.' });
+    }
+
+    // Fetch the target user's folders and populate forms
+    const targetUser = await User.findById(targetId).populate({
+        path: 'folders',
+        populate: {
+            path: 'forms',
+        },
+    });
+    if (!targetUser) return res.status(404).json({ message: 'Target user not found.' });
+
+    return res.status(200).json({ folders: targetUser.folders });
+};
 
 const createFolder = async (req, res) => {
     const { userId: loggedInUserId } = req.user;  // The logged-in user's ID
@@ -337,6 +361,7 @@ module.exports = {
 
     //folder
     getFolders:asyncHandler(getFolders),
+    getFoldersUserBased:asyncHandler(getFoldersUserBased),
     createFolder:asyncHandler(createFolder),
     deleteFolder:asyncHandler(deleteFolder),
     
