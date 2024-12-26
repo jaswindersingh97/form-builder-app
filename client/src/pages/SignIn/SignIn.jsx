@@ -1,5 +1,5 @@
 // pages/SignUp.js
-import React from "react";
+import React,{useState} from "react";
 import Form from "./../../components/Form/Form";
 import AuthLayout from "../../components/AuthLayout/AuthLayout";
 import buttonIcon from './../../assets/AuthPage/Google Icon.svg'
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Api from "./../../Api/Api";
 const SignIn = () => {
-  const from = location.state?.from?.pathname || '/workspace';
+  const from = location.state?.from?.pathname || `/workspace`;
   const formFields = [
     {
       name: "email",
@@ -36,6 +36,7 @@ const SignIn = () => {
     });
     if(response.status === 200){
       localStorage.setItem("token",response.data.token);
+      localStorage.setItem("id", response.data.id);
       toast.success("logged-in Succesfully");
       window.location.href = from;
     }

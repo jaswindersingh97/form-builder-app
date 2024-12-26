@@ -35,6 +35,15 @@ function WorkSpaceBody() {
       navigate('createForm');
     }
   }
+  const editForm = (id)=>{
+    if(!FolderId){
+      const {_id} = folders.find((item)=>(item.name =='Default'))
+      navigate(`${_id}/editForm/${id}`);
+    }
+    else{
+      navigate(`editForm/${id}`);
+    }
+  }
 
   const AddFolder = async (foldername) => {
     const response = await Api({
@@ -120,7 +129,7 @@ function WorkSpaceBody() {
           <span>Create a typebot</span>
         </div>
         {forms.map((form) => (
-          <div onClick={()=>navigate(`editForm/${form._id}`)} key={form._id} className={styles.Forms}>
+          <div onClick={()=>editForm(form._id)} key={form._id} className={styles.Forms}>
             <span>{form.name}</span>
             <img
               onClick={() =>
