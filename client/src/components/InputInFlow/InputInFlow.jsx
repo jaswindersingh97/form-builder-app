@@ -2,8 +2,10 @@ import React from 'react'
 import styles from './style.module.css';
 import deleteIcon from './../../assets/Workspace/delete.svg';
 import {buttons,Date,Email,Number,Phone,Rating,Textinput} from './../../assets/FormPage';
+import { useForm } from '../../context/FormContext';
 
 function InputInFlow({type , label}) {
+  const {form,setForm}= useForm();
       const payload = [
         {
           name:"Text",
@@ -49,11 +51,20 @@ function InputInFlow({type , label}) {
         placeholder: "Unsupported type",
       };
     
+  const deleteButton = (label) => {
+    console.log(label);
+    setForm((prevdata) => ({
+      ...prevdata, // Keep other properties of prevdata intact
+      elements: prevdata.elements.filter((item) => item.label !== label),
+    }));
+  };
 
   return (
     <div className={styles.container}>
-        <div className={styles.deleteIcon}>
-      <img src={deleteIcon} alt='deleteicon'/>
+        <div onClick={(e)=>{
+        e.stopPropagation()
+        deleteButton(label)}} className={styles.deleteIcon}>
+      <img  src={deleteIcon} alt='deleteicon'/>
         </div>
       <span>
         {label}

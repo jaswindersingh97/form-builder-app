@@ -16,6 +16,14 @@ function ButtonInFlow({ type, label, state, setState }) {
 
   const [buttonFields, setButtonFields] = useState([{ id: uuidv4(), value: '' }]);
 
+  const deleteButton = (label) => {
+    console.log(label);
+    setState((prevdata) => ({
+      ...prevdata, // Keep other properties of prevdata intact
+      elements: prevdata.elements.filter((item) => item.label !== label),
+    }));
+  };
+
   const handleInputChange = (e, id) => {
     const { value } = e.target;
 
@@ -62,7 +70,9 @@ function ButtonInFlow({ type, label, state, setState }) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.deleteIcon}>
+      <div onClick={(e)=>{
+          e.stopPropagation()
+          deleteButton(label)} } className={styles.deleteIcon}>
         <img src={deleteIcon} alt="delete icon" />
       </div>
       <span>{label}</span>

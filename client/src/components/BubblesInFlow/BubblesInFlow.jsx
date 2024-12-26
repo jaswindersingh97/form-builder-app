@@ -21,6 +21,15 @@ function BubblesInFlow({ type, label, state, setState }) {
     });
   };
 
+  const deleteButton = (label) => {
+    console.log(label);
+    setState((prevdata) => ({
+      ...prevdata, // Keep other properties of prevdata intact
+      elements: prevdata.elements.filter((item) => item.label !== label),
+    }));
+  };
+  
+  
   const payload = [
     {
       name: "Text",
@@ -53,8 +62,10 @@ function BubblesInFlow({ type, label, state, setState }) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.deleteIcon}>
-        <img src={deleteIcon} alt="delete icon" />
+      <div onClick={(e)=>{
+          e.stopPropagation()
+          deleteButton(label)}} className={styles.deleteIcon}>
+        <img  src={deleteIcon} alt="delete icon" />
       </div>
       <span>{label}</span>
       <div className={styles.input}>
