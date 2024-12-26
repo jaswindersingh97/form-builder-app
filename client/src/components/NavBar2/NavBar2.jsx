@@ -4,12 +4,15 @@ import ToggleButton from '../ToggleButton/ToggleButton';
 import { useForm } from '../../context/FormContext';
 import Api from '../../Api/Api';
 import { useParams } from 'react-router-dom';
+import {toast} from 'react-toastify';
 function NavBar2() {
-    const {FolderId} = useParams();
+    const {FolderId,FormId} = useParams();
+    const [formId,setFormId] = useState(FormId || '');
     useEffect(()=>{
       setForm((prevData) =>(
           {...prevData, folder:FolderId}
       ))
+      console.log(FormId);
     },[])
     const onSave = async()=>{
         const Response = await Api({
@@ -18,7 +21,11 @@ function NavBar2() {
             method:"post",
             data:form
         });
-        console.log(Response);
+        if(Response.status == 201){
+            toast.success("The form is created successfully");
+            setFormId(Response.data.form._id);
+        }
+        console.log(Response,formId);
     }
     const {form,setForm} = useForm();
   return (
@@ -32,7 +39,7 @@ function NavBar2() {
         </div>
         <div className={styles.right}>
             <ToggleButton/>
-            <button>Share</button>
+            <button className={`${formId && styles.Active}`}>Share</button>
             <button onClick={onSave}>Save</button>
             <button>X</button>
         </div>
