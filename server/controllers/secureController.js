@@ -62,8 +62,13 @@ const getFoldersUserBased = async (req, res) => {
     if (!currentUser) return res.status(404).json({ message: 'User not found.' });
 
     // Check if the targetId is the current user or part of dashboardShared
-    if (targetId !== userId && !currentUser.sharedDashboards.includes(targetId)) {
-        return res.status(403).json({ message: 'Access denied.' });
+    if (
+        targetId !== userId &&
+        !currentUser.sharedDashboards.some(
+          (dashboard) => dashboard.userId.toString() === targetId
+        )
+      )  {
+        return res.status(403).json({ message: 'Access denied.' , currentUser, targetId });
     }
 
     // Fetch the target user's folders and populate forms
@@ -80,8 +85,8 @@ const getFoldersUserBased = async (req, res) => {
 
 const createFolder = async (req, res) => {
     const { userId: loggedInUserId } = req.user;  // The logged-in user's ID
-    const { name, userId: targetUserId } = req.body;  // Target user ID (if provided)
-
+    const { name } = req.body;  // Target user ID (if provided)
+    const { userId : targetUserId} = req.params;
     const targetUser = await User.findById(targetUserId || loggedInUserId).populate('sharedDashboards folders');
     if (!targetUser) return res.status(404).json({ message: 'Target user not found.' });
 
@@ -91,14 +96,16 @@ const createFolder = async (req, res) => {
         return res.status(400).json({ message: 'A folder with this name already exists.' });
     }
 
+    const currentUser = await User.findById(loggedInUserId)
+
     // Check if the logged-in user has permission (owner or editor) for the target user
     const isOwner = targetUser._id.equals(loggedInUserId);
-    const hasEditPermission = targetUser.sharedDashboards.some(
-        (d) => d.userId._id.equals(loggedInUserId) && d.permission === 'edit'
+    const hasEditPermission = currentUser.sharedDashboards.some(
+        (d) => d.userId.toString() === targetUserId && d.permission === 'edit'
     );
 
     if (!isOwner && !hasEditPermission) {
-        return res.status(403).json({ message: 'You do not have permission to create a folder for this user.' });
+        return res.status(403).json({ message: 'You do not have permission to create a folder for this user.' , targetUser });
     }
 
     // Create the new folder
@@ -133,7 +140,7 @@ const  deleteFolder = async(req,res) =>{
 
     const isFolderOwner = folder.userId.toString() === userId;
     const hasEditRights = user.sharedDashboards.some(shared => 
-        shared.dashboardId.toString() === folder.userId.toString() && shared.permission === 'edit'
+        shared.userId.toString() === folder.userId.toString() && shared.permission === 'edit'
     );
 
     if (!isFolderOwner && !hasEditRights) {

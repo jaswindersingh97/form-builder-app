@@ -1,8 +1,7 @@
 import { useModal } from '../../context/ModalContext';
 import ToggleButton from '../ToggleButton/ToggleButton';
-import UserMenu from '../UserMenu/UserMenu';
 import styles from './index.module.css';
-import React, { act, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import EmailInvites from './../WorkSpaceModals/EmailInvites/EmailInvites';
 import Dropdown from '../Dropdown/Dropdown';
 import {Link, useNavigate, useParams} from 'react-router-dom'

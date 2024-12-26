@@ -9,8 +9,8 @@ function NavBar2() {
     const {FolderId,FormId} = useParams();
     const [formId,setFormId] = useState(FormId || '');
     useEffect(()=>{
-      setForm((prevData) =>(
-          {...prevData, folder:FolderId}
+      setForm(() =>(
+          {folder:FolderId}
       ))
     //   console.log(FormId);
     },[])
