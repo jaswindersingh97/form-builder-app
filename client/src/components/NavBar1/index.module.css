@@ -16,3 +16,6 @@
     justify-content: space-between;
     align-items: center;
 }
+.middle div{
+    padding: 10px;
+}
