@@ -133,8 +133,9 @@ function WorkSpaceBody() {
           <div onClick={()=>editForm(form._id)} key={form._id} className={styles.Forms}>
             <span>{form.name}</span>
             <img
-              onClick={() =>
-                deleteSomething({ something: 'form', id: form._id, onDelete: DeleteForm })
+              onClick={(e) =>{
+                e.stopPropagation();
+                deleteSomething({ something: 'form', id: form._id, onDelete: DeleteForm })}
               }
               src={DeleteIcon}
               alt="🗑️"
