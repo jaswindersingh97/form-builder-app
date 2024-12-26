@@ -39,6 +39,11 @@ const schemas ={
     getUser:{
 
     },
+    getform:{
+        params: Joi.object({
+            formId:Joi.string().length(24).hex().required(),
+        })
+    },
     searchUser:{
         query:Joi.object({
             query:Joi.string().required(),

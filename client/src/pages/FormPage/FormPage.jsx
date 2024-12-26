@@ -6,15 +6,29 @@ import styles from './style.module.css';
 import { buttons, Date, Email, Gif, Image, Number, Phone, Rating, TextBubble, Textinput, Video } from './../../assets/FormPage';
 import { useForm } from '../../context/FormContext';
 import { useParams } from 'react-router-dom';
+import Api from '../../Api/Api';
 
 function FormPage({ mode }) {
-  const {formId} = useParams();
+  const {FormId} = useParams();
   const { form, setForm } = useForm();
+  
+  const fetchForm = async(id)=>{
+    alert("editPage")
+    const response = await Api({
+      endpoint:`/public/forms/${id}`,
+      method:"get",
+      includeToken:false,
+    })
+    console.log(response)
+  }
+
   useEffect(()=>{
-    console.log(form);
-  },[form])
+    if(mode=='edit'){
+      fetchForm(FormId);
+    }
+  },[FormId])
+
   // Function to handle adding a field
-// Function to handle adding a field
 const addElement = (name, superType) => {
   const count = form.elements.filter(
     element => element.type === name && element.superType === superType

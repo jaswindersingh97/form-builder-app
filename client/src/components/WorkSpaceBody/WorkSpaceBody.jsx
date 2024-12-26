@@ -120,7 +120,7 @@ function WorkSpaceBody() {
           <span>Create a typebot</span>
         </div>
         {forms.map((form) => (
-          <div key={form._id} className={styles.Forms}>
+          <div onClick={()=>navigate(`editForm/${form._id}`)} key={form._id} className={styles.Forms}>
             <span>{form.name}</span>
             <img
               onClick={() =>

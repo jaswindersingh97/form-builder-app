@@ -12,7 +12,7 @@ function NavBar2() {
       setForm((prevData) =>(
           {...prevData, folder:FolderId}
       ))
-      console.log(FormId);
+    //   console.log(FormId);
     },[])
     const onSave = async()=>{
         const Response = await Api({
