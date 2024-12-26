@@ -23,18 +23,11 @@ export const FolderProvider = ({ children }) => {
       }
   }
 
-  const getForms = (folderId) =>{
-    if(!folderId){
-      setForms(folders.filter((item)=>(
-        item.name =='Default'
-      )))
-    }
-    setForms(folders.filter((item)=>(
-      item._id == folderId
-    )))
-    console.log(forms)
-  }
-  return (
+  const getForms = (folderId) => {
+    const selectedFolder = folders.find((folder) => folder._id === folderId);
+    setForms(selectedFolder?.forms || []);
+  };
+    return (
     <FolderContext.Provider
       value={{
         folders,

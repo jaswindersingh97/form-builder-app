@@ -55,3 +55,7 @@
 .Folders:hover, .Forms:hover {
     background-color: #777676;
 }
+
+.Active {
+    background-color: gold;
+}
