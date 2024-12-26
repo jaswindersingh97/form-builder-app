@@ -24,7 +24,13 @@ export const FolderProvider = ({ children }) => {
   }
 
   const getForms = (folderId) => {
-    const selectedFolder = folders.find((folder) => folder._id === folderId);
+    let selectedFolder;
+    if(!folderId){
+     selectedFolder = folders.find((folder) => folder.name === 'Default');
+    }
+    else{
+      selectedFolder = folders.find((folder) => folder._id === folderId);
+    }
     setForms(selectedFolder?.forms || []);
   };
     return (
