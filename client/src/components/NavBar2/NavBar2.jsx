@@ -1,10 +1,24 @@
 import styles from './style.module.css';
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import ToggleButton from '../ToggleButton/ToggleButton';
 import { useForm } from '../../context/FormContext';
+import Api from '../../Api/Api';
+import { useParams } from 'react-router-dom';
 function NavBar2() {
+    const {FolderId} = useParams();
+    useEffect(()=>{
+      setForm((prevData) =>(
+          {...prevData, folder:FolderId}
+      ))
+    },[])
     const onSave = async()=>{
-        // Api for the saving the form
+        const Response = await Api({
+            endpoint:"/secure/forms",
+            includeToken:true,
+            method:"post",
+            data:form
+        });
+        console.log(Response);
     }
     const {form,setForm} = useForm();
   return (

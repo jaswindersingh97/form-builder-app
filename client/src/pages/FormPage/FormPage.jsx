@@ -5,8 +5,10 @@ import WorkFlow from '../../components/WorkFlow/WorkFlow';
 import styles from './style.module.css';
 import { buttons, Date, Email, Gif, Image, Number, Phone, Rating, TextBubble, Textinput, Video } from './../../assets/FormPage';
 import { useForm } from '../../context/FormContext';
+import { useParams } from 'react-router-dom';
 
 function FormPage({ mode }) {
+  const {formId} = useParams();
   const { form, setForm } = useForm();
   useEffect(()=>{
     console.log(form);
@@ -34,8 +36,6 @@ const addElement = (name, superType) => {
     elements: [...prev.elements, newElement]
   }));
 };
-
-  
 
   const Bubbles = [
     { name: "Text", icon: TextBubble },

@@ -46,8 +46,9 @@ const FormSchema = new mongoose.Schema({
     required: true,
   },
   folder: {
-    type: String,
-    default: '', // Folder name, if applicable
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'Folder',
+    required:true, // Folder name, if applicable
   },
   elements: [ElementSchema], // Array of form elements
 });
