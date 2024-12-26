@@ -1,5 +1,5 @@
 const Form = require("../models/FormModel");
-
+const asyncHandler = require('./../utils/asyncHandler')
 const getform =async(req,res) =>{
     const {formId} = req.params;
     const form = await Form.findById(formId)
@@ -13,5 +13,11 @@ const getform =async(req,res) =>{
         form:form
     })
 }
+const submitForm = (req,res) =>{
+    res.send("hi");
+}
 
-module.exports = {getform};
+module.exports = {
+    getform: asyncHandler(getform),
+    submitForm:asyncHandler(submitForm)
+};
