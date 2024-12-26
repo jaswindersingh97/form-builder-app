@@ -37,10 +37,21 @@ function NavBar2() {
         if(Response.status == 200){
             toast.success("The form is Updated successfully");
             setFormId(Response.data.form._id);
-        }
-        
+        }   
     }
     const {form,setForm} = useForm();
+    const shareForm = () => {
+        const fullDomain = window.location.hostname + (window.location.port ? `:${window.location.port}` : '');
+        const link = `${fullDomain}/FormSubmit/${formId}`;
+        navigator.clipboard.writeText(link)
+          .then(() => {
+            toast.success("Link copied to clipboard!");
+          })
+          .catch(err => {
+            toast.error("Failed to copy the link.");
+          });
+      };
+    
   return (
     <div className={styles.container}>
         <div className={styles.left}>
@@ -52,7 +63,7 @@ function NavBar2() {
         </div>
         <div className={styles.right}>
             <ToggleButton/>
-            <button className={`${formId && styles.Active}`}>Share</button>
+            <button disabled={!formId && true} onClick={shareForm} className={`${formId && styles.Active}`}>Share</button>
             <button onClick={onSave}>Save</button>
             <button>X</button>
         </div>
