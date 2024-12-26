@@ -283,8 +283,7 @@ const deleteForm = async (req, res) => {
     await folderDoc.save();
 
     // Delete the form
-    await formDoc.remove();
-
+    await Form.deleteOne({_id:formId})
     return res.status(200).json({ message: 'Form deleted successfully.' });
 };
 
@@ -366,7 +365,7 @@ module.exports = {
     deleteFolder:asyncHandler(deleteFolder),
     
     //form
-    deleteForm:asyncHandler(deleteFolder),
+    deleteForm:asyncHandler(deleteForm),
     updateForm:asyncHandler(updateForm),
     createForm:asyncHandler(createform),
 

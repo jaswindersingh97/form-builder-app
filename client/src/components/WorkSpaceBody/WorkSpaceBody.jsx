@@ -86,6 +86,7 @@ function WorkSpaceBody() {
       closeModal();
       toast.success('Form Deleted Successfully');
     }
+    console.log(response);
   };
 
   const createFolder = () => openModal(<CreateNewFolder AddFolder={AddFolder} />);

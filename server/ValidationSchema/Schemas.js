@@ -67,10 +67,18 @@ const schemas ={
             formId:Joi.string().length(24).hex().required(),
         }),
         body:Joi.object({
+            _id:Joi.string().optional(),
+            userId:Joi.optional(),
+            __v:Joi.optional(),
             name:Joi.string().min(2).optional(),
             folder:Joi.string().length(24).hex().optional(),
             elements:Joi.array().optional(),
         }),
+    },
+    deleteForm:{
+        params:Joi.object({
+            formId:Joi.string().length(24).hex().required(),
+        })
     }
 };
 module.exports = schemas;

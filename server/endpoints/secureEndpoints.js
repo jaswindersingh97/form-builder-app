@@ -32,7 +32,7 @@ router.delete("/folders/:folderId",validationMiddleware("deleteFolder"),deleteFo
 //forms
 router.post("/forms",validationMiddleware("createForm"),createForm);    //implemented for other Users access but not tested
 router.patch("/forms/:formId",validationMiddleware("updateForm"),updateForm);
-router.delete("/forms/:formId",validationMiddleware("deleteform"), deleteForm);
+router.delete("/forms/:formId",validationMiddleware("deleteForm"), deleteForm);
 
 //dashboard
 router.post("/dashboard/share", validationMiddleware("shareDashboard"),shareDashboard);

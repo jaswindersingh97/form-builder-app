@@ -15,17 +15,30 @@ function NavBar2() {
     //   console.log(FormId);
     },[])
     const onSave = async()=>{
-        const Response = await Api({
+        let config = {
             endpoint:"/secure/forms",
             includeToken:true,
             method:"post",
             data:form
-        });
+        }
+        if(formId){
+            config={
+                endpoint:`/secure/forms/${formId}`,
+                method:"patch",
+                includeToken:true,
+                data:form
+            }
+        }
+        const Response = await Api(config);
         if(Response.status == 201){
             toast.success("The form is created successfully");
             setFormId(Response.data.form._id);
         }
-        console.log(Response,formId);
+        if(Response.status == 200){
+            toast.success("The form is Updated successfully");
+            setFormId(Response.data.form._id);
+        }
+        
     }
     const {form,setForm} = useForm();
   return (
