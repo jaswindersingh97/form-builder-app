@@ -1,7 +1,6 @@
 import React from 'react'
 import styles from './style.module.css';
 import flag from './../../assets/FormPage/Flag.svg'
-import {buttons,Date,Email,Gif,Image,Number,Phone,Rating,TextBubble,Textinput,Video} from './../../assets/FormPage';
 import BubblesInFlow from '../BubblesInFlow/BubblesInFlow';
 import InputInFlow from '../InputInFlow/InputInFlow';
 import ButtonInFlow from '../ButtonInFlow/ButtonInFlow';

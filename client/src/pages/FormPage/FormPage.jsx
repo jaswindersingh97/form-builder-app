@@ -23,6 +23,13 @@ function FormPage({ mode }) {
   }
 
   useEffect(()=>{
+    setForm ((prevData)=>(
+      {
+        ...prevData,
+        name:"",
+        elements:[]
+      }
+    ));
     if(mode=='edit'){
       fetchForm(FormId);
     }
