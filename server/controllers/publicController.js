@@ -10,7 +10,7 @@ const getform =async(req,res) =>{
     }
     return res.status(200).json({
         message:"Form fetched successfully",
-        form
+        form:form
     })
 }
 

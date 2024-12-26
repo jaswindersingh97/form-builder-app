@@ -13,12 +13,12 @@ function FormPage({ mode }) {
   const { form, setForm } = useForm();
   
   const fetchForm = async(id)=>{
-    alert("editPage")
     const response = await Api({
       endpoint:`/public/forms/${id}`,
       method:"get",
       includeToken:false,
     })
+    setForm(response.data.form);
     console.log(response)
   }
 
