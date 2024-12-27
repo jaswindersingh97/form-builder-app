@@ -1,0 +1,17 @@
+{
+  "name": "form-builder-app",
+  "version": "1.0.0",
+  "description": "Cuevette final eval proje",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run start-client\" \"npm run start-server\"",
+    "start-client": "npm --prefix ./client start",
+    "start-server": "npm --prefix ./server start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
