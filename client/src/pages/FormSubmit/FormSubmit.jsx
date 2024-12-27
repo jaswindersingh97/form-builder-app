@@ -12,6 +12,7 @@ import Rating from '../../components/Inputs/Rating/Rating';
 function FormSubmit() {
     const { FormId } = useParams();
     const [form, setForm] = useState({ name: '', elements: [] });
+    const [formData, setFormData] = useState([]);
 
     const fetchForm = async () => {
         try {
@@ -30,6 +31,17 @@ function FormSubmit() {
         fetchForm();
     }, []);
 
+    useEffect(()=>{
+        console.log(formData)
+    },[formData])
+    const handleSave = (value, label) => {
+        setFormData((prevData) => [
+          ...prevData,
+          { label, value }
+        ]);
+      };
+    
+
     return (
         <div className={Styles.container}>
             <h1>{form.name}</h1>
@@ -38,12 +50,12 @@ function FormSubmit() {
                     return (
                         <div key={index} className={Styles.inputs}>
                             {element.type === 'Buttons' && (
-                                <Buttons array={element.buttonValues} />
+                                <Buttons key={index} label={element.label} choices={element.buttonValues} onSave={handleSave}  />
                             )}
                             {['Text', 'Date', 'Number', 'Email', 'Phone'].includes(element.type) && (
-                                <InputText type={element.type} />
+                                <InputText key={index} type={element.type} label={element.label} onSave={handleSave}  />
                             )}
-                            {element.type === 'Rating' && <Rating />}
+                            {element.type === 'Rating' && <Rating key={index} label={element.label} onSave={handleSave}  />}
                             {!['Buttons', 'Text', 'Date', 'Number', 'Email', 'Phone', 'Rating'].includes(element.type) && (
                                 <div>{element.label}</div> // Fallback
                             )}

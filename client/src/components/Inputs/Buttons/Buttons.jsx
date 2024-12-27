@@ -1,15 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react';
 
-function Buttons({array}) {
+function Buttons({ label, choices, onSave }) {
+  const [selectedChoice, setSelectedChoice] = useState(null);
+
+  const handleButtonClick = (choice) => {
+    setSelectedChoice(choice);
+    onSave(choice, label);  // Save the value as soon as a button is clicked
+  };
+
   return (
     <div>
-      {array.map((item) =>{
-        return(
-            <button key={item.id}>{item.value}</button>
-        )
-      })}
+      {selectedChoice ? (
+        <div>{selectedChoice}</div>  // Display selected value as a sent message
+      ) : (
+        <div>
+          {choices.map((choice, index) => (
+            <button
+              key={index}
+              onClick={() => handleButtonClick(choice.value)}
+              disabled={selectedChoice} // Disable further clicks once a choice is made
+            >
+              {choice.value}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default Buttons
+export default Buttons;

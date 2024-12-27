@@ -1,17 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react';
 
-function Rating() {
-    const ratings = [1,2,3,4,5]
+function Rating({ label, onSave }) {
+  const [selectedRating, setSelectedRating] = useState(null);
+  const [savedResponse, setSavedResponse] = useState(null); // Store the saved rating
+
+  const handleRatingClick = (rating) => {
+    setSelectedRating(rating);
+  };
+
+  const handleSave = () => {
+    onSave(selectedRating, label); // Save the selected rating
+    setSavedResponse(selectedRating); // Display the saved rating
+    setSelectedRating(null); // Clear selection after saving
+  };
+
   return (
     <div>
-    
-      {
-        ratings.map((item)=>{
-        return <span key={item}> {item}</span>
-        })
-      }
+      <h3>{label}</h3>
+      {savedResponse ? (
+        <div>{savedResponse}</div>  // Display the saved rating
+      ) : (
+        <div>
+          {[1, 2, 3, 4, 5].map((rating) => (
+            <button
+              key={rating}
+              onClick={() => handleRatingClick(rating)}
+              disabled={selectedRating}
+            >
+              {rating}
+            </button>
+          ))}
+          {selectedRating && <button onClick={handleSave}>Save</button>} {/* Save button only visible after selection */}
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default Rating
+export default Rating;
