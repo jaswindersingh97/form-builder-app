@@ -8,6 +8,7 @@ import Video from '../../components/Bubbles/Video/Video';
 import Buttons from '../../components/Inputs/Buttons/Buttons';
 import InputText from '../../components/Inputs/Text/Text';
 import Rating from '../../components/Inputs/Rating/Rating';
+
 function FormSubmit() {
     const { FormId } = useParams();
     const [form, setForm] = useState({ name: '', elements: [] });
@@ -19,7 +20,7 @@ function FormSubmit() {
                 method: 'get',
             });
             setForm(response.data.form);
-            console.log(form)
+            console.log(form);
         } catch (error) {
             console.error('Error fetching form:', error);
         }
@@ -33,34 +34,37 @@ function FormSubmit() {
         <div className={Styles.container}>
             <h1>{form.name}</h1>
             {form.elements.map((element, index) => {
-                if(element.superType == 'Inputs'){
-                  if(element.type =='Buttons'){
-                    return(<Buttons key={index} array = {element.buttonValues}/>) // done fetching
-                  }
-                  if(element.type == 'Text' || element.type =='Date' || element.type =='Number' || element.type == 'Email' || element.type == 'Phone'){
-                    return (<InputText key={index} type = {element.type}/>) // done fetching
-                  }
-                  if(element.type == 'Rating'){
-                    return (<Rating key={index}/>) // done fetching
-                  }
-                  return <div key={index} className={Styles.inputs}>{element.label}</div> // falback not to used
+                if (element.superType === 'Inputs') {
+                    return (
+                        <div key={index} className={Styles.inputs}>
+                            {element.type === 'Buttons' && (
+                                <Buttons array={element.buttonValues} />
+                            )}
+                            {['Text', 'Date', 'Number', 'Email', 'Phone'].includes(element.type) && (
+                                <InputText type={element.type} />
+                            )}
+                            {element.type === 'Rating' && <Rating />}
+                            {!['Buttons', 'Text', 'Date', 'Number', 'Email', 'Phone', 'Rating'].includes(element.type) && (
+                                <div>{element.label}</div> // Fallback
+                            )}
+                        </div>
+                    );
+                } else if (element.superType === 'Bubbles') {
+                    return (
+                        <div key={index} className={Styles.bubbles}>
+                            {element.type === 'Text' && <Text content={element.value} />}
+                            {['Image', 'Gif'].includes(element.type) && (
+                                <Image image={element.value} />
+                            )}
+                            {element.type === 'Video' && <Video video={element.value} />}
+                            {!['Text', 'Image', 'Gif', 'Video'].includes(element.type) && (
+                                <div>{element.label}</div> // Fallback
+                            )}
+                        </div>
+                    );
                 }
-                else if(element.superType == 'Bubbles'){
-                  if(element.type == 'Text'){
-                    return (<Text content = {element.value} key={index}/>)  // done fetching
-                  }
-                  else if(element.type == 'Image' || element.type == 'Gif'){
-                    return (<Image image={element.value} key={index}/>) // somewhat done lets check 
-                  }
-                  else if(element.type == 'Video'){
-                    return (<Video video={element.value} key={index} />) // somewhat done lets check
-                  }
-                  else{
-                    return <div className={Styles.bubbles} key={index}> {element.label}</div> // fallback
-                  }
-                }
-            }
-            )}
+                return null;
+            })}
         </div>
     );
 }
