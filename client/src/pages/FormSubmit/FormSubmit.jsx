@@ -10,12 +10,14 @@ import InputText from '../../components/Inputs/Text/Text';
 import Rating from '../../components/Inputs/Rating/Rating';
 
 function FormSubmit() {
-    const { FormId } = useParams();
+    const { FormId } = useParams(); // Form Id
     const [form, setForm] = useState({ name: '', elements: [] });
-    const [renderPage, setRenderPage] = useState([]);  // Store rendered elements (bubbles + inputs)
+    const [renderPage, setRenderPage] = useState([]); // Store rendered elements (bubbles + inputs)
     const [currentIndex, setCurrentIndex] = useState(0); // Track current element in the form array
     const [userInput, setUserInput] = useState(''); // User input state
-    const [inputCompleted, setInputCompleted] = useState(false); // Track if input is completed
+
+    // State to store inputs as an array of objects: { label, value }
+    const [userInputs, setUserInputs] = useState([]);
 
     const fetchForm = async () => {
         try {
@@ -33,53 +35,43 @@ function FormSubmit() {
         fetchForm();
     }, []);
 
-    // Handle save function that also advances to the next element
+    // Handle saving input
     const handleSave = (value, label) => {
-        // Check if the label already exists in renderPage to prevent duplicates
-        const labelExists = renderPage.some(item => item.element && item.element.label === label);
-        if (labelExists) {
-            console.log('This label already exists. Skipping insertion.');
-            setCurrentIndex((prevIndex) => prevIndex + 1); // Explicitly move to the next element
-            return; // Prevent adding the element if the label already exists
-        }
-    
-        // Save the user input and proceed to next
         setRenderPage((prevData) => [
             ...prevData,
-            { type: 'userMessage', value, label } // Save user input with the label
+            { type: 'userMessage', value, label }
         ]);
-        setInputCompleted(true); // Mark input as completed
-    
-        // Clear input and advance to the next form element
-        setInputCompleted(false); // Reset the input completion state
-        setUserInput(''); // Clear the user input
-        setCurrentIndex((prevIndex) => prevIndex + 1); // Move to the next element in the form
-    };
-        
-    // Handle user input change (for text-based inputs)
-    const handleInputChange = (e) => {
-        setUserInput(e.target.value); // Capture user input
+
+        // Add the value to the userInputs array with label and value
+        setUserInputs((prevInputs) => [
+            ...prevInputs,
+            { label, value }
+        ]);
+
+        setUserInput(''); // Clear input field
+        setCurrentIndex((prevIndex) => prevIndex + 1); // Move to next element
     };
 
-    // Render form elements based on currentIndex
+    const handleInputChange = (e) => {
+        setUserInput(e.target.value); // Handle input change
+    };
+
     useEffect(() => {
         if (form.elements.length > 0 && currentIndex < form.elements.length) {
             const element = form.elements[currentIndex];
 
-            // Check if the element has already been rendered to prevent duplicates
             const isAlreadyRendered = renderPage.some(item => item.element && item.element.label === element.label);
 
             if (!isAlreadyRendered) {
                 if (element.superType === 'Bubbles') {
                     setRenderPage((prev) => [
                         ...prev,
-                        { type: 'bubble', element } // Render the bubble immediately
+                        { type: 'bubble', element }
                     ]);
-                    setCurrentIndex((prevIndex) => prevIndex + 1); // Move to next immediately
+                    setCurrentIndex((prevIndex) => prevIndex + 1);
                 }
 
-                if (element.superType === 'Inputs' && !inputCompleted) {
-                    // Render the input if it is the user's turn and input is not completed
+                if (element.superType === 'Inputs') {
                     setRenderPage((prev) => [
                         ...prev,
                         { type: 'input', element }
@@ -87,13 +79,11 @@ function FormSubmit() {
                 }
             }
         }
-    }, [currentIndex, form, inputCompleted]);
+    }, [currentIndex, form]);
 
     return (
         <div className={Styles.container}>
             <h1>{form.name}</h1>
-
-            {/* Render bubbles and inputs dynamically based on the renderPage state */}
             {renderPage.map((item, index) => {
                 if (item.type === 'input') {
                     const element = item.element;
@@ -123,17 +113,6 @@ function FormSubmit() {
                         </div>
                     );
                 }
-
-                if (item.type === 'userMessage') {
-                    return (
-                        <div key={index} className={Styles.userMessage}>
-                            <div className={Styles.userMessageContent}>
-                                <strong>{item.label}: </strong>{item.value}
-                            </div>
-                        </div>
-                    );
-                }
-
                 return null;
             })}
         </div>
