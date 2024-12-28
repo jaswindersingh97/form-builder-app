@@ -15,6 +15,7 @@ function FormSubmit() {
     const [renderPage, setRenderPage] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [userInputs, setUserInputs] = useState([]);
+    const [firstValueChange,setFirstValueChange] = useState(false);
 
     const fetchForm = async () => {
         try {
@@ -27,6 +28,36 @@ function FormSubmit() {
             console.error('Error fetching form:', error);
         }
     };
+    const startCountUpdate = async() =>{
+        try {
+            const response = await Api({
+                endpoint: `/public/forms/start/${FormId}`,
+                method: 'post',
+            });
+        } catch (error) {
+            console.error('Error fetching form:', error);
+        }
+    }
+    const viewCountUpdate = async() =>{
+        try {
+            const response = await Api({
+                endpoint: `/public/forms/view/${FormId}`,
+                method: 'post',
+            });
+        } catch (error) {
+            console.error('Error fetching form:', error);
+        }
+    }
+    const completeCountUpdate = async() =>{
+        try {
+            const response = await Api({
+                endpoint: `/public/forms/complete/${FormId}`,
+                method: 'post',
+            });
+        } catch (error) {
+            console.error('Error fetching form:', error);
+        }
+    }
 
     const submitForm = async(e) =>{
         e.preventDefault();
@@ -38,6 +69,7 @@ function FormSubmit() {
             });
             if(response.status == 201){
                 toast.success("Form submitted succesfully")
+                completeCountUpdate();
             }
         } catch (error) {
             console.error('Error fetching form:', error);
@@ -46,6 +78,7 @@ function FormSubmit() {
 
     useEffect(() => {
         fetchForm();
+        viewCountUpdate();
     }, []);
 
     // Handle saving input
@@ -60,7 +93,11 @@ function FormSubmit() {
             { label, value }
         ]);
 
-        setCurrentIndex((prevIndex) => prevIndex + 1); // Move to next element
+        setCurrentIndex((prevIndex) => prevIndex + 1); 
+        if(!firstValueChange){
+            startCountUpdate();
+            setFirstValueChange(true);
+        }
     };
 
     useEffect(() => {

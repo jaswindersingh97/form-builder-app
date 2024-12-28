@@ -88,6 +88,10 @@ const schemas ={
             data:Joi.array().required(),
         }),
     },
-
+    tracking:{
+        params:Joi.object({
+            formId:Joi.string().length(24).hex().required(),
+        })
+    },
 };
 module.exports = schemas;

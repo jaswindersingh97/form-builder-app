@@ -43,4 +43,7 @@ router.post("/dashboard/share", validationMiddleware("shareDashboard"),shareDash
 router.get("/users",validationMiddleware("getUser"), getUser);
 router.get("/users/search",validationMiddleware("searchUser"),searchUser);
 
+//analytics section
+// router.get("/analytics/:formId", analytics);
+
 module.exports= router;

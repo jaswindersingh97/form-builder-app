@@ -22,18 +22,71 @@ const submitForm = async(req,res) =>{
       formId,
       data,
     });
-  
-
-
-    res.status(201).json({
+    
+    return res.status(201).json({
       message: 'Form submitted successfully.',
       submission,
       data
     });
-  
 }
+
+const ProgressTracking = require('./../models/ProgressTrackingModel'); // Adjust the path as needed
+
+const view = async (req, res) => {
+  const { formId } = req.params;
+
+    let progress = await ProgressTracking.findOne({ formId });
+    if (!progress) {
+      progress = new ProgressTracking({ formId, viewCount: 1, startedCount: 0, completedCount: 0 });
+    } else {
+      progress.viewCount += 1;
+    }
+    await progress.save();
+
+    res.status(200).json({
+      message: 'Form view tracked successfully.',
+      viewCount: progress.viewCount,
+    });
+};
+
+const start = async (req, res) => {
+  const { formId } = req.params;
+
+    let progress = await ProgressTracking.findOne({ formId });
+    if (!progress) {
+      progress = new ProgressTracking({ formId, startedCount: 1, completedCount: 0, viewCount: 0 });
+    } else {
+      progress.startedCount += 1;
+    }
+    await progress.save();
+
+    res.status(200).json({
+      message: 'Form start tracked successfully.',
+      startedCount: progress.startedCount,
+    });
+  }
+
+const complete =  async (req, res) => {
+  const { formId } = req.params;
+
+    let progress = await ProgressTracking.findOne({ formId });
+    if (!progress) {
+      progress = new ProgressTracking({ formId, completedCount: 1, startedCount: 0, viewCount: 0 });
+    } else {
+      progress.completedCount += 1;
+    }
+    await progress.save();
+
+    res.status(200).json({
+      message: 'Form completion tracked successfully.',
+      completedCount: progress.completedCount,
+    });
+};
 
 module.exports = {
     getform: asyncHandler(getform),
-    submitForm:asyncHandler(submitForm)
+    submitForm:asyncHandler(submitForm), 
+    view:asyncHandler(view),
+    start:asyncHandler(start),
+    complete:asyncHandler(complete)
 };
