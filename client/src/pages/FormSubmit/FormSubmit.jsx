@@ -10,13 +10,10 @@ import InputText from '../../components/Inputs/Text/Text';
 import Rating from '../../components/Inputs/Rating/Rating';
 
 function FormSubmit() {
-    const { FormId } = useParams(); // Form Id
+    const { FormId } = useParams();
     const [form, setForm] = useState({ name: '', elements: [] });
-    const [renderPage, setRenderPage] = useState([]); // Store rendered elements (bubbles + inputs)
-    const [currentIndex, setCurrentIndex] = useState(0); // Track current element in the form array
-    const [userInput, setUserInput] = useState(''); // User input state
-
-    // State to store inputs as an array of objects: { label, value }
+    const [renderPage, setRenderPage] = useState([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [userInputs, setUserInputs] = useState([]);
 
     const fetchForm = async () => {
@@ -42,18 +39,12 @@ function FormSubmit() {
             { type: 'userMessage', value, label }
         ]);
 
-        // Add the value to the userInputs array with label and value
         setUserInputs((prevInputs) => [
             ...prevInputs,
             { label, value }
         ]);
 
-        setUserInput(''); // Clear input field
         setCurrentIndex((prevIndex) => prevIndex + 1); // Move to next element
-    };
-
-    const handleInputChange = (e) => {
-        setUserInput(e.target.value); // Handle input change
     };
 
     useEffect(() => {
@@ -93,7 +84,7 @@ function FormSubmit() {
                                 <Buttons label={element.label} choices={element.buttonValues} onSave={handleSave} />
                             )}
                             {['Text', 'Date', 'Number', 'Email', 'Phone'].includes(element.type) && (
-                                <InputText type={element.type} label={element.label} onSave={handleSave} onChange={handleInputChange} value={userInput} />
+                                <InputText type={element.type} label={element.label} onSave={handleSave} />
                             )}
                             {element.type === 'Rating' && <Rating label={element.label} onSave={handleSave} />}
                         </div>
