@@ -12,6 +12,7 @@ import FormPage from './pages/FormPage/FormPage';
 import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
 import { useTheme } from './context/ThemeContext';
 import FormSubmit from './pages/FormSubmit/FormSubmit';
+import Response from './pages/Response/Response';
 function App() {
   const {theme}=useTheme();
   const themeStyle = theme ? "dark" : "light"; 
@@ -30,6 +31,7 @@ function App() {
           <Route path='/:dashboardId/Workspace/:FolderId' element={<ProtectedRoutes element={<WorkSpace theme={themeStyle}/>} isPublic={false}/>}/> 
           <Route path='/:dashboardId/Workspace/:FolderId/createForm' element={<ProtectedRoutes element={<FormPage mode={"create"} theme={themeStyle}/>} isPublic={false}/>} />
           <Route path='/:dashboardId/Workspace/:FolderId/editForm/:FormId' element={<ProtectedRoutes element={<FormPage mode={"edit"} theme={themeStyle}/>} isPublic={false}/>} />
+          <Route path='/:dashboardId/Workspace/:FolderId/responses/:formId' element={<ProtectedRoutes element={<Response theme={themeStyle}/>} isPublic={false}/>} />
           <Route path='/FormSubmit/:FormId' element={<FormSubmit/>}/>
           <Route path='*' element={<h1>Not Found</h1>} />
         </Routes>

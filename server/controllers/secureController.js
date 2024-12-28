@@ -338,6 +338,45 @@ const verifyLink =()=>{
 
 }
 
+const Submission = require('./../models/SubmissionModel');
+const ProgressTracking =require('./../models/ProgressTrackingModel');
+const analytics = async (req, res) => {
+    const { userId } = req.user; // Extract userId from authenticated user
+    const { formId } = req.params; // Extract formId from route parameters
+
+        // Find the form document
+        const formDoc = await Form.findById(formId);
+        if (!formDoc) {
+            return res.status(404).json({ message: 'Form not found.' });
+        }
+
+        // Check if the form's userId matches the current user or if sharedDashboards includes the form owner
+        const user = await User.findById(userId).populate('sharedDashboards.userId');
+
+        const isOwner = formDoc.userId.equals(userId);
+        const hasPermission = user.sharedDashboards.some((d) => d.userId._id.equals(formDoc.userId));
+
+        if (!isOwner && !hasPermission) {
+            return res.status(403).json({ message: 'You do not have permission to view this form.' });
+        }
+
+        // Fetch submissions and progress data
+        const submissions = await Submission.find({ formId });
+        const progress = await ProgressTracking.findOne({ formId });
+
+        // Return analytics data
+        res.status(200).json({
+            form: formDoc,
+            submissions,
+            progress: {
+                viewCount: progress ? progress.viewCount : 0,
+                startedCount: progress ? progress.startedCount : 0,
+                completedCount: progress ? progress.completedCount : 0,
+            },
+        });
+
+    }
+
 //User Routes
 const getUser = async(req,res) =>{
     const {userId} = req.user;
@@ -358,6 +397,7 @@ const getUser = async(req,res) =>{
 
     res.status(200).json(user);
 }
+
 const searchUser = async(req,res)=>{
     const { query } = req.query;
     if (!query) {
@@ -389,6 +429,7 @@ module.exports = {
 
     //User
     getUser: asyncHandler(getUser),
-    searchUser:asyncHandler(searchUser)
+    searchUser:asyncHandler(searchUser),
 
+    analytics:asyncHandler(analytics)
 }
