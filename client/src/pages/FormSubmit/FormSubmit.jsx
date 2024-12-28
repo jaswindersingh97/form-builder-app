@@ -8,7 +8,7 @@ import Video from '../../components/Bubbles/Video/Video';
 import Buttons from '../../components/Inputs/Buttons/Buttons';
 import InputText from '../../components/Inputs/Text/Text';
 import Rating from '../../components/Inputs/Rating/Rating';
-
+import {toast} from 'react-toastify'
 function FormSubmit() {
     const { FormId } = useParams();
     const [form, setForm] = useState({ name: '', elements: [] });
@@ -27,6 +27,22 @@ function FormSubmit() {
             console.error('Error fetching form:', error);
         }
     };
+
+    const submitForm = async(e) =>{
+        e.preventDefault();
+        try {
+            const response = await Api({
+                endpoint: `/public/forms/submit/${FormId}`,
+                method: 'post',
+                data:{data:userInputs}
+            });
+            if(response.status == 201){
+                toast.success("Form submitted succesfully")
+            }
+        } catch (error) {
+            console.error('Error fetching form:', error);
+        }
+    }
 
     useEffect(() => {
         fetchForm();
@@ -106,6 +122,7 @@ function FormSubmit() {
                 }
                 return null;
             })}
+            <button onClick={submitForm}>Submit</button>
         </div>
     );
 }

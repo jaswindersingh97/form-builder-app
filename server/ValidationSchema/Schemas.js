@@ -79,6 +79,15 @@ const schemas ={
         params:Joi.object({
             formId:Joi.string().length(24).hex().required(),
         })
-    }
+    },
+    submitForm:{
+        params:Joi.object({
+            formId:Joi.string().length(24).hex().required(),
+        }),
+        body:Joi.object({
+            data:Joi.array().required(),
+        }),
+    },
+
 };
 module.exports = schemas;
