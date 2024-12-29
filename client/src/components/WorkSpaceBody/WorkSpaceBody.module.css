@@ -20,6 +20,8 @@
     gap: 20px;
     width: 100%; 
     box-sizing: border-box;
+    align-items: center;
+
 }
 
 .Folders, .Forms {

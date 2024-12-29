@@ -9,12 +9,13 @@ import DeleteIcon from './../../assets/Workspace/delete.svg';
 import { useFolder } from '../../context/FolderContext';
 import { toast } from 'react-toastify';
 import Api from '../../Api/Api';
+import Loading from './../../assets/Loading/loading.gif'
 function WorkSpaceBody() {
   const navigate = useNavigate();
   const { FolderId, dashboardId } = useParams();
   const { folders, forms, getFolders, getForms, setFolders, setForms } = useFolder();
   const { openModal, closeModal } = useModal();
-
+  const [loading, setLoading] = useState(true);
   // Fetch folders on initial load
   useEffect(() => {
     getFolders(dashboardId);
@@ -23,6 +24,7 @@ function WorkSpaceBody() {
   // Handle folder changes and update forms
   useEffect(() => {
       getForms(FolderId);
+      setLoading(false)
   }, [folders,FolderId]);
 
 
@@ -100,7 +102,7 @@ function WorkSpaceBody() {
           <img src={FolderIcon} alt="📁" />
           Create a Folder
         </div>
-        {folders ?  folders?.map((folder) => (
+        {loading ?<img className='loading' src={Loading}/> : folders?.map((folder) => (
           <div
             key={folder._id}
             onClick={() => navigate(`/${dashboardId}/workspace/${folder._id}`)}
@@ -122,14 +124,14 @@ function WorkSpaceBody() {
               />
             )}
           </div>
-        )) : "Loading"}
+        ))  }
       </div>
       <div className={styles.body}>
         <div onClick={creatForm} style={{ flexDirection: 'column', background: '#1A5FFF' }} className={styles.Forms}>
           <p style={{ fontSize: '40px' }}>+</p>
           <span>Create a typebot</span>
         </div>
-        {forms.map((form) => (
+        {loading ?<img className='loading' src={Loading}/> : forms.map((form) => (
           <div onClick={()=>editForm(form._id)} key={form._id} className={styles.Forms}>
             <span>{form.name}</span>
             <img
