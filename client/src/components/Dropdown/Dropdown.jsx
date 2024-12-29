@@ -9,7 +9,7 @@ const Dropdown = ({ children ,active}) => {
   return (
     <div className={styles.dropdown}>
       <button onClick={toggleMenu} className={styles.userName}>
-        {active}
+        {active}'s dashboard
       </button>
       {isOpen && <div className={styles.dropdownMenu}>{children}</div>}
     </div>

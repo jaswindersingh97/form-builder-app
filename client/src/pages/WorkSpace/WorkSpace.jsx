@@ -10,7 +10,6 @@ function WorkSpace() {
     <div className={style.container}>
       <Modal/>
       <NavBar1/>
-      <hr/>
       <WorkSpaceBody/>
     </div>
   )

@@ -51,7 +51,7 @@ function NavBar1() {
   return (
     <div className={styles.container}>
       <div className={styles.middle}>
-        <Dropdown active={ActiveUser()}>
+        <Dropdown active={ActiveUser() }>
         <Link to={'/settings'}><div className={styles.menuItem}>Settings</div></Link>
             <div onClick={Logout} className={styles.menuItem}>Logout</div>
             <hr/>
@@ -59,7 +59,7 @@ function NavBar1() {
             {
               user?.sharedDashboards?.map((item,index) =>(
                 item.permission == 'edit' &&
-                <div key={item.userId._id} onClick={()=>navigate(`/${item.userId._id}/workspace`)} className={styles.menuItem}>{item.userId.name}</div>
+                <div key={item.userId._id} onClick={()=>navigate(`/${item.userId._id}/workspace`)} className={styles.menuItem}>{item.userId.name}'s dashboard</div>
               ))
             }
             <hr/>

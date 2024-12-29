@@ -5,6 +5,7 @@
     padding: 10px;
     gap: 20px;
     align-items: center;
+    border-bottom: 1px solid #FFFFFF29
 }
 .middle{
     margin-left: auto;
@@ -19,4 +20,8 @@
 .middle div{
     padding: 10px;
     cursor: pointer;
+}
+.right button{
+    background-color: #1A5FFF;
+    color: var(--color);
 }
