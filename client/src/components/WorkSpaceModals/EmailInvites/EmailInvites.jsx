@@ -10,7 +10,6 @@ function EmailInvites() {
     email: "",
     access: "edit"
   });
-  const [link, setLink] = useState("https://example.com/invite");
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -90,9 +89,8 @@ function EmailInvites() {
       data:
       {access:data.access}
     });
-    console.log(response.data);
 
-    navigator.clipboard.writeText(link)
+    navigator.clipboard.writeText(`http://localhost:5173/getPermission/${response.data.link}`)
       .then(() => {
         alert("Link copied to clipboard!");
       })

@@ -345,18 +345,45 @@ const createLink = async(req,res)=>{
 }
 
 const decryptData = require("./../utils/Decrypt");
-const verifyLink =async(req,res)=>{
-    const {userId} = req.user;
-    const {data} = req.params; 
-    
-    if(!data){
-        return res.status({message:"data not present"});
-    }
-    
+const verifyLink =async(req,res)=>{        
+    const { userId } = req.user; 
+    const { data } = req.params; 
+
     const rights = decryptData(data);
+    if (!rights || !rights.userId || !rights.permission) {
+        return res.status(400).json({ message: "Invalid data" });
+    }
 
-    return res.status(200).json({message:"decrypted successfully find the payload", rights:rights });
+    const requestingUser = await User.findById(userId);
+    if (!requestingUser) {
+        return res.status(404).json({ message: "Requesting user not found" });
+    }
 
+    requestingUser.sharedDashboards = requestingUser.sharedDashboards || [];
+
+    const isDuplicate = requestingUser.sharedDashboards.some(
+        (dashboard) => 
+            dashboard.userId === rights.userId && 
+            dashboard.permission === rights.permission
+    );
+
+    const isOwner = userId == rights.userId
+
+    if(isOwner){
+        return res.status(400).json({message:"User is owner of dashboard"});
+    }
+    if (isDuplicate) {
+        return res.status(400).json({ message: "Rights already exist in sharedDashboards" });
+    }
+
+    requestingUser.sharedDashboards.push(rights);
+
+    await requestingUser.save();
+
+    return res.status(200).json({ 
+        message: "Rights added to User", 
+        rights 
+    });
 }
 
 const Submission = require('./../models/SubmissionModel');
