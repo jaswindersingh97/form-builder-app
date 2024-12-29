@@ -76,7 +76,7 @@ function NavBar1() {
       </div>
       <div className={styles.right}>
         <ToggleButton/>
-        <button onClick={ShareClk}>Share</button>
+        <button className={styles.sharebutton} onClick={ShareClk}>Share</button>
       </div>
     </div>
   )

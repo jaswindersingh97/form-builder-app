@@ -10,10 +10,13 @@
     border: none;
     outline: none;
   }
-  
+  .container{display: flex;
+  gap: 10px;
+  align-items: center;
+}
   /* Styling for the active state of the toggle */
   .toggleButton.active {
-    background-color: #4CAF50;
+    background-color:#1A5FFF;
   }
   
   /* The sliding part of the toggle */

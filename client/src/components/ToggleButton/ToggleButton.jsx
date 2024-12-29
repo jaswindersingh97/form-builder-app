@@ -9,13 +9,14 @@ const ToggleButton = () => {
     setTheme(!theme);
   };
 
-  return (
+  return (<div className={styles.container}>
+  Light
     <button
       className={`${styles.toggleButton} ${theme ? styles.active : ''}`}
       onClick={handleToggle}
     >
       <span className={styles.slider}></span>
-    </button>
+    </button>Dark</div>
   );
 };
 

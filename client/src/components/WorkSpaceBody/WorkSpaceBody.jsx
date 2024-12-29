@@ -1,6 +1,6 @@
 import styles from './WorkSpaceBody.module.css';
-import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useModal } from './../../context/ModalContext';
 import CreateNewFolder from './../WorkSpaceModals/CreateNewFolder/CreateNewFolder';
 import Delete from './../WorkSpaceModals/Delete/Delete';
@@ -100,7 +100,7 @@ function WorkSpaceBody() {
           <img src={FolderIcon} alt="📁" />
           Create a Folder
         </div>
-        {folders.map((folder) => (
+        {folders ?  folders?.map((folder) => (
           <div
             key={folder._id}
             onClick={() => navigate(`/${dashboardId}/workspace/${folder._id}`)}
@@ -122,7 +122,7 @@ function WorkSpaceBody() {
               />
             )}
           </div>
-        ))}
+        )) : "Loading"}
       </div>
       <div className={styles.body}>
         <div onClick={creatForm} style={{ flexDirection: 'column', background: '#1A5FFF' }} className={styles.Forms}>

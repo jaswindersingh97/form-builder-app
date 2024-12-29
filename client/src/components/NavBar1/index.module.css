@@ -21,7 +21,7 @@
     padding: 10px;
     cursor: pointer;
 }
-.right button{
+.sharebutton{
     background-color: #1A5FFF;
     color: var(--color);
 }
