@@ -37,8 +37,8 @@ router.delete("/forms/:formId",validationMiddleware("deleteForm"), deleteForm);
 
 //dashboard
 router.post("/dashboard/share", validationMiddleware("shareDashboard"),shareDashboard);
-// router.post("/dashboard/createLink",validationMiddleware("createLink"),createLink); 
-// router.get("/dashboard/verifyLink", validationMiddleware("verifyLink"),verifyLink); //GET /api/dashboards/verify-sharelink?token=<encryptedToken>
+router.post("/dashboard/createLink",validationMiddleware("createLink"),createLink); 
+router.get("/dashboard/verifyLink/:data", validationMiddleware("verifyLink"),verifyLink); //GET /api/dashboards/verify-sharelink?token=<encryptedToken>
 
 //user
 router.get("/users",validationMiddleware("getUser"), getUser);

@@ -330,11 +330,32 @@ const shareDashboard = async(req,res) =>{
 
     return res.status(200).json({ message: 'Dashboard shared successfully' });
 }
-const createLink = ()=>{
 
+const encryptData = require('./../utils/Encrypt');
+const createLink = async(req,res)=>{
+    const {userId}= req.user;
+    const {access} = req.body;
+    
+    if(!access){
+        return res.status(400).json({message:"the access is not shared"});
+    }
+
+    const data = encryptData(userId,access);
+    return res.status(200).json({message:"Link created successfully", link:data})
 }
 
-const verifyLink =()=>{
+const decryptData = require("./../utils/Decrypt");
+const verifyLink =async(req,res)=>{
+    const {userId} = req.user;
+    const {data} = req.params; 
+    
+    if(!data){
+        return res.status({message:"data not present"});
+    }
+    
+    const rights = decryptData(data);
+
+    return res.status(200).json({message:"decrypted successfully find the payload", rights:rights });
 
 }
 
@@ -425,7 +446,8 @@ module.exports = {
 
     //dashboard
     shareDashboard:asyncHandler(shareDashboard),
-    createLink,verifyLink,
+    createLink:asyncHandler(createLink),
+    verifyLink:asyncHandler(verifyLink),
 
     //User
     getUser: asyncHandler(getUser),

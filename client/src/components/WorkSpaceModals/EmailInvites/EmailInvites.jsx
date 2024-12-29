@@ -82,7 +82,16 @@ function EmailInvites() {
     setData((prevData) => ({ ...prevData, email: "" }));
   };
 
-  const onLinkShare = () => { //pending
+  const onLinkShare = async() => { 
+
+    const response = await Api({endpoint:"/secure/dashboard/createLink",
+      method:'post',
+      includeToken:true,
+      data:
+      {access:data.access}
+    });
+    console.log(response.data);
+
     navigator.clipboard.writeText(link)
       .then(() => {
         alert("Link copied to clipboard!");

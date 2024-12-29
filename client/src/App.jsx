@@ -13,6 +13,7 @@ import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
 import { useTheme } from './context/ThemeContext';
 import FormSubmit from './pages/FormSubmit/FormSubmit';
 import Response from './pages/Response/Response';
+import SharedPage from './pages/SharedPage/SharedPage';
 function App() {
   const {theme}=useTheme();
   const themeStyle = theme ? "dark" : "light"; 
@@ -33,6 +34,7 @@ function App() {
           <Route path='/:dashboardId/Workspace/:FolderId/editForm/:FormId' element={<ProtectedRoutes element={<FormPage mode={"edit"} theme={themeStyle}/>} isPublic={false}/>} />
           <Route path='/:dashboardId/Workspace/:FolderId/responses/:formId' element={<ProtectedRoutes element={<Response theme={themeStyle}/>} isPublic={false}/>} />
           <Route path='/FormSubmit/:FormId' element={<FormSubmit/>}/>
+          <Route path='/getPermission/:data' element={<SharedPage/>}/>
           <Route path='*' element={<h1>Not Found</h1>} />
         </Routes>
       </BrowserRouter>

@@ -93,5 +93,15 @@ const schemas ={
             formId:Joi.string().length(24).hex().required(),
         })
     },
+    createLink:{
+        body:Joi.object({
+            access:Joi.string().required(),
+        }),
+    },
+    verifyLink:{
+        params:Joi.object({
+            data:Joi.string().required(),
+        }),
+    },
 };
 module.exports = schemas;
