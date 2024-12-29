@@ -5,11 +5,13 @@ import React, { useEffect, useState } from 'react'
 import EmailInvites from './../WorkSpaceModals/EmailInvites/EmailInvites';
 import Dropdown from '../Dropdown/Dropdown';
 import {Link, useNavigate, useParams} from 'react-router-dom'
+import Loading from './../../assets/Loading/loading.gif' 
 import Api from '../../Api/Api';
 function NavBar1() {
   const {dashboardId} = useParams();
   const {openModal,closeModal} = useModal();
   const navigate = useNavigate()
+  const [loading,setLoading] = useState(true);
   const ShareClk = () =>{
     openModal(<EmailInvites/>);
   }
@@ -26,6 +28,7 @@ function NavBar1() {
       includeToken:true,
     })
     setUser(response.data);
+    setLoading(false)
   }
   useEffect(()=>{
   getUser();
@@ -51,6 +54,7 @@ function NavBar1() {
   return (
     <div className={styles.container}>
       <div className={styles.middle}>
+      {loading ? <img src={Loading} className='loading' alt='loading'/>:      
         <Dropdown active={ActiveUser() }>
         <Link to={'/settings'}><div className={styles.menuItem}>Settings</div></Link>
             <div onClick={Logout} className={styles.menuItem}>Logout</div>
@@ -72,7 +76,7 @@ function NavBar1() {
             }
             <hr/>
             <div onClick={()=>navigate('/Workspace')} className={styles.menuItem}>{user.name}</div>
-        </Dropdown>
+        </Dropdown>}
       </div>
       <div className={styles.right}>
         <ToggleButton/>

@@ -24,9 +24,11 @@ function WorkSpaceBody() {
   // Handle folder changes and update forms
   useEffect(() => {
       getForms(FolderId);
-      setLoading(false)
+      if(folders.length > 0){
+        setLoading(false)
+      }
   }, [folders,FolderId]);
-
+  
 
   const creatForm = () =>{
     if(!FolderId){
