@@ -3,11 +3,12 @@ import React, {useEffect, useState} from 'react'
 import ToggleButton from '../ToggleButton/ToggleButton';
 import { useForm } from '../../context/FormContext';
 import Api from '../../Api/Api';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {toast} from 'react-toastify';
 function NavBar2() {
     const {FolderId,FormId} = useParams();
     const [formId,setFormId] = useState(FormId || '');
+    const navigate = useNavigate();
     useEffect(()=>{
       setForm(() =>(
           {folder:FolderId}
@@ -63,9 +64,15 @@ function NavBar2() {
         </div>
         <div className={styles.right}>
             <ToggleButton/>
-            <button disabled={!formId && true} onClick={shareForm} className={`${formId && styles.Active}`}>Share</button>
-            <button onClick={onSave}>Save</button>
-            <button>X</button>
+            <button 
+  className={`${styles.rightButtons} ${formId ? styles.Active : ''}`} 
+  disabled={!formId} 
+  onClick={shareForm}
+>
+  Share
+</button>
+            <button className={styles.rightButtons} onClick={onSave}>Save</button>
+            <button className={styles.rightButtons}>X</button>
         </div>
     </div>
   )

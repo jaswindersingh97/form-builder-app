@@ -5,7 +5,9 @@
     padding: 10px;
     padding-top: 70px;
     gap: 30px;
-    overflow-y: auto;
+    overflow-y: auto;   
+    box-sizing: border-box;
+    width: 100%;
 }
 .top{
     display: flex;
