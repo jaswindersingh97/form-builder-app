@@ -34,6 +34,7 @@
     box-sizing: border-box;
     max-width: 100%; /* Prevent elements from overflowing their container */
     flex: 1 1 auto; /* Allow elements to grow and shrink as needed */
+    border:var(--border);
 }
 .Folders{
     max-width: fit-content;
@@ -60,5 +61,5 @@
 }
 
 .Active {
-    background-color: gold;
+    background-color: #9e9999;
 }

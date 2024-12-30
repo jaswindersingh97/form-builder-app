@@ -100,7 +100,7 @@ function WorkSpaceBody() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div onClick={createFolder} className={styles.Folders}>
+        <div onClick={!loading && createFolder} className={styles.Folders}>
           <img src={FolderIcon} alt="📁" />
           Create a Folder
         </div>
@@ -129,7 +129,7 @@ function WorkSpaceBody() {
         ))  }
       </div>
       <div className={styles.body}>
-        <div onClick={creatForm} style={{ flexDirection: 'column', background: '#1A5FFF' }} className={styles.Forms}>
+        <div onClick={!loading && creatForm} style={{ flexDirection: 'column', background: '#1A5FFF' }} className={styles.Forms}>
           <p style={{ fontSize: '40px' }}>+</p>
           <span>Create a typebot</span>
         </div>
