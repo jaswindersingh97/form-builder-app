@@ -38,7 +38,7 @@ function Response() {
                 label: 'Submission Progress',
                 data: [
                     data?.progress?.completedCount || 0, // Completed count
-                    (data?.progress?.viewCount || 0) - (data?.progress?.completedCount || 0), // Pending count (calculated by subtracting completed from total views)
+                    (data?.progress?.startedCount || 0) - (data?.progress?.completedCount || 0), // Pending count (calculated by subtracting completed from total views)
                 ],
                 backgroundColor: ['#36A2EB', '#FF6384'], // Colors for each section
                 borderColor: ['#ffffff', '#ffffff'], // Border color for sections
@@ -49,47 +49,82 @@ function Response() {
 
     return (
         <div className={styles.container}>
-            <NavBar3/>
-            <div className={styles.header}>
+          <NavBar3 />
+          {!loading && data?.progress?.viewCount === 0 ? (
+            <div className={styles.noresponse}>No Response yet collected</div>
+          ) : (
+            <>
+              <div className={styles.header}>
                 <div className={styles.count}>
-                    <p>Views:</p> {!loading ? data.progress.viewCount :
-                    <img src={Loading} className='loading' alt='loading'/>
-                     }
+                  <p>Views:</p>
+                  {loading ? (
+                    <img src={Loading} className="loading" alt="loading" />
+                  ) : (
+                    data.progress.viewCount
+                  )}
                 </div>
                 <div className={styles.count}>
-                    <p>Starts:</p> {!loading ?
-                     data?.progress?.startedCount :
-                        <img src={Loading} className='loading' alt='loading'/>
-                    }
+                  <p>Starts:</p>
+                  {loading ? (
+                    <img src={Loading} className="loading" alt="loading" />
+                  ) : (
+                    data?.progress?.startedCount
+                  )}
                 </div>
-                <div className={styles.count}>
-                    <p>Completed:</p> {!loading ?
-                        data?.progress?.completedCount:
-                        <img src={Loading} className='loading' alt='loading'/>
-                        }
-                </div>
-            </div>
-            <div className={styles.body}>
-                {!loading ? (
-                    <>
-                        <Table data={data} />
-                    </>
+              </div>
+      
+              <div className={styles.body}>
+                {loading ? (
+                  <img src={Loading} className="loading" alt="loading" />
                 ) : (
-                    <img src={Loading} className='loading' alt='loading'/>
-
+                  <Table data={data} />
                 )}
-            </div>
-            <div className={styles.footer}>
-            {!loading ? (
-                    <div style={{ width: '300px', height: '300px', margin: '0 auto' }}>
-                        <Doughnut data={doughnutData} />
+              </div>
+      
+              <div className={styles.footer}>
+                {loading ? (
+                  <img src={Loading} className="loading" alt="loading" />
+                ) : (
+                  <>
+                    <div
+                    className={styles.Doughnut}
+                      style={{
+                        width: '300px',
+                        height: '300px',
+                        margin: '0 auto',
+                      }}
+                    >
+                      <Doughnut data={doughnutData} />
+                      <div className={styles.count}>
+                      <p>Completed:</p>
+                      <p>
+                        {data?.progress?.startedCount > 0
+                          ? `${data?.progress?.completedCount}`
+                          : 'N/A'}
+                      </p>
                     </div>
-                ) : (
-                    <img src={Loading} className='loading' alt='loading'/>
+
+                      <div className={styles.count}>
+                      <p>Completion rate:</p>
+                      <p>
+                        {data?.progress?.startedCount > 0
+                          ? `${(
+                              (data?.progress?.completedCount /
+                                data?.progress?.startedCount) *
+                              100
+                            ).toFixed(2)}%`
+                          : 'N/A'}
+                      </p>
+                    </div>
+                    </div>
+                    
+                  </>
                 )}
-            </div>
+              </div>
+            </>
+          )}
         </div>
-    );
-}
+      );
+      }
 
 export default withTheme(Response);

@@ -1,9 +1,11 @@
 .container{
     display: flex;
     flex-direction: column;
-    width: 100vh;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     box-sizing: border-box;
+    background-color: pink;
+    overflow-y: auto;
 }
 .inputs{
     margin-left: auto;

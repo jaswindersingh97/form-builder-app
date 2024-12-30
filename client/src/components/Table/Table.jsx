@@ -13,7 +13,7 @@ const Table = ({ data }) => {
           row[element.label] = submissionItem ? submissionItem.value : "N/A";
         });
         return row;
-      }) || []; // Ensure rows is always an array
+      }) || []; 
   
       return { headers, rows };
     };
