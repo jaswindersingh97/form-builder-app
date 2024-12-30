@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import NavBar2 from '../../components/NavBar2/NavBar2';
 import withTheme from '../../components/ThemeComponent/ThemeComponent';
 import WorkFlow from '../../components/WorkFlow/WorkFlow';
@@ -6,12 +6,13 @@ import styles from './style.module.css';
 import { buttons, Date, Email, Gif, Image, Number, Phone, Rating, TextBubble, Textinput, Video } from './../../assets/FormPage';
 import { useForm } from '../../context/FormContext';
 import { useParams } from 'react-router-dom';
+import Loading from './../../assets/Loading/loading.gif'
 import Api from '../../Api/Api';
 
 function FormPage({ mode }) {
   const {FormId} = useParams();
   const { form, setForm } = useForm();
-  
+  const [loading,setLoading] = useState(true);
   const fetchForm = async(id)=>{
     const response = await Api({
       endpoint:`/public/forms/${id}`,
@@ -20,6 +21,7 @@ function FormPage({ mode }) {
     })
     setForm(response.data.form);
     console.log(response)
+    setLoading(false);
   }
 
   useEffect(()=>{
@@ -78,7 +80,7 @@ const addElement = (name, superType) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <NavBar2 />
+        <NavBar2 loading={loading}/>
       </div>
       <div className={styles.body}>
         <div className={styles.left}>
@@ -114,7 +116,7 @@ const addElement = (name, superType) => {
           </div>
         </div>
         <div className={styles.right}>
-          <WorkFlow />
+          <WorkFlow loading={loading} />
         </div>
       </div>
     </div>

@@ -27,12 +27,12 @@ function App() {
           <Route path='/SignIn' element={<ProtectedRoutes element={<SignInPage theme={themeStyle}/>} isPublic={true}/>}/>
           <Route path='/Register' element={<ProtectedRoutes element={<RegisterPage theme={themeStyle}/>} isPublic={true}/>}/>
           <Route path='/settings' element={<ProtectedRoutes element={<SettingsPage theme={themeStyle}/>} isPublic={false}/>}/>
-          <Route path='/Workspace' element= {<Navigate to ={`/${userId}/workspace`} replace/>}/>
-          <Route path='/:dashboardId/WorkSpace/' element={<ProtectedRoutes element={<WorkSpace theme={themeStyle}/>} isPublic={false}/>} />
-          <Route path='/:dashboardId/Workspace/:FolderId' element={<ProtectedRoutes element={<WorkSpace theme={themeStyle}/>} isPublic={false}/>}/> 
-          <Route path='/:dashboardId/Workspace/:FolderId/createForm' element={<ProtectedRoutes element={<FormPage mode={"create"} theme={themeStyle}/>} isPublic={false}/>} />
-          <Route path='/:dashboardId/Workspace/:FolderId/editForm/:FormId' element={<ProtectedRoutes element={<FormPage mode={"edit"} theme={themeStyle}/>} isPublic={false}/>} />
-          <Route path='/:dashboardId/Workspace/:FolderId/responses/:formId' element={<ProtectedRoutes element={<Response theme={themeStyle}/>} isPublic={false}/>} />
+          <Route path='/workspace' element= {<Navigate to ={`/${userId}/workspace`} replace/>}/>
+          <Route path='/:dashboardId/workSpace/' element={<ProtectedRoutes element={<WorkSpace theme={themeStyle}/>} isPublic={false}/>} />
+          <Route path='/:dashboardId/workspace/:FolderId' element={<ProtectedRoutes element={<WorkSpace theme={themeStyle}/>} isPublic={false}/>}/> 
+          <Route path='/:dashboardId/workspace/:FolderId/createForm' element={<ProtectedRoutes element={<FormPage mode={"create"} theme={themeStyle}/>} isPublic={false}/>} />
+          <Route path='/:dashboardId/workspace/:FolderId/editForm/:FormId' element={<ProtectedRoutes element={<FormPage mode={"edit"} theme={themeStyle}/>} isPublic={false}/>} />
+          <Route path='/:dashboardId/workspace/:FolderId/responses/:formId' element={<ProtectedRoutes element={<Response theme={themeStyle}/>} isPublic={false}/>} />
           <Route path='/FormSubmit/:FormId' element={<FormSubmit/>}/>
           <Route path='/getPermission/:data' element={<SharedPage/>}/>
           <Route path='*' element={<h1>Not Found</h1>} />

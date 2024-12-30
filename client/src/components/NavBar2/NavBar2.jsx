@@ -3,12 +3,17 @@ import React, {useEffect, useState} from 'react'
 import ToggleButton from '../ToggleButton/ToggleButton';
 import { useForm } from '../../context/FormContext';
 import Api from '../../Api/Api';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import {toast} from 'react-toastify';
-function NavBar2() {
-    const {FolderId,FormId} = useParams();
+import Loading from './../../assets/Loading/loading.gif'
+
+function NavBar2({loading}) {
+    const {dashboardId,FolderId,FormId} = useParams();
     const [formId,setFormId] = useState(FormId || '');
+    const location = useLocation();
     const navigate = useNavigate();
+    const isFlowActive = location.pathname === `/${dashboardId}/workspace/${FolderId}/editForm/${FormId}`;
+    const isResponseActive = location.pathname === `/${dashboardId}/workspace/${FolderId}/responses/${FormId}`;
     useEffect(()=>{
       setForm(() =>(
           {folder:FolderId}
@@ -56,11 +61,25 @@ function NavBar2() {
   return (
     <div className={styles.container}>
         <div className={styles.left}>
-            <input type='text' placeholder='Enter Form Name' value={form.name} onChange={(e)=>setForm((prevData)=>({...prevData, name:e.target.value}))}/>
+            {
+                !loading?
+                <input type='text' placeholder='Enter Form Name' value={form.name} onChange={(e)=>setForm((prevData)=>({...prevData, name:e.target.value}))}/> 
+                :<img src={Loading} className='loading' alt='loading'/>
+            }
         </div>
         <div className={styles.middle}>
-            <button>Flow</button>
-            <button>Response</button>
+        <button
+        onClick={() => navigate(`/${dashboardId}/Workspace/${FolderId}/editForm/${FormId}`)}
+        className={isFlowActive ? styles.activeButton : ''}
+      >
+        Flow
+      </button>
+      <button
+        onClick={() => navigate(`/${dashboardId}/Workspace/${FolderId}/responses/${FormId}`)}
+        className={isResponseActive ? styles.activeButton : ''}
+      >
+        Response
+      </button>
         </div>
         <div className={styles.right}>
             <ToggleButton/>

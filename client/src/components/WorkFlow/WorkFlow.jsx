@@ -5,7 +5,9 @@ import BubblesInFlow from '../BubblesInFlow/BubblesInFlow';
 import InputInFlow from '../InputInFlow/InputInFlow';
 import ButtonInFlow from '../ButtonInFlow/ButtonInFlow';
 import { useForm } from '../../context/FormContext';
-function WorkFlow() {
+import Loading from './../../assets/Loading/loading.gif'
+
+function WorkFlow({loading}) {
   const {form,setForm} = useForm();
 
   return (
@@ -14,7 +16,7 @@ function WorkFlow() {
         <img src={flag} alt='flag'/>
         <span>Start</span>
       </div>
-      {
+      { !loading?
         form.elements.map((element, index) => {
           if (element.superType === 'Bubbles') {
             return <BubblesInFlow key={index} type={element.type} label={element.label} state={form} setState={setForm} />;
@@ -27,6 +29,7 @@ function WorkFlow() {
           }
           return <p key={index}>Unsupported element</p>;
         })
+        : <img src={Loading} className='loading' alt='loading'/>
       }
 
     </div>

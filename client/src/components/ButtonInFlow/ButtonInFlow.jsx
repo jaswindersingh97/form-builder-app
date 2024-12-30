@@ -101,7 +101,7 @@ function ButtonInFlow({ type, label, state, setState }) {
         </button>
         <p>{object.placeholder}</p>
       </div>
-      <pre>{JSON.stringify(buttonFields, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(buttonFields, null, 2)}</pre> */}
     </div>
   );
 }
