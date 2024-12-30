@@ -17,7 +17,6 @@ function SettingsPage() {
           validate: (value) => value.length >= 3 || value === "", 
           errorMessage: "Username should be at least 3 characters",
           icon:name
-
         },
         {
           name: "email",

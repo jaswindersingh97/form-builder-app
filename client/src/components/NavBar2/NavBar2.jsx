@@ -18,7 +18,6 @@ function NavBar2({loading}) {
       setForm(() =>(
           {folder:FolderId}
       ))
-    //   console.log(FormId);
     },[])
     const onSave = async()=>{
         let config = {
@@ -69,14 +68,14 @@ function NavBar2({loading}) {
         </div>
         <div className={styles.middle}>
         <button
-        onClick={() => navigate(`/${dashboardId}/Workspace/${FolderId}/editForm/${FormId}`)}
-        className={isFlowActive ? styles.activeButton : ''}
+        onClick={() => navigate(`/${dashboardId}/workspace/${FolderId}/editForm/${FormId}`)}
+        className={ styles.activeButton}
       >
         Flow
       </button>
       <button
-        onClick={() => navigate(`/${dashboardId}/Workspace/${FolderId}/responses/${FormId}`)}
-        className={isResponseActive ? styles.activeButton : ''}
+        onClick={() => navigate(`/${dashboardId}/workspace/${FolderId}/responses/${FormId}`)}
+        className={styles.notselected}
       >
         Response
       </button>

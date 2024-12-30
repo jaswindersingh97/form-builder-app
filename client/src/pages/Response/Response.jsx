@@ -6,22 +6,24 @@ import { useParams } from 'react-router-dom';
 import Api from '../../Api/Api';
 import styles from './styles.module.css';
 import Table from './../../components/Table/Table';
-
+import Loading from './../../assets/Loading/loading.gif'
+import NavBar3 from '../../components/NavBar3/NavBar3';
 // Register Chart.js components
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
 
 function Response() {
-    const { formId } = useParams();
+    const {  FormId } = useParams();
     const [data, setData] = useState({});
 
+    const [loading,setLoading] = useState(true);
     const fetchData = async () => {
         const response = await Api({
-            endpoint: `/secure/analytics/${formId}`,
+            endpoint: `/secure/analytics/${FormId}`,
             includeToken: true,
             method: 'get',
         });
         setData(response.data);
-        console.log(response.data);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -47,33 +49,43 @@ function Response() {
 
     return (
         <div className={styles.container}>
+            <NavBar3/>
             <div className={styles.header}>
                 <div className={styles.count}>
-                    <p>Views:</p> {data?.progress?.viewCount}
+                    <p>Views:</p> {!loading ? data.progress.viewCount :
+                    <img src={Loading} className='loading' alt='loading'/>
+                     }
                 </div>
                 <div className={styles.count}>
-                    <p>Starts:</p> {data?.progress?.startedCount}
+                    <p>Starts:</p> {!loading ?
+                     data?.progress?.startedCount :
+                        <img src={Loading} className='loading' alt='loading'/>
+                    }
                 </div>
                 <div className={styles.count}>
-                    <p>Completed:</p> {data?.progress?.completedCount}
+                    <p>Completed:</p> {!loading ?
+                        data?.progress?.completedCount:
+                        <img src={Loading} className='loading' alt='loading'/>
+                        }
                 </div>
             </div>
             <div className={styles.body}>
-                {data ? (
+                {!loading ? (
                     <>
                         <Table data={data} />
                     </>
                 ) : (
-                    <p>Loading...</p>
+                    <img src={Loading} className='loading' alt='loading'/>
+
                 )}
             </div>
             <div className={styles.footer}>
-            {data ? (
-                    <>
+            {!loading ? (
+                    <div style={{ width: '300px', height: '300px', margin: '0 auto' }}>
                         <Doughnut data={doughnutData} />
-                    </>
+                    </div>
                 ) : (
-                    <p>Loading...</p>
+                    <img src={Loading} className='loading' alt='loading'/>
                 )}
             </div>
         </div>

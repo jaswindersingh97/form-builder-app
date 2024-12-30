@@ -37,6 +37,9 @@
     display: flex;
     gap: 20px;
 }
+.middle{
+    align-self: center;
+}
 .notselected{
     background-color: inherit;
     color: var(--color);

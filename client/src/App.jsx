@@ -32,7 +32,7 @@ function App() {
           <Route path='/:dashboardId/workspace/:FolderId' element={<ProtectedRoutes element={<WorkSpace theme={themeStyle}/>} isPublic={false}/>}/> 
           <Route path='/:dashboardId/workspace/:FolderId/createForm' element={<ProtectedRoutes element={<FormPage mode={"create"} theme={themeStyle}/>} isPublic={false}/>} />
           <Route path='/:dashboardId/workspace/:FolderId/editForm/:FormId' element={<ProtectedRoutes element={<FormPage mode={"edit"} theme={themeStyle}/>} isPublic={false}/>} />
-          <Route path='/:dashboardId/workspace/:FolderId/responses/:formId' element={<ProtectedRoutes element={<Response theme={themeStyle}/>} isPublic={false}/>} />
+          <Route path='/:dashboardId/workspace/:FolderId/responses/:FormId' element={<ProtectedRoutes element={<Response theme={themeStyle}/>} isPublic={false}/>} />
           <Route path='/FormSubmit/:FormId' element={<FormSubmit/>}/>
           <Route path='/getPermission/:data' element={<SharedPage/>}/>
           <Route path='*' element={<h1>Not Found</h1>} />
