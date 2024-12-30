@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from './CreateNewFolder.module.css';
-
+// import useTheme  from './../../ThemeComponent/ThemeComponent';
 function CreateNewFolder({ AddFolder }) {
   const [folder, setFolder] = useState("");
   const [error, setError] = useState("");  // To hold the error message

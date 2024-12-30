@@ -1,8 +1,9 @@
 
 
 .theme-light{
-    width: 100vw;
     background-color: white;
+    --background-color: white;
+
     --text:#18181B;
     --dropdownbackground:white;
     --hover:rgba(0, 0, 0, 0.484);
@@ -13,8 +14,8 @@
     }
 }
 .theme-dark{
-    width: 100vw;
     background-color: #18181B;
+    --background-color: #18181B;
     --text:white;
     --dropdownbackground:#18181B;
     --dropdownborder:#FFFFFF29;

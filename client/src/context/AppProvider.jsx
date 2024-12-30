@@ -6,8 +6,9 @@ import { FolderProvider } from './FolderContext'
 import { FormProvider } from './FormContext'
 function AppProvider({children}) {
   return (
+    <ThemeProvider>
+
       <ModalProvider>
-        <ThemeProvider>
           <TokenProvider>
             <FolderProvider>
               <FormProvider>
@@ -15,8 +16,9 @@ function AppProvider({children}) {
               </FormProvider>
             </FolderProvider>
           </TokenProvider>
-        </ThemeProvider>
       </ModalProvider>
+      </ThemeProvider>
+
   )
 }
 

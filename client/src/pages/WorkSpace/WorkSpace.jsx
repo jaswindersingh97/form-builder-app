@@ -4,11 +4,13 @@ import React from 'react'
 import withTheme from '../../components/ThemeComponent/ThemeComponent';
 import WorkSpaceBody from '../../components/WorkSpaceBody/WorkSpaceBody';
 import Modal from './../../components/Modal/Modal';
+import { useTheme } from '../../context/ThemeContext';
 function WorkSpace() {
-  
+    const {theme}=useTheme();
+    console.log(theme)
   return (
     <div className={style.container}>
-      <Modal/>
+      {/* <Modal theme={theme}/> */}
       <NavBar1/>
       <WorkSpaceBody/>
     </div>
