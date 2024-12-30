@@ -1,7 +1,10 @@
 import React from 'react';
-import Form from '../../components/Form/Form';
+import Form from './Form';
+import styles from './Settings.module.css';
 import withTheme from '../../components/ThemeComponent/ThemeComponent';
 import Api from './../../Api/Api'
+import {name,email,password,hidePassword,unhidePassword} from './../../assets/FormComponents/index';
+import LogOut from './../../assets/Settings/Logout.svg'
 import { useToken } from '../../context/TokenContext';
 import {toast} from 'react-toastify'
 function SettingsPage() {
@@ -13,6 +16,8 @@ function SettingsPage() {
           required: false,
           validate: (value) => value.length >= 3 || value === "", 
           errorMessage: "Username should be at least 3 characters",
+          icon:name
+
         },
         {
           name: "email",
@@ -20,6 +25,7 @@ function SettingsPage() {
           required: false, 
           validate: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || value === "",
           errorMessage: "Please enter a valid email address",
+          icon:email
         },
         {
           name: "oldPassword",
@@ -27,6 +33,9 @@ function SettingsPage() {
           required: false, 
           validate: (value) => value.length >= 6 || value === "", 
           errorMessage: "Password must be at least 6 characters long",
+          icon:password,
+          hidePassword:hidePassword,
+          unhidePassword:unhidePassword,
         },
         {
           name: "newPassword",
@@ -40,6 +49,9 @@ function SettingsPage() {
             return true; // If newPassword is not filled, it's valid.
           },
           errorMessage: "New password must be at least 6 characters long and Old password cannot be empty if New password is filled.",
+          icon:password,
+          hidePassword:hidePassword,
+          unhidePassword:unhidePassword,
         }        
       ];
       const handleSubmit = async(data) => {
@@ -59,13 +71,15 @@ function SettingsPage() {
       };
 
     return (
-        <div>
-            <div>
+        <div className={styles.container}>
+            <div className={styles.header}>
                 <h1>Settings</h1>
+            </div>
+            <div className={styles.body}>
+              <Form fields={formFields} onSubmit={handleSubmit} buttonLabel={"Update"}/>
             </div>        
-            <Form fields={formFields} onSubmit={handleSubmit} buttonLabel={"Update"}/>
-            <div>
-                <button>Log out</button>
+            <div className={styles.footer}>
+              <button><img src={LogOut} alt='logOut'/> Log out</button>
             </div>
         </div>
     );

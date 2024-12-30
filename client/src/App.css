@@ -55,3 +55,10 @@ a{
 ::-webkit-scrollbar-thumb:hover {
   background: #000000A1; 
 }
+
+input:-webkit-autofill {
+  background-color: transparent !important; /* Remove custom background */
+  border: none!important; /* Reset border */
+  color: #000 !important; /* Reset text color */
+}
+
