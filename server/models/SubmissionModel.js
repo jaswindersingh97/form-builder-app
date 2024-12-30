@@ -1,29 +1,27 @@
 const mongoose = require('mongoose');
 
-// Schema for storing field data in a submission
 const FieldDataSchema = new mongoose.Schema({
   label: {
     type: String,
-    required: true, // Match the label in the Form model's elements
+    required: true, 
   },
   value: {
-    type: String, // Value associated with the field
+    type: String,
     required: true,
   },
 });
 
-// Schema for submissions
 const SubmissionSchema = new mongoose.Schema({
   formId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Form',
-    required: true, // Reference to the Form being submitted
+    required: true,
   },
   submittedAt: {
     type: Date,
-    default: Date.now, // Timestamp for when the submission occurred
+    default: Date.now,
   },
-  data: [FieldDataSchema], // Array of submitted field data
+  data: [FieldDataSchema],
 });
 
 const Submission = mongoose.model('Submission', SubmissionSchema);

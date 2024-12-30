@@ -16,7 +16,7 @@ function FormSubmit() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [userInputs, setUserInputs] = useState([]);
     const [firstValueChange,setFirstValueChange] = useState(false);
-
+    const [submited,setSubmitted] = useState(false);
     const fetchForm = async () => {
         try {
             const response = await Api({
@@ -61,6 +61,7 @@ function FormSubmit() {
 
     const submitForm = async(e) =>{
         e.preventDefault();
+        setSubmitted(true);        
         try {
             const response = await Api({
                 endpoint: `/public/forms/submit/${FormId}`,
@@ -72,6 +73,7 @@ function FormSubmit() {
                 completeCountUpdate();
             }
         } catch (error) {
+            setSubmitted(false);
             console.error('Error fetching form:', error);
         }
     }
@@ -159,7 +161,7 @@ function FormSubmit() {
                 }
                 return null;
             })}
-            <button onClick={submitForm}>Submit</button>
+            <button disabled={submited} onClick={submitForm}>Submit</button>
         </div>
     );
 }
