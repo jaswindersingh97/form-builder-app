@@ -74,7 +74,6 @@ function EmailInvites() {
       toast.error("Please select or enter a valid email address.");
       return;
     }
-    console.log(`Invitation sent to ${data.email} with ${data.access} access`);
     shareDashboard(data);
     setSelectedUser(null);
     setData((prevData) => ({ ...prevData, email: "" }));
@@ -91,7 +90,7 @@ function EmailInvites() {
 
     navigator.clipboard.writeText(`http://localhost:5173/getPermission/${response.data.link}`)
       .then(() => {
-        alert("Link copied to clipboard!");
+        toast.success("Link copied to clipboard!");
       })
       .catch((err) => {
         console.error("Failed to copy link: ", err);

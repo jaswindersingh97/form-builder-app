@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './Delete.module.css'
 function Delete({name,id,onDelete}) {
   const onSubmit = async(e)=>{
@@ -6,13 +6,15 @@ function Delete({name,id,onDelete}) {
     await onDelete(id);
   }
   return (
-    <form onSubmit={onSubmit} className={styles.container}>
+    <form onSubmit={ onSubmit}>
+    <div  className={styles.container}> 
       <h2>Are you sure you want to delete this {name}</h2>
-      <div>
-        <button type='submit' className={styles.deleteButton}>Delete</button>
+      <div className={styles.body}>
+        <button type='submit' className={styles.deleteButton}>Confirm</button>
         <hr />
         <button type='reset' className={styles.cancelButton}>Cancel</button>
       </div>
+    </div>
     </form>
   )
 }

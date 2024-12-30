@@ -20,7 +20,7 @@ function CreateNewFolder({ AddFolder }) {
   return (
     <div className={styles.container}>
       <form onSubmit={FormSubmit}>
-        <h1>Create New Folder</h1>
+        <h3>Create New Folder</h3>
         <input
           type="text"
           placeholder="Enter folder Name"
@@ -31,7 +31,6 @@ function CreateNewFolder({ AddFolder }) {
 
         <div className={styles.buttonContainer}>
           <button type="submit" className={styles.createButton}>Done</button>
-          <hr />
           <button type="reset" className={styles.cancelButton}>Cancel</button>
         </div>
       </form>
