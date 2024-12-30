@@ -3,10 +3,11 @@
     flex-direction: column;
     position: relative;
     padding: 10px;
-    background-color: black;
+    background-color: var(--bubblesbackground);
     border-radius: 10px;
     box-sizing: border-box;
     width: 335px;
+    border: var(--border);
 }
 .deleteIcon{
     position: absolute;

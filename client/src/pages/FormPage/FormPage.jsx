@@ -6,7 +6,6 @@ import styles from './style.module.css';
 import { buttons, Date, Email, Gif, Image, Number, Phone, Rating, TextBubble, Textinput, Video } from './../../assets/FormPage';
 import { useForm } from '../../context/FormContext';
 import { useParams } from 'react-router-dom';
-import Loading from './../../assets/Loading/loading.gif'
 import Api from '../../Api/Api';
 
 function FormPage({ mode }) {
@@ -43,7 +42,6 @@ const addElement = (name, superType) => {
     element => element.type === name && element.superType === superType
   ).length + 1; // Count elements with the same type AND superType
 
-  // Determine the initial value type (array or string) based on the name or superType
   const isArrayType = name === "Buttons"; // Example: Use array for "Buttons"
   const newElement = { 
     label: `${superType} ${name} ${count}`, 

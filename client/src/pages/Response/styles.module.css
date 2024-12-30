@@ -15,7 +15,8 @@
     border-radius: 20px;
     width: 200px;
     height: 120px;
-    background-color: #323232;
+    background-color:var(--bubblesbackground);
+    border: var(--border);
     display: flex;
     flex-direction: column;
 }

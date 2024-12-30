@@ -6,6 +6,13 @@ import {toast} from 'react-toastify';
 
 function NavBar3() {
     const {dashboardId,FolderId,FormId} = useParams();
+    const location = useLocation();
+
+    const handleGoBack = () => {
+      const basePath = location.pathname.split('/responses')[0];
+      navigate(basePath);
+    };
+  
     const navigate = useNavigate();
     const shareForm = () => {
         const fullDomain = window.location.hostname + (window.location.port ? `:${window.location.port}` : '');
@@ -43,7 +50,7 @@ function NavBar3() {
                 // onSave
                 ()=>toast.success("form is saved")
                 }>Save</button>
-            <button className={styles.x}>X</button>
+            <button onClick={handleGoBack} className={styles.x}>X</button>
         </div>
     </div>
   )

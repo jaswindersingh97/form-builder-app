@@ -4,6 +4,7 @@
     flex-direction: column;
     box-sizing: border-box;
     height: 100vh;
+    color: var(--text);
 }
 .body{
     /* padding: 10px; */
@@ -13,6 +14,10 @@
     gap: 10px;
     background-color: #1F1F23;
     overflow: hidden;
+    padding: 10px;
+    background-color: var(--backgroundcolor);
+    color: var(--text);
+
 }
 .left{
     width: 20%;
@@ -21,7 +26,8 @@
     flex-direction: column;
     border: 1px,white,solid;
     border-radius: 10px;
-    background-color: #18181B;
+    background-color: var(--bubblesbackground);
+    border: var(--border);
 }
 .right{
     flex: 1;
@@ -30,6 +36,8 @@
     box-sizing: border-box;
     width: 100%;
     height: 100%;
+    color: var(--text);
+
 }
 .Fields{
     display: flex;
@@ -45,7 +53,6 @@
     display: flex;
     width: 40%;
     padding: 10px;
-    background-color: var(--dropdownbackground);
     gap: 10px;
 }
 .Field img{
@@ -53,4 +60,6 @@
 }
 .Field:hover{
     background-color: var(--hover);
+    color: var(--text);
+
 }

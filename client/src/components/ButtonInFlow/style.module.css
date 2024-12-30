@@ -3,10 +3,14 @@
     flex-direction: column;
     position: relative;
     padding: 10px;
-    background-color: black;
+    background-color:var(--bubblesbackground);
     border-radius: 10px;
+    border: var(--border);
     box-sizing: border-box;
     width: 335px;
+}
+.container button{
+    background-color: #1A5FFF;
 }
 .deleteIcon{
     position: absolute;

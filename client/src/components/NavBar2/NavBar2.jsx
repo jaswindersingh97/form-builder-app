@@ -11,9 +11,12 @@ function NavBar2({loading}) {
     const {dashboardId,FolderId,FormId} = useParams();
     const [formId,setFormId] = useState(FormId || '');
     const location = useLocation();
+
+    const handleGoBack = () => {
+      const basePath = location.pathname.split('/editForm')[0];
+      navigate(basePath);
+    };
     const navigate = useNavigate();
-    const isFlowActive = location.pathname === `/${dashboardId}/workspace/${FolderId}/editForm/${FormId}`;
-    const isResponseActive = location.pathname === `/${dashboardId}/workspace/${FolderId}/responses/${FormId}`;
     useEffect(()=>{
       setForm(() =>(
           {folder:FolderId}
@@ -84,7 +87,7 @@ function NavBar2({loading}) {
             <ToggleButton/>
             <button className={`${styles.rightButtons} ${formId ? styles.Active : ''}`} disabled={!formId} onClick={shareForm}>Share</button>
             <button className={styles.save} onClick={onSave}>Save</button>
-            <button className={styles.x}>X</button>
+            <button onClick={handleGoBack} className={styles.x}>X</button>
         </div>
     </div>
   )

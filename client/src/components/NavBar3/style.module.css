@@ -5,7 +5,8 @@
     justify-content: space-between;
     padding: 10px;
     box-sizing: border-box;
-    border-bottom: 1px solid #FFFFFF29;
+    border-bottom: var(--border);
+    color: var(--color);
 }
 
 .activeButton{
@@ -31,7 +32,7 @@
 }
 .x{
     background-color: inherit;
-    color: white;
+    color: red;
 }
 .right{
     display: flex;
