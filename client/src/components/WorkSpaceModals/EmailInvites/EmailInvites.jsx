@@ -71,11 +71,10 @@ function EmailInvites() {
   const onSubmit = (e) => {
     e.preventDefault();
     if (!data.email) {
-      alert("Please select or enter a valid email address.");
+      toast.error("Please select or enter a valid email address.");
       return;
     }
     console.log(`Invitation sent to ${data.email} with ${data.access} access`);
-    alert(`Invitation sent to ${data.email} with ${data.access} access`);
     shareDashboard(data);
     setSelectedUser(null);
     setData((prevData) => ({ ...prevData, email: "" }));
@@ -103,7 +102,7 @@ function EmailInvites() {
     <div className={styles.container}>
       <form onSubmit={onSubmit}>
         <div className={styles.header}>
-          <h2>Invite by Email</h2>
+          <h3>Invite by Email</h3>
           <select
             value={data.access}
             onChange={(e) =>
@@ -135,7 +134,7 @@ function EmailInvites() {
                 onChange={handleSearch}
               />
               {suggestions.length > 0 && (
-                <ul className={styles.suggestions}>
+                <ol className={styles.suggestions}>
                   {suggestions.map((user, index) => (
                     <li
                       key={index}
@@ -144,7 +143,7 @@ function EmailInvites() {
                       {user.name} ({user.email})
                     </li>
                   ))}
-                </ul>
+                </ol>
               )}
             </div>
           )}
