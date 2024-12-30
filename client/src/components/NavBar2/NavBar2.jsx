@@ -64,15 +64,9 @@ function NavBar2() {
         </div>
         <div className={styles.right}>
             <ToggleButton/>
-            <button 
-  className={`${styles.rightButtons} ${formId ? styles.Active : ''}`} 
-  disabled={!formId} 
-  onClick={shareForm}
->
-  Share
-</button>
-            <button className={styles.rightButtons} onClick={onSave}>Save</button>
-            <button className={styles.rightButtons}>X</button>
+            <button className={`${styles.rightButtons} ${formId ? styles.Active : ''}`} disabled={!formId} onClick={shareForm}>Share</button>
+            <button className={styles.save} onClick={onSave}>Save</button>
+            <button className={styles.x}>X</button>
         </div>
     </div>
   )

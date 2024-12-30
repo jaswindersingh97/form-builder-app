@@ -5,6 +5,7 @@
     justify-content: space-between;
     padding: 10px;
     box-sizing: border-box;
+    border-bottom: 1px solid #FFFFFF29;
 }
 
 
@@ -20,4 +21,15 @@
     border-radius: 7px;
     border: none;
 }
-
+.save{
+    background-color: #4ADE80CC;
+    color: white;
+}
+.x{
+    background-color: inherit;
+    color: white;
+}
+.right{
+    display: flex;
+    gap: 20px;
+}

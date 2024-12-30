@@ -79,7 +79,6 @@ const addElement = (name, superType) => {
     <div className={styles.container}>
       <div className={styles.header}>
         <NavBar2 />
-        <hr />
       </div>
       <div className={styles.body}>
         <div className={styles.left}>
