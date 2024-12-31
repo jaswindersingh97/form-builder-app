@@ -1,10 +1,9 @@
 import React from 'react'
-
+import styles from './index.module.css'
 function Text({content}) {
-    // const content = 'LoremIpsum '
   return (
-    <div>
-        <p>{content}</p>
+    <div className={styles.container}>
+        <span>{content}</span>
     </div>
   )
 }

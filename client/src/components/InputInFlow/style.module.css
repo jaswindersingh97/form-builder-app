@@ -19,6 +19,7 @@
     border-radius: 50%;
     align-content: center;
     text-align: center;
+    cursor: pointer;
 }
 .input{
     display: flex;

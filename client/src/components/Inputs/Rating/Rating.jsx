@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+import style from './index.module.css';
+import SendIcon from './../../../assets/FormPage/sendicon.svg'
 function Rating({ label, onSave ,disabled }) {
   const [selectedRating, setSelectedRating] = useState(null);
   const [savedResponse, setSavedResponse] = useState(null); // Store the saved rating
@@ -11,27 +12,45 @@ function Rating({ label, onSave ,disabled }) {
   const handleSave = () => {
     onSave(selectedRating, label); // Save the selected rating
     setSavedResponse(selectedRating); // Display the saved rating
-    setSelectedRating(null); // Clear selection after saving
   };
 
   return (
-    <div>
-      <h3>{label}</h3>
+    <div className={style.container}>
       {savedResponse ? (
-        <div>{savedResponse}</div>  // Display the saved rating
-      ) : (
-        <div>
+        <>
+        <div className={!savedResponse ? style.input : style.saved}>
           {[1, 2, 3, 4, 5].map((rating) => (
             <button
+              className={selectedRating == rating ? style.Rating : ""}
               key={rating}
-              onClick={() => handleRatingClick(rating)}
-              disabled={selectedRating ||disabled}
+              disabled={true}
             >
               {rating}
             </button>
           ))}
-          {selectedRating && <button onClick={handleSave}>Save</button>} {/* Save button only visible after selection */}
+           
         </div>
+        <div className={style.sent} onClick={handleSave}>
+           <img src={SendIcon} alt='send'/>
+           </div></>      
+        ) : (
+        <>
+        <div className={!savedResponse ? style.input : style.saved}>
+          {[1, 2, 3, 4, 5].map((rating) => (
+            <button
+              className={selectedRating == rating ? style.Rating : ""}
+              key={rating}
+              onClick={() => handleRatingClick(rating)}
+              disabled={disabled}
+            >
+              {rating}
+            </button>
+          ))}
+           
+        </div>
+        <div className={style.send} onClick={handleSave}>
+           <img src={SendIcon} alt='send'/>
+           </div></>
       )}
     </div>
   );

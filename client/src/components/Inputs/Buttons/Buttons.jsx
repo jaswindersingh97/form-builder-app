@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import styles from './index.module.css';
 function Buttons({ label, choices, onSave ,disabled}) {
   const [selectedChoice, setSelectedChoice] = useState(null);
 
@@ -9,11 +9,11 @@ function Buttons({ label, choices, onSave ,disabled}) {
   };
 
   return (
-    <div>
+    <div className={styles.container}>
       {selectedChoice ? (
-        <div>{selectedChoice}</div>  // Display selected value as a sent message
+        <div className={styles.selectedChoice}>{selectedChoice}</div>  // Display selected value as a sent message
       ) : (
-        <div>
+        <div className={styles.choices}>
           {choices.map((choice, index) => (
             <button
               key={index}

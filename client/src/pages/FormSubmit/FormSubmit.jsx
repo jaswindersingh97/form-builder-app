@@ -140,6 +140,7 @@ function FormSubmit() {
         userInputs.length === form.elements.filter((el) => el.superType === 'Inputs').length;
 
     return (
+        <div className={Styles.super}>
         <div className={Styles.container}>
             <h1>{form.name}</h1>
             {renderPage.map((item, index) => {
@@ -193,9 +194,10 @@ function FormSubmit() {
                 }
                 return null;
             })}
-            <button disabled={!isFormComplete || submited} onClick={submitForm}>
+            <button className={!isFormComplete || submited ?Styles.pending : Styles.submit} disabled={!isFormComplete || submited} onClick={submitForm}>
                 Submit
             </button>
+        </div>
         </div>
     );
 }
