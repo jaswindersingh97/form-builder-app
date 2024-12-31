@@ -7,7 +7,7 @@ import Modal from './../../components/Modal/Modal';
 import { useTheme } from '../../context/ThemeContext';
 function WorkSpace() {
     const {theme}=useTheme();
-    console.log(theme)
+    // console.log(theme)
   return (
     <div className={style.container}>
       {/* <Modal theme={theme}/> */}

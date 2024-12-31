@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './CreateNewFolder.module.css';
 // import useTheme  from './../../ThemeComponent/ThemeComponent';
-function CreateNewFolder({ AddFolder }) {
+function CreateNewFolder({ AddFolder ,cancel}) {
   const [folder, setFolder] = useState("");
   const [error, setError] = useState("");  // To hold the error message
 
@@ -31,7 +31,7 @@ function CreateNewFolder({ AddFolder }) {
 
         <div className={styles.buttonContainer}>
           <button type="submit" className={styles.createButton}>Done</button>
-          <button type="reset" className={styles.cancelButton}>Cancel</button>
+          <button type="reset" onClick={cancel} className={styles.cancelButton}>Cancel</button>
         </div>
       </form>
     </div>

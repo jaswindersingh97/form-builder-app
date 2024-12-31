@@ -93,9 +93,9 @@ function WorkSpaceBody() {
     console.log(response);
   };
 
-  const createFolder = () => openModal(<CreateNewFolder AddFolder={AddFolder} />);
+  const createFolder = () => openModal(<CreateNewFolder AddFolder={AddFolder} cancel={closeModal} />);
   const deleteSomething = ({ something, id, onDelete }) =>
-    openModal(<Delete name={something} id={id} onDelete={onDelete} />);
+    openModal(<Delete name={something} id={id} onDelete={onDelete} cancel={closeModal} />);
 
   return (
     <div className={styles.container}>
