@@ -13,9 +13,12 @@
   border-radius: 4px;
   background-color: var(--dropdownbackground);
   color: var(--text);
-  border: 0.5px,solid,var(--text);
+  border: var(--border);
 }
 
+.userName:hover{
+  background-color: var(--hover);
+}
 .dropdownMenu {
   display: flex;
   flex-direction: column;

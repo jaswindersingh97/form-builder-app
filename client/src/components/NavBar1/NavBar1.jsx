@@ -21,6 +21,7 @@ function NavBar1() {
     navigate("/");
   }
   const [user,setUser] = useState({});
+  console.log(user);
   const getUser = async()=>{
     const response =await Api({
       endpoint:"/secure/users",
@@ -57,9 +58,9 @@ function NavBar1() {
       {loading ? <img src={Loading} className='loading' alt='loading'/>:      
         <Dropdown active={ActiveUser() }>
         <Link to={'/settings'}><div className={styles.menuItem}>Settings</div></Link>
-            <div onClick={Logout} className={styles.menuItem}>Logout</div>
+            <div onClick={Logout} style={{color:'#FFA54C'}} className={styles.menuItem}>Logout</div>
             <hr/>
-            <div className={styles.menuItem}>edit Rights</div>
+            <div>edit Rights</div>
             {
               user?.sharedDashboards?.map((item,index) =>(
                 item.permission == 'edit' &&
@@ -67,7 +68,7 @@ function NavBar1() {
               ))
             }
             <hr/>
-            <div className={styles.menuItem}>view Rights</div>
+            <div>view Rights</div>
             {
               user?.sharedDashboards?.map((item,index) =>(
                 item.permission == 'view' &&
@@ -75,7 +76,7 @@ function NavBar1() {
               ))
             }
             <hr/>
-            <div onClick={()=>navigate('/Workspace')} className={styles.menuItem}>{user.name}</div>
+            <div style={{color:'#1A5FFF'}} onClick={()=>navigate('/Workspace')} className={styles.menuItem}>{user.name}</div>
         </Dropdown>}
       </div>
       <div className={styles.right}>

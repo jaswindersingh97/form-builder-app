@@ -25,3 +25,6 @@
     background-color: #1A5FFF;
     color: white;
 }
+.menuItem:hover{
+    background-color: var(--hover);
+}
