@@ -16,11 +16,11 @@ function SharedPage() {
             });
 
             if (response.status === 200) {
-                toast.success("Rights allocated to user, redirecting in 3 seconds...");
-                setTimeout(() => {
-                    navigate('/workspace'); // Redirect to the /workspace page
-                }, 3000); // 3 seconds delay
+                toast.success("Rights allocated to user, redirecting in 3 seconds..."); // 3 seconds delay
             }
+            setTimeout(() => {
+                navigate('/workspace'); // Redirect to the /workspace page
+            }, 3000);
         } catch (error) {
             toast.error("Failed to allocate rights. Please try again.");
             console.error("Error fetching rights:", error);
