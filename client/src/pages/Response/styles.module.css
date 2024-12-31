@@ -27,6 +27,10 @@
     border: var(--border);
     display: flex;
     flex-direction: column;
+    gap: 10px;
+}
+.count p{
+    margin: 0px;
 }
 .footer{
     padding: 10px;

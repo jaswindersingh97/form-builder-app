@@ -119,8 +119,8 @@ function Response() {
                               100
                             ).toFixed(2)}%`
                           : 'N/A'}
-                      <p>(completed/started)*100</p>
                       </p>
+                      <p>(completed/started)*100</p>
                     </div>
                     </div>
                     
