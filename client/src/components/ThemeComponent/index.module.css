@@ -10,6 +10,8 @@
     color: #333;
     --border: 1px solid #13030329;
     --bubblesbackground:white;
+    --inputbackground:#ffffff;
+    
     hr{
         background-color: #333;
     }
@@ -23,6 +25,7 @@
     --hover:rgba(80, 68, 68, 0.484);
     --border: 1px solid #FFFFFF29;
     --bubblesbackground:#1F1F23;
+    --inputbackground:#18181B;
     color: #f5f5f5;
     hr{
         background-color: #f5f5f5;

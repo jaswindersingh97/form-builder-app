@@ -34,11 +34,19 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    gap: 10px;
+}
+.inputGroup button{
+    background-color: inherit;
+    color: red;
 }
 .input input{
-    background-color: inherit;
-    border: none;
+    border-radius: 10px;
+    width: 100%;
+    background-color: var(--inputbackground);
+    border: var(--border);
     padding: 10px;
     color: var(--color);
+
 }
 
