@@ -78,7 +78,7 @@ const addElement = (name, superType) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <NavBar2 loading={loading}/>
+        <NavBar2 loading={mode == 'edit' && loading}/>
       </div>
       <div className={styles.body}>
         <div className={styles.left}>
@@ -114,7 +114,7 @@ const addElement = (name, superType) => {
           </div>
         </div>
         <div className={styles.right}>
-          <WorkFlow loading={loading} />
+          <WorkFlow loading={mode == 'edit' && loading} />
         </div>
       </div>
     </div>
