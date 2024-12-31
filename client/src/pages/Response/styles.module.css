@@ -1,8 +1,16 @@
 .container{
     display: flex;
     flex-direction: column;
-    width: 100vw;
+    width: 100vw;   
     height: 100vh;
+    gap: 20px;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding: 10px;
+}
+.small{
+    display: flex;
+    flex-direction: column;
 }
 .header{
     padding: 10px;
@@ -30,6 +38,7 @@
     align-self: center;
     overflow-y: auto;
     overflow-x: auto;
+    max-width: 90vw;
 }
 .Doughnut{
     display: flex;

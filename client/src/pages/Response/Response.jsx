@@ -31,29 +31,34 @@ function Response() {
     }, []);
 
     // Prepare the data for the Doughnut chart
+    const totalCount = data?.progress?.viewCount || 0;
+    const startedCount = data?.progress?.startedCount || 0;
+    const completedCount = data?.progress?.completedCount || 0;
+    
     const doughnutData = {
-        labels: ['Completed', 'Pending'], // Labels for the sections
+        labels: ['Viewed only', 'Started Only', 'Completed'], // Representing hierarchy
         datasets: [
             {
                 label: 'Submission Progress',
                 data: [
-                    data?.progress?.completedCount || 0, // Completed count
-                    (data?.progress?.startedCount || 0) - (data?.progress?.completedCount || 0), // Pending count (calculated by subtracting completed from total views)
+                    totalCount-startedCount,       // only Viewed
+                    startedCount - completedCount, // Only Started
+                    completedCount                 // Fully Completed
                 ],
-                backgroundColor: ['#36A2EB', '#FF6384'], // Colors for each section
-                borderColor: ['#ffffff', '#ffffff'], // Border color for sections
+                backgroundColor: ['#36A2EB', '#FF6384', '#42f551'], 
+                borderColor: ['#ffffff', '#ffffff', '#ffffff'], 
                 borderWidth: 1,
             },
         ],
     };
-
+    
     return (
         <div className={styles.container}>
           <NavBar3 />
           {!loading && data?.progress?.viewCount === 0 ? (
             <div className={styles.noresponse}>No Response yet collected</div>
           ) : (
-            <>
+            <div className={styles.small}>
               <div className={styles.header}>
                 <div className={styles.count}>
                   <p>Views:</p>
@@ -114,6 +119,7 @@ function Response() {
                               100
                             ).toFixed(2)}%`
                           : 'N/A'}
+                      <p>(completed/started)*100</p>
                       </p>
                     </div>
                     </div>
@@ -121,7 +127,7 @@ function Response() {
                   </>
                 )}
               </div>
-            </>
+            </div>
           )}
         </div>
       );
