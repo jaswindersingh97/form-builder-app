@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Buttons({ label, choices, onSave }) {
+function Buttons({ label, choices, onSave ,disabled}) {
   const [selectedChoice, setSelectedChoice] = useState(null);
 
   const handleButtonClick = (choice) => {
@@ -18,7 +18,7 @@ function Buttons({ label, choices, onSave }) {
             <button
               key={index}
               onClick={() => handleButtonClick(choice.value)}
-              disabled={selectedChoice} // Disable further clicks once a choice is made
+              disabled={selectedChoice || disabled} // Disable further clicks once a choice is made
             >
               {choice.value}
             </button>

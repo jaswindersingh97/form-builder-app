@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Text({ label, onSave, type }) {
+function Text({ label, onSave, type,disabled }) {
   const [inputValue, setInputValue] = useState('');
   const [savedResponse, setSavedResponse] = useState(null);  // Store the saved response
 
@@ -25,6 +25,7 @@ function Text({ label, onSave, type }) {
             type={type}
             value={inputValue}
             onChange={handleInputChange}
+            disabled={disabled}
           />
           <button onClick={handleSave} disabled={!inputValue}>
             Save

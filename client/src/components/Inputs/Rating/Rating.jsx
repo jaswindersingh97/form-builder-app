@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Rating({ label, onSave }) {
+function Rating({ label, onSave ,disabled }) {
   const [selectedRating, setSelectedRating] = useState(null);
   const [savedResponse, setSavedResponse] = useState(null); // Store the saved rating
 
@@ -25,7 +25,7 @@ function Rating({ label, onSave }) {
             <button
               key={rating}
               onClick={() => handleRatingClick(rating)}
-              disabled={selectedRating}
+              disabled={selectedRating ||disabled}
             >
               {rating}
             </button>

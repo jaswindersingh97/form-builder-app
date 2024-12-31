@@ -8,15 +8,17 @@ import Video from '../../components/Bubbles/Video/Video';
 import Buttons from '../../components/Inputs/Buttons/Buttons';
 import InputText from '../../components/Inputs/Text/Text';
 import Rating from '../../components/Inputs/Rating/Rating';
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify';
+
 function FormSubmit() {
     const { FormId } = useParams();
     const [form, setForm] = useState({ name: '', elements: [] });
     const [renderPage, setRenderPage] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [userInputs, setUserInputs] = useState([]);
-    const [firstValueChange,setFirstValueChange] = useState(false);
-    const [submited,setSubmitted] = useState(false);
+    const [firstValueChange, setFirstValueChange] = useState(false);
+    const [submited, setSubmitted] = useState(false);
+
     const fetchForm = async () => {
         try {
             const response = await Api({
@@ -28,55 +30,58 @@ function FormSubmit() {
             console.error('Error fetching form:', error);
         }
     };
-    const startCountUpdate = async() =>{
+
+    const startCountUpdate = async () => {
         try {
             const response = await Api({
                 endpoint: `/public/forms/start/${FormId}`,
                 method: 'post',
             });
         } catch (error) {
-            console.error('Error fetching form:', error);
+            console.error('Error starting form count:', error);
         }
-    }
-    const viewCountUpdate = async() =>{
+    };
+
+    const viewCountUpdate = async () => {
         try {
             const response = await Api({
                 endpoint: `/public/forms/view/${FormId}`,
                 method: 'post',
             });
         } catch (error) {
-            console.error('Error fetching form:', error);
+            console.error('Error updating view count:', error);
         }
-    }
-    const completeCountUpdate = async() =>{
+    };
+
+    const completeCountUpdate = async () => {
         try {
             const response = await Api({
                 endpoint: `/public/forms/complete/${FormId}`,
                 method: 'post',
             });
         } catch (error) {
-            console.error('Error fetching form:', error);
+            console.error('Error completing form count:', error);
         }
-    }
+    };
 
-    const submitForm = async(e) =>{
+    const submitForm = async (e) => {
         e.preventDefault();
-        setSubmitted(true);        
+        setSubmitted(true);
         try {
             const response = await Api({
                 endpoint: `/public/forms/submit/${FormId}`,
                 method: 'post',
-                data:{data:userInputs}
+                data: { data: userInputs },
             });
-            if(response.status == 201){
-                toast.success("Form submitted succesfully")
+            if (response.status === 201) {
+                toast.success('Form submitted successfully');
                 completeCountUpdate();
             }
         } catch (error) {
             setSubmitted(false);
-            console.error('Error fetching form:', error);
+            console.error('Error submitting form:', error);
         }
-    }
+    };
 
     useEffect(() => {
         fetchForm();
@@ -87,16 +92,16 @@ function FormSubmit() {
     const handleSave = (value, label) => {
         setRenderPage((prevData) => [
             ...prevData,
-            { type: 'userMessage', value, label }
+            { type: 'userMessage', value, label },
         ]);
 
         setUserInputs((prevInputs) => [
             ...prevInputs,
-            { label, value }
+            { label, value },
         ]);
 
-        setCurrentIndex((prevIndex) => prevIndex + 1); 
-        if(!firstValueChange){
+        setCurrentIndex((prevIndex) => prevIndex + 1);
+        if (!firstValueChange) {
             startCountUpdate();
             setFirstValueChange(true);
         }
@@ -106,13 +111,15 @@ function FormSubmit() {
         if (form.elements.length > 0 && currentIndex < form.elements.length) {
             const element = form.elements[currentIndex];
 
-            const isAlreadyRendered = renderPage.some(item => item.element && item.element.label === element.label);
+            const isAlreadyRendered = renderPage.some(
+                (item) => item.element && item.element.label === element.label
+            );
 
             if (!isAlreadyRendered) {
                 if (element.superType === 'Bubbles') {
                     setRenderPage((prev) => [
                         ...prev,
-                        { type: 'bubble', element }
+                        { type: 'bubble', element },
                     ]);
                     setCurrentIndex((prevIndex) => prevIndex + 1);
                 }
@@ -120,12 +127,17 @@ function FormSubmit() {
                 if (element.superType === 'Inputs') {
                     setRenderPage((prev) => [
                         ...prev,
-                        { type: 'input', element }
+                        { type: 'input', element },
                     ]);
                 }
             }
         }
     }, [currentIndex, form]);
+
+    // Check if the form is fully completed
+    const isFormComplete =
+        form.elements.length > 0 &&
+        userInputs.length === form.elements.filter((el) => el.superType === 'Inputs').length;
 
     return (
         <div className={Styles.container}>
@@ -136,12 +148,30 @@ function FormSubmit() {
                     return (
                         <div key={index} className={Styles.inputs}>
                             {element.type === 'Buttons' && (
-                                <Buttons label={element.label} choices={element.buttonValues} onSave={handleSave} />
+                                <Buttons
+                                    label={element.label}
+                                    choices={element.buttonValues}
+                                    onSave={handleSave}
+                                    disabled={submited}
+                                />
                             )}
-                            {['Text', 'Date', 'Number', 'Email', 'Phone'].includes(element.type) && (
-                                <InputText type={element.type} label={element.label} onSave={handleSave} />
+                            {['Text', 'Date', 'Number', 'Email', 'Phone'].includes(
+                                element.type
+                            ) && (
+                                <InputText
+                                    type={element.type}
+                                    label={element.label}
+                                    onSave={handleSave}
+                                    disabled={submited}
+                                />
                             )}
-                            {element.type === 'Rating' && <Rating label={element.label} onSave={handleSave} />}
+                            {element.type === 'Rating' && (
+                                <Rating
+                                    label={element.label}
+                                    onSave={handleSave}
+                                    disabled={submited}
+                                />
+                            )}
                         </div>
                     );
                 }
@@ -151,7 +181,9 @@ function FormSubmit() {
                     return (
                         <div key={index} className={Styles.bubbles}>
                             {element.type === 'Text' && <Text content={element.value} />}
-                            {['Image', 'Gif'].includes(element.type) && <Image image={element.value} />}
+                            {['Image', 'Gif'].includes(element.type) && (
+                                <Image image={element.value} />
+                            )}
                             {element.type === 'Video' && <Video video={element.value} />}
                             {!['Text', 'Image', 'Gif', 'Video'].includes(element.type) && (
                                 <div>{element.label}</div> // Fallback for unsupported types
@@ -161,7 +193,9 @@ function FormSubmit() {
                 }
                 return null;
             })}
-            <button disabled={submited} onClick={submitForm}>Submit</button>
+            <button disabled={!isFormComplete || submited} onClick={submitForm}>
+                Submit
+            </button>
         </div>
     );
 }
