@@ -119,7 +119,14 @@ function NavBar2({loading}) {
         Flow
       </button>
       <button
-        onClick={() => navigate(`/${dashboardId}/workspace/${FolderId}/responses/${FormId}`)}
+        onClick={() =>{
+          if(!formId){
+            toast.error("please save the Form first")
+            console.log(FormId)
+          }
+          else{
+          navigate(`/${dashboardId}/workspace/${FolderId}/responses/${formId}`)}}
+          } 
         className={styles.notselected}
       >
         Response

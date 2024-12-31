@@ -21,7 +21,6 @@ function NavBar1() {
     navigate("/");
   }
   const [user,setUser] = useState({});
-  console.log(user);
   const getUser = async()=>{
     const response =await Api({
       endpoint:"/secure/users",
