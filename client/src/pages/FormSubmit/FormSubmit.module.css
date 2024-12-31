@@ -29,3 +29,14 @@
     color: white;
     cursor: not-allowed;
 }
+
+@media screen and (max-width: 768px) {
+    .container {
+        /* Styles specific for phones */
+        font-size: 14px;
+        padding: 5px;
+        width: 100%;
+        gap: .3125rem;
+    }
+  }
+  
