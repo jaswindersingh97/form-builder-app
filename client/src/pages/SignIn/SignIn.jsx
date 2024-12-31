@@ -7,8 +7,10 @@ import withTheme from "../../components/ThemeComponent/ThemeComponent";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Api from "./../../Api/Api";
+import Loading from './../../assets/Loading/loading.gif'
 const SignIn = () => {
   const from = location.state?.from?.pathname || `/workspace`;
+  const[loading,setLoading] = useState(false);
   const formFields = [
     {
       name: "email",
@@ -29,11 +31,13 @@ const SignIn = () => {
   ];
 
   const handleSubmit = async(data) => {
+    setLoading(true);
     const response =await Api({
       endpoint: "/login",
       method: "POST",
       data,
     });
+    setLoading(false);
     if(response.status === 200){
       localStorage.setItem("token",response.data.token);
       localStorage.setItem("id", response.data.id);
@@ -51,6 +55,7 @@ const SignIn = () => {
         Sign In with Google
        </button >
        <p>Don’t have an account? <mark><Link to={"/register"}>Register now</Link></mark></p>
+       {loading?<div style={{alignSelf:'center'}}> <img src={Loading} className='loading' alt="loading"/></div> : null}
     </>
     
   );

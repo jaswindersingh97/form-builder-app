@@ -1,13 +1,16 @@
 // pages/SignUp.js
-import React from "react";
+import React,{useState} from "react";
 import Form from "./../../components/Form/Form";
 import AuthLayout from "../../components/AuthLayout/AuthLayout";
 import buttonIcon from './../../assets/AuthPage/Google Icon.svg'
 import withTheme from "../../components/ThemeComponent/ThemeComponent";
 import { Link } from "react-router-dom";
 import {toast} from 'react-toastify';
+import Loading from './../../assets/Loading/loading.gif'
 import Api from "../../Api/Api";
 const SignUp = () => {
+    const[loading,setLoading] = useState(false);
+  
   const formFields = [
     {
         name: "name",
@@ -44,6 +47,7 @@ const SignUp = () => {
   ];
 
   const handleSubmit = async(data) => {
+    setLoading(true);
     const {confirmPassword,...finalData}=data; 
     const response =await Api({
       endpoint: "/register",
@@ -52,6 +56,7 @@ const SignUp = () => {
     });
     if(response.status === 201){
       toast.success("Account created successfully");}
+      setLoading(false);
       
   };
 
@@ -64,6 +69,7 @@ const SignUp = () => {
         Sign In with Google
        </button>
        <p>Already have an accout <mark><Link to={"/Signin"}>Login</Link></mark></p>
+       {loading?<div style={{alignSelf:'center'}}> <img src={Loading} className='loading' alt="loading"/></div> : null}
           
     </>
   );
