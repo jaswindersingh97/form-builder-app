@@ -1,11 +1,12 @@
-// components/Form.js
 import React, { useState } from "react";
 import './style.css'
-const Form = ({ fields, onSubmit ,buttonLabel}) => {
+
+const Form = ({ fields, onSubmit, buttonLabel }) => {
   const [formValues, setFormValues] = useState(() =>
     fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
   );
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false); // Add loading state
 
   const validate = () => {
     const newErrors = {};
@@ -22,22 +23,27 @@ const Form = ({ fields, onSubmit ,buttonLabel}) => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validate()) {
-      const filteredValues = Object.fromEntries(
-        Object.entries(formValues).filter(([_, value]) => value !== "")
-      );
-      onSubmit(filteredValues);
+      setIsSubmitting(true); // Disable button
+      try {
+        const filteredValues = Object.fromEntries(
+          Object.entries(formValues).filter(([_, value]) => value !== "")
+        );
+        await onSubmit(filteredValues); // Wait for API handling
+      } catch (error) {
+        console.error("Error during submission:", error);
+      } finally {
+        setIsSubmitting(false); // Re-enable button
+      }
     }
-
   };
 
   return (
@@ -58,7 +64,13 @@ const Form = ({ fields, onSubmit ,buttonLabel}) => {
           )}
         </div>
       ))}
-      <button className="AuthButton" type="submit">{buttonLabel}</button>
+      <button
+        className="AuthButton"
+        type="submit"
+        disabled={isSubmitting} // Disable when loading
+      >
+        {isSubmitting ? "Submitting..." : buttonLabel}
+      </button>
     </form>
   );
 };
