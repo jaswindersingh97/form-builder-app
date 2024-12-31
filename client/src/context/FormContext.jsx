@@ -7,14 +7,16 @@ export const FormProvider = ({ children }) => {
     name:"",
     folder:"",
     elements:[],
-
   });
+  const [formErrors, setFormErrors] = useState({});
 
   return (
     <FormContext.Provider
       value={{
         form,
         setForm,
+        formErrors, 
+        setFormErrors
       }}
     >
       {children}

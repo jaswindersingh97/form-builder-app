@@ -10,6 +10,8 @@ import Loading from './../../assets/Loading/loading.gif'
 function NavBar2({loading}) {
     const {dashboardId,FolderId,FormId} = useParams();
     const [formId,setFormId] = useState(FormId || '');
+    const {form,setForm,formErrors, setFormErrors} = useForm();
+
     const location = useLocation();
 
     const handleGoBack = () => {
@@ -22,7 +24,46 @@ function NavBar2({loading}) {
           {folder:FolderId}
       ))
     },[])
+
+    const isFormValid = () => {
+      let errors = {}; // This will store error messages
+      let isValid = true;
+    
+      form.elements.forEach((element) => {
+        // Check for Bubbles
+        if (element.superType === 'Bubbles') {
+          if (element.value.trim().length < 1) {
+            // console.log("failed")
+            errors[element.label] = 'This field cannot be empty.';
+            isValid = false;
+          }
+        }
+        // Check for Buttons
+        else if (element.superType === 'Inputs' && element.type === 'Buttons') {
+          if (element.buttonValues.length === 0) {
+            errors[element.label] = 'Please add at least one button.';
+            isValid = false;
+          } else {
+            element.buttonValues.forEach((button, index) => {
+              if (button.value.trim().length < 1) {
+                errors[element.label] = 'Button value cannot be empty.';
+                isValid = false;
+              }
+            });
+          }
+        }
+        // Add additional validation for other field types here
+      });
+      setFormErrors(errors); // Update the error state
+      return isValid; // Return whether the form is valid
+    };
+        
+
     const onSave = async()=>{
+      if(!isFormValid()){
+        toast.error("fill complete Data")
+      }
+      else{
         let config = {
             endpoint:"/secure/forms",
             includeToken:true,
@@ -46,8 +87,9 @@ function NavBar2({loading}) {
             toast.success("The form is Updated successfully");
             setFormId(Response.data.form._id);
         }   
-    }
-    const {form,setForm} = useForm();
+      }
+    
+      }
     const shareForm = () => {
         const fullDomain = window.location.hostname + (window.location.port ? `:${window.location.port}` : '');
         const link = `${fullDomain}/FormSubmit/${formId}`;

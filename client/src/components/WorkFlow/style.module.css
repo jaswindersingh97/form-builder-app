@@ -19,3 +19,6 @@
     background-color:  var(--backgroundcolor); 
     border-radius: 10px;
 }
+.errorMessage{
+    color: red;
+}

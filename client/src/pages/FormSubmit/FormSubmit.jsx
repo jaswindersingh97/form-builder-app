@@ -9,7 +9,7 @@ import Buttons from '../../components/Inputs/Buttons/Buttons';
 import InputText from '../../components/Inputs/Text/Text';
 import Rating from '../../components/Inputs/Rating/Rating';
 import { toast } from 'react-toastify';
-
+import Loading from './../../assets/Loading/loading.gif'
 function FormSubmit() {
     const { FormId } = useParams();
     const [form, setForm] = useState({ name: '', elements: [] });
@@ -18,8 +18,10 @@ function FormSubmit() {
     const [userInputs, setUserInputs] = useState([]);
     const [firstValueChange, setFirstValueChange] = useState(false);
     const [submited, setSubmitted] = useState(false);
+    const [loading, setLoading] = useState(false);  // Loading state
 
     const fetchForm = async () => {
+        setLoading(true);  // Start loading
         try {
             const response = await Api({
                 endpoint: `/public/forms/${FormId}`,
@@ -28,6 +30,8 @@ function FormSubmit() {
             setForm(response.data.form);
         } catch (error) {
             console.error('Error fetching form:', error);
+        } finally {
+            setLoading(false);  // Stop loading
         }
     };
 
@@ -67,6 +71,7 @@ function FormSubmit() {
     const submitForm = async (e) => {
         e.preventDefault();
         setSubmitted(true);
+        setLoading(true);  // Start loading during form submission
         try {
             const response = await Api({
                 endpoint: `/public/forms/submit/${FormId}`,
@@ -80,6 +85,8 @@ function FormSubmit() {
         } catch (error) {
             setSubmitted(false);
             console.error('Error submitting form:', error);
+        } finally {
+            setLoading(false);  // Stop loading
         }
     };
 
@@ -141,63 +148,73 @@ function FormSubmit() {
 
     return (
         <div className={Styles.super}>
-        <div className={Styles.container}>
-            <h1>{form.name}</h1>
-            {renderPage.map((item, index) => {
-                if (item.type === 'input') {
-                    const element = item.element;
-                    return (
-                        <div key={index} className={Styles.inputs}>
-                            {element.type === 'Buttons' && (
-                                <Buttons
-                                    label={element.label}
-                                    choices={element.buttonValues}
-                                    onSave={handleSave}
-                                    disabled={submited}
-                                />
-                            )}
-                            {['Text', 'Date', 'Number', 'Email', 'Phone'].includes(
-                                element.type
-                            ) && (
-                                <InputText
-                                    type={element.type}
-                                    label={element.label}
-                                    onSave={handleSave}
-                                    disabled={submited}
-                                />
-                            )}
-                            {element.type === 'Rating' && (
-                                <Rating
-                                    label={element.label}
-                                    onSave={handleSave}
-                                    disabled={submited}
-                                />
-                            )}
-                        </div>
-                    );
-                }
+            <div className={Styles.container}>
+                <h1>{form.name}</h1>
 
-                if (item.type === 'bubble') {
-                    const element = item.element;
-                    return (
-                        <div key={index} className={Styles.bubbles}>
-                            {element.type === 'Text' && <Text content={element.value} />}
-                            {['Image', 'Gif'].includes(element.type) && (
-                                <Image image={element.value} />
-                            )}
-                            {element.type === 'Video' && <Video video={element.value} />}
-                            {!['Text', 'Image', 'Gif', 'Video'].includes(element.type) && (
-                                <div>{element.label}</div> // Fallback for unsupported types
-                            )}
-                        </div>
-                    );
-                }
-                return null;
-            })}
-            <button className={!isFormComplete || submited ?Styles.pending : Styles.submit} disabled={!isFormComplete || submited} onClick={submitForm}>
-                Submit
-            </button>
-        </div>
+                {/* Loading indicator */}
+                {loading && <div className={Styles.loading}>
+                <img src={Loading} className='loading' alt='loading'/> 
+                </div>}
+
+                {renderPage.map((item, index) => {
+                    if (item.type === 'input') {
+                        const element = item.element;
+                        return (
+                            <div key={index} className={Styles.inputs}>
+                                {element.type === 'Buttons' && (
+                                    <Buttons
+                                        label={element.label}
+                                        choices={element.buttonValues}
+                                        onSave={handleSave}
+                                        disabled={submited || loading}
+                                    />
+                                )}
+                                {['Text', 'Date', 'Number', 'Email', 'Phone'].includes(
+                                    element.type
+                                ) && (
+                                    <InputText
+                                        type={element.type}
+                                        label={element.label}
+                                        onSave={handleSave}
+                                        disabled={submited || loading}
+                                    />
+                                )}
+                                {element.type === 'Rating' && (
+                                    <Rating
+                                        label={element.label}
+                                        onSave={handleSave}
+                                        disabled={submited || loading}
+                                    />
+                                )}
+                            </div>
+                        );
+                    }
+
+                    if (item.type === 'bubble') {
+                        const element = item.element;
+                        return (
+                            <div key={index} className={Styles.bubbles}>
+                                {element.type === 'Text' && <Text content={element.value} />}
+                                {['Image', 'Gif'].includes(element.type) && (
+                                    <Image image={element.value} />
+                                )}
+                                {element.type === 'Video' && <Video video={element.value} />}
+                                {!['Text', 'Image', 'Gif', 'Video'].includes(element.type) && (
+                                    <div>{element.label}</div> // Fallback for unsupported types
+                                )}
+                            </div>
+                        );
+                    }
+                    return null;
+                })}
+                <button
+                    className={!isFormComplete || submited ? Styles.pending : Styles.submit}
+                    disabled={!isFormComplete || submited || loading}
+                    onClick={submitForm}
+                >
+                    Submit
+                </button>
+            </div>
         </div>
     );
 }

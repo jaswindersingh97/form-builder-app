@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './style.module.css';
 import deleteIcon from './../../assets/Workspace/delete.svg';
 import { buttons as buttonIcon } from './../../assets/FormPage';
 import { useForm } from './../../context/FormContext';
 import { v4 as uuidv4 } from 'uuid'; // Unique ID generator
 
-function ButtonInFlow({ type, label, state, setState }) {
+function ButtonInFlow({ type, label }) {
   const { form, setForm } = useForm();
   const object = {
     name: "Button",
@@ -14,13 +14,20 @@ function ButtonInFlow({ type, label, state, setState }) {
       "Hint: User will select one of many buttons and select what response it wants to give. Add the choices below.",
   };
 
-  const [buttonFields, setButtonFields] = useState([{ id: uuidv4(), value: '' }]);
+  const [buttonFields, setButtonFields] = useState([]);
+
+  // Sync buttonFields with form state
+  useEffect(() => {
+    const element = form.elements.find((el) => el.label === label);
+    if (element && element.buttonValues) {
+      setButtonFields(element.buttonValues.length > 0 ? element.buttonValues : [{ id: uuidv4(), value: '' }]);
+    }
+  }, [form, label]);
 
   const deleteButton = (label) => {
-    console.log(label);
-    setState((prevdata) => ({
-      ...prevdata, // Keep other properties of prevdata intact
-      elements: prevdata.elements.filter((item) => item.label !== label),
+    setForm((prevData) => ({
+      ...prevData,
+      elements: prevData.elements.filter((item) => item.label !== label),
     }));
   };
 
@@ -45,10 +52,19 @@ function ButtonInFlow({ type, label, state, setState }) {
   };
 
   const addTextField = () => {
-    setButtonFields((prevButtons) => [
-      ...prevButtons,
-      { id: uuidv4(), value: '' },
-    ]);
+    const newButton = { id: uuidv4(), value: '' };
+    const updatedFields = [...buttonFields, newButton];
+    setButtonFields(updatedFields);
+
+    // Update global state
+    setForm((prevData) => ({
+      ...prevData,
+      elements: prevData.elements.map((element) =>
+        element.label === label
+          ? { ...element, buttonValues: updatedFields }
+          : element
+      ),
+    }));
   };
 
   const removeTextField = (id) => {
@@ -70,9 +86,13 @@ function ButtonInFlow({ type, label, state, setState }) {
 
   return (
     <div className={styles.container}>
-      <div onClick={(e)=>{
-          e.stopPropagation()
-          deleteButton(label)} } className={styles.deleteIcon}>
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          deleteButton(label);
+        }}
+        className={styles.deleteIcon}
+      >
         <img src={deleteIcon} alt="delete icon" />
       </div>
       <span>{label}</span>
@@ -101,7 +121,6 @@ function ButtonInFlow({ type, label, state, setState }) {
         </button>
         <p>{object.placeholder}</p>
       </div>
-      {/* <pre>{JSON.stringify(buttonFields, null, 2)}</pre> */}
     </div>
   );
 }
