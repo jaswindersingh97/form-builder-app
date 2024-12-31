@@ -23,9 +23,9 @@ function App() {
       <ToastContainer />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ThemedLandingPage theme={themeStyle} />} />
-          <Route path='/SignIn' element={<ProtectedRoutes element={<SignInPage theme={themeStyle}/>} isPublic={true}/>}/>
-          <Route path='/Register' element={<ProtectedRoutes element={<RegisterPage theme={themeStyle}/>} isPublic={true}/>}/>
+          <Route path="/" element={<ThemedLandingPage theme={"dark"} />} />
+          <Route path='/SignIn' element={<ProtectedRoutes element={<SignInPage theme={"dark"}/>} isPublic={true}/>}/>
+          <Route path='/Register' element={<ProtectedRoutes element={<RegisterPage theme={"dark"}/>} isPublic={true}/>}/>
           <Route path='/settings' element={<ProtectedRoutes element={<SettingsPage theme={themeStyle}/>} isPublic={false}/>}/>
           <Route path='/workspace' element= {<Navigate to ={`/${userId}/workspace`} replace/>}/>
           <Route path='/:dashboardId/workSpace/' element={<ProtectedRoutes element={<WorkSpace theme={themeStyle}/>} isPublic={false}/>} />
