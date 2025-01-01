@@ -88,7 +88,7 @@ function EmailInvites() {
       {access:data.access}
     });
 
-    navigator.clipboard.writeText(`http://localhost:5173/getPermission/${response.data.link}`)
+    navigator.clipboard.writeText(`${window.location.origin}/getPermission/${response.data.link}`)
       .then(() => {
         toast.success("Link copied to clipboard!");
       })
