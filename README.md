@@ -30,6 +30,7 @@ Here're some of the project's best features:
 git clone https://github.com/jaswindersingh97/form-builder-app
 ```
 
+```
 cd form-builder-app
 ```
 
@@ -49,12 +50,15 @@ npm install
 
 ```
 PORT=5000
+```
 
 ```
 MONGO_URI=your_mongodb_connection_string
+```
 
 ```
 JWT_SECRET=your_jwt_secret
+```
 
 ```
 SECRET_KEY=24charactersecretkey
