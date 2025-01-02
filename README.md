@@ -28,9 +28,6 @@ Here're some of the project's best features:
 
 ```
 git clone https://github.com/jaswindersingh97/form-builder-app
-```
-
-```
 cd form-builder-app
 ```
 
