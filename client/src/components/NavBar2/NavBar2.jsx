@@ -15,7 +15,7 @@ function NavBar2({loading}) {
     const location = useLocation();
 
     const handleGoBack = () => {
-      const basePath = location.pathname.split('/editForm')[0];
+      const basePath = `/${dashboardId}/workspace/${FolderId}/`
       navigate(basePath);
     };
     const navigate = useNavigate();
