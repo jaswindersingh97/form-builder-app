@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import styles from './style.module.css';
 import deleteIcon from './../../assets/Workspace/delete.svg';
 import { Gif, Image, TextBubble, Video } from './../../assets/FormPage';

@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import styles from './style.module.css';
 import flag from './../../assets/FormPage/Flag.svg'
 import BubblesInFlow from '../BubblesInFlow/BubblesInFlow';
